@@ -162,7 +162,7 @@
 
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import AdminLogin from "./pages/AdminLogin";
+import AdminLogin from "./pages/Admin/AdminLogin";
 import FarmerLogin from "./pages/Farmers/FarmerLogin";
 import CustomerLogin from "./pages/Customers/CustomerLogin";
 import FarmerRegister from "./pages/Farmers/FarmerRegister";
