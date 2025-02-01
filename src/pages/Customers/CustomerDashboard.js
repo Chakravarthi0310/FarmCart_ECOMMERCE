@@ -1,5 +1,5 @@
 import React from "react";
-import CustomerNavbar from "../../components/CustomerNavbar";
+import CustomerNavbar from "../../Components/CustomerNavbar.jsx";
 import "./CustomerDashboard.css";
 
 const CustomerDashboard = () => {

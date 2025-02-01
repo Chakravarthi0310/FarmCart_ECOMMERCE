@@ -24,10 +24,10 @@ const Home = () => {
         Farmer
       </button>
       <button
-        onClick={() => navigate("/consumer-login")}
+        onClick={() => navigate("/customer-login")}
         className="bg-blue-500 text-white px-4 py-2 rounded-lg"
       >
-        Consumer
+        Buyer
       </button>
     </div>
   );
