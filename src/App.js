@@ -11,6 +11,9 @@ import AddNewItem from "./pages/Farmers/AddNewItem";
 import ItemDetails from "./pages/Farmers/ItemDetails";
 import CustomerDashboard from "./pages/Customers/CustomerDashboard";
 import Home from "./pages/Home";
+import FarmerProfile from "./pages/Farmers/FarmerProfile";
+import FarmerOrders from "./pages/Farmers/FarmerOrders";
+import FarmerNotifications from "./pages/Farmers/FarmerNotifications";
 
 function App() {
   return (
@@ -22,7 +25,10 @@ function App() {
       <Route path="/farmer-register" element={<FarmerRegister />} />
       <Route path="/consumer-register" element={<CustomerRegister />} />
       <Route path="/admin-dashboard" element={<AdminDashboard />} />
-      <Route path="/FarmerDashboard" element={<FarmerDashboard />} />
+      <Route path="/farmer-dashboard" element={<FarmerDashboard />} />
+      <Route path="/farmer-profile" element={<FarmerProfile />} />
+      <Route path="/farmer-notifications" element={<FarmerNotifications />} />
+      <Route path="/farmer-orders" element={<FarmerOrders />} />
       <Route path="/add-item" element={<AddNewItem />} />
       <Route path="/item/:id" element={<ItemDetails />} />
       <Route path="/customer-dashboard" element={<CustomerDashboard />} />

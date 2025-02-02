@@ -16,15 +16,15 @@ const Navbar = () => {
 
       {/* Profile, Orders, and Notifications */}
       <div className="navbar-right">
-        <button className="nav-item" onClick={() => navigate("/orders")}>
+        <button className="nav-item" onClick={() => navigate("/farmer-orders")}>
           <FaShoppingCart size={24} />
           <span>Orders</span>
         </button>
-        <button className="nav-item" onClick={() => navigate("/notifications")}>
+        <button className="nav-item" onClick={() => navigate("/farmer-notifications")}>
           <FaBell size={24} />
           <span>Notifications</span>
         </button>
-        <button className="nav-item" onClick={() => navigate("/profile")}>
+        <button className="nav-item" onClick={() => navigate("/farmer-profile")}>
           <FaUserCircle size={24} />
           <span>Profile</span>
         </button>
