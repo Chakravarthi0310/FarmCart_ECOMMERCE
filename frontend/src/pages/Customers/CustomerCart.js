@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CustomerCart.css"; // Import the CSS file for styling
+<<<<<<< HEAD
+
+=======
 import CustomerNavbar from "../../components/CustomerNavbar";
 const CustomerCart = () => {
   const navigate = useNavigate();
@@ -71,6 +74,8 @@ const CustomerCart = () => {
   };
 
   return (
+<<<<<<< HEAD
+=======
 
     <div className="Cart">
       <CustomerNavbar />
@@ -136,6 +141,8 @@ const CustomerCart = () => {
         </>
       )}
     </div>
+<<<<<<< HEAD
+=======
     </div>
   );
 };

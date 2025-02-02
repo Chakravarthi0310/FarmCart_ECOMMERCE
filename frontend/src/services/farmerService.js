@@ -1,3 +1,4 @@
+
 import axios from "axios";
 const API_BASE_URL = "http://localhost:5000/api/farmer";
 
@@ -16,11 +17,14 @@ export const addProduct = async (productData) => {
     formData.append("marketRate", productData.marketRate);
     formData.append("price", productData.price);
     formData.append("quantity", productData.quantity);
+
+    formData.append("expiryDate",productData.expiryDate);
     
     if (productData.image) {
       formData.append("image", productData.image);
     } else {
-      console.warn("⚠ Warning: No image selected.");
+
+      console.warn("⚠️ Warning: No image selected.");
     }
 
     // ✅ Debugging: Check if all fields are included
@@ -63,6 +67,7 @@ export const viewOwnProducts = async () => {
     throw error;
   }
 };
+
 
 export const viewOrders = async () => {
   try {
@@ -107,6 +112,7 @@ export const updateOrderStatus = async (orderId, status) => {
   }
 };
 
+
 export const deleteProduct = async (productId, token) => {
   try {
     const response = await axios.delete(
@@ -128,14 +134,16 @@ export const deleteProduct = async (productId, token) => {
   }
 };
 
+
+
 export const updateProfile = async (userData, token) => {
   try {
     const response = await axios.put(
-      `${API_BASE_URL}/profile`, // Adjust the API URL
+      "http://localhost:5000/api/farmer/profile", // Adjust the API URL
       userData,
       {
         headers: {
-          Authorization: `Bearer ${token}`, // ✅ Fixed template literal issue
+          Authorization: `Bearer ${token}`, // ✅ Send the token
           "Content-Type": "application/json",
         },
       }

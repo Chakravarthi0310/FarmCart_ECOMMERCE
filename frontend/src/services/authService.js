@@ -26,6 +26,9 @@ export const loginCustomer = async (loginData) => {
       },
     });
     return response.data; // You can save the token in localStorage or state
+=======
+    return response.data.token; // You can save the token in localStorage or state
+>>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
   } catch (error) {
     console.error("Error logging in customer", error);
     throw error;
@@ -57,6 +60,9 @@ export const loginFarmer = async (loginData) => {
       },
     });
     return response.data; // You can save the token in localStorage or state
+=======
+    return response.data.token; // You can save the token in localStorage or state
+>>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
   } catch (error) {
     console.error("Error logging in farmer", error);
     throw error;

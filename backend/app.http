@@ -14,16 +14,16 @@ POST http://localhost:5000/api/farmer/login
 Content-Type: application/json
 
 {
-  "phone": "1234567810",
+  "phone": "0000000000",
   "password": "password123"
 }
 
 
 ### store token manually
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWVlNWFkZDliY2JkMGE5YTJkODAyMyIsInBob25lIjoiMTIzNDU2NzgxMCIsImlhdCI6MTczODQ5MzgyOSwiZXhwIjoxNzM4NDk3NDI5fQ._CimgvC948vEZloXRq5aJ--qyaSAbuOUhdEMjRfx_qo
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWZiZDA0NGZiYWY0N2Q2N2QxZDNlOCIsInBob25lIjoiMDAwMDAwMDAwMCIsImlhdCI6MTczODUyMTg4MCwiZXhwIjoxNzM4NTI1NDgwfQ.m-0TrEbnY4MX50clffmxPzLcXm4p2c2Mo_g3lYy0kfE
 ### Add Product
 POST http://localhost:5000/api/farmer/products
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWVlNWFkZDliY2JkMGE5YTJkODAyMyIsInBob25lIjoiMTIzNDU2NzgxMCIsImlhdCI6MTczODQ5MzE0NCwiZXhwIjoxNzM4NDk2NzQ0fQ.DXAeZkS-phc0_EfseQMMOgkjNxzJk0nwJaxquLIbSBU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWZiZDA0NGZiYWY0N2Q2N2QxZDNlOCIsInBob25lIjoiMDAwMDAwMDAwMCIsImlhdCI6MTczODUyMTg4MCwiZXhwIjoxNzM4NTI1NDgwfQ.m-0TrEbnY4MX50clffmxPzLcXm4p2c2Mo_g3lYy0kfE
 Content-Type: application/json
 
 {

@@ -7,10 +7,10 @@ const AddNewItem = () => {
   const [newItem, setNewItem] = useState({
     name: "",
     category: "",
-    marketRate: "",  // Ensure correct field name
+    marketRate: "",
     price: "",
     quantity: "",
-    expiryDate: "",
+    expiryDate:"",
     image: null,
   });
 
@@ -30,21 +30,21 @@ const AddNewItem = () => {
   };
 
   const handleAddItem = async () => {
-    const { name, category, marketRate, price, quantity, expiryDate, image } = newItem;
-
-    if (!name || !category || !marketRate || !price || !quantity || !expiryDate || !image) {
+    const { name, category, marketRate, price, quantity,expiryDate, image } = newItem;
+  
+    if (!name || !category || !marketRate || !price || !quantity || !image) {
       alert("❌ Please fill all fields and upload an image!");
       return;
     }
-
+  
     try {
       console.log(newItem);
       await handleAddProduct(newItem);
       alert("✅ Product submitted successfully!");
-
+  
       // Reset form
-      setNewItem({ name: "", category: "", marketRate: "", price: "", quantity: "", expiryDate: "", image: null });
-      setPreviewImage(null);
+      // setNewItem({ name: "", category: "", marketPrice: "", price: "", quantity: "", expiryDate:"",image: null });
+      // setPreviewImage(null);
     } catch (error) {
       alert("❌ Error submitting product: " + error);
     }
@@ -97,6 +97,13 @@ const AddNewItem = () => {
           placeholder="Quantity (kg)"
           value={newItem.quantity}
           onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })}
+          className="input-field"
+        />
+        <input
+          type="date"
+          placeholder="Expiry Date"
+          value={newItem.expiryDate}
+          onChange={(e) => setNewItem({ ...newItem, expiryDate: e.target.value })}
           className="input-field"
         />
 

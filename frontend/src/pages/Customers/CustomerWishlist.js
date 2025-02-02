@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./CustomerWishlist.css"; // Import the CSS file
+<<<<<<< HEAD
+
+=======
 import CustomerNavbar from "../../components/CustomerNavbar";
 const CustomerWishlist = () => {
   // Dummy wishlist data
@@ -41,6 +44,8 @@ const CustomerWishlist = () => {
   };
 
   return (
+<<<<<<< HEAD
+=======
 
     <div className="Wishlist">
      <CustomerNavbar />

@@ -3,11 +3,13 @@ const {registerFarmer,loginFarmer,viewOwnProducts, addProduct, viewOrders, updat
 const {authMiddleware}=require("../middlewares/authMiddleware");
 const {updateProduct,deleteProduct}=require("../controllers/productController");
 const router = express.Router();
+const multer = require("multer");
+const upload = multer({ storage: multer.memoryStorage() }); // Store images in memory buffer
 
 router.post("/register",registerFarmer);
 router.post("/login",loginFarmer);
 router.get("/products",authMiddleware,viewOwnProducts);
-router.post("/products",authMiddleware,addProduct);
+router.post("/products", authMiddleware,upload.single("image"), addProduct);
 router.get("/orders",authMiddleware,viewOrders);
 router.put("/orders",authMiddleware,updateOrderStatus);
 router.put("/products/:productId",authMiddleware,updateProduct);

@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import FarmerLogin from "./pages/Farmers/FarmerLogin";
@@ -42,10 +43,6 @@ function App() {
       <Route path="/customer-dashboard" element={<ProtectedRoute role="customer"><CustomerDashboard/></ProtectedRoute>}></Route>
       <Route path="/farmer-register" element={<FarmerRegister />} />
       <Route path="/customer-register" element={<CustomerRegister />} />
-      <Route path="/farmer-profile" element={<FarmerProfile />} />
-      <Route path="/farmer-orders" element={<FarmerOrders />} />
-      <Route path="/farmer-notifications" element={<FarmerNotifications />} />
-      <Route path="/farmer-edit" element={<FarmerEdit />} />
       <Route path="/add-item" element={<AddNewItem />} />
       <Route path="/item/:id" element={<ItemDetails />} />
       {/* <Route path="/customer-dashboard" element={<CustomerDashboard />} /> */}
@@ -54,17 +51,20 @@ function App() {
        <Route path="/customer-cart" element={<CustomerCart />} />
        <Route path="/customer-pay" element={<CustomerPayment/>}/>
        <Route path="/customer-notification" element={<CustomerNotifications/>}/>
+
+
        <Route path="/customer-wishlist" element={<CustomerWishlist/>}/>
        <Route path="/customer-orders" element={<CustomerOrders/>}/>
+       <Route path="/farmer-orders" element={<FarmerOrders />} />
+       <Route path="/farmer-profile" element={<FarmerProfile/>}/>
+       <Route path="/farmer-notifications" element={<FarmerNotifications/>}/>
+       <Route path="/farmerProfile-edit" element={<FarmerEdit/>}/>
+
        <Route path="/customer-subscriptions" element={<CustomerSubscriptions/>}/>
        <Route path="/customer-message" element={<CustomerMessage />} />
        <Route path="/customer-wishlist" element={<CustomerWishlist/>}/>
        <Route path="/customer-orders" element={<CustomerOrders/>}/>
        <Route path="/product-details/:id" element={<ProductDetails/>}/>
-       <Route path="/farmer-profile" element={<FarmerProfile/>}/>
-       <Route path="/farmer-edit" element={<FarmerEdit/>}/>
-       <Route path="/farmer-orders" element={<FarmerOrders/>}/>
-       <Route path="/farmer-notification" element={<FarmerNotifications/>}/>
     </Routes>
   );
 }

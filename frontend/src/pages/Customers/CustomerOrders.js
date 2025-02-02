@@ -1,5 +1,8 @@
 import React from "react";
 import "./CustomerOrders.css";
+<<<<<<< HEAD
+
+=======
 import CustomerNavbar from "../../components/CustomerNavbar";
 const CustomerOrders = () => {
   const orders = [
@@ -33,6 +36,8 @@ const CustomerOrders = () => {
   ];
 
   return (
+<<<<<<< HEAD
+=======
     <div className="Orders">
       <CustomerNavbar />
     <div className="orders-container">
@@ -58,6 +63,8 @@ const CustomerOrders = () => {
         ))}
       </div>
     </div>
+<<<<<<< HEAD
+=======
     </div>
   );
 };

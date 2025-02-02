@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CustomerProfile.css"; // Import the CSS file for styling
+<<<<<<< HEAD
+=======
+
+>>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
 import "./../../components/CustomerNavbar"
 import CustomerNavbar from "./../../components/CustomerNavbar";
 
@@ -21,8 +25,15 @@ const CustomerProfile = () => {
   }
 
   return (
+<<<<<<< HEAD
     <>
     <CustomerNavbar/>
+=======
+
+    <div className="Profile">
+      <CustomerNavbar />
+
+>>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
     <div className="profile-container">
       <div className="profile-box">
         <h2 className="profile-title">Customer Profile</h2>
@@ -52,7 +63,10 @@ const CustomerProfile = () => {
         </button>
       </div>
     </div>
+<<<<<<< HEAD
     </>
+=======
+    </div>
 
   );
 };

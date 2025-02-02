@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+import React from "react";
+import CustomerNavbar from "../../components/CustomerNavbar";
+import "./CustomerDashboard.css";
+
+const CustomerDashboard = () => {
+  return (
+    <div className="dashboard">
+      <CustomerNavbar />
+      
+=======
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 // import CustomerNavbar from "../../components/CustomerNavbar";

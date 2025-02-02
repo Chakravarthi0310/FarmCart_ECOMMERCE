@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CustomerPayment.css"; // Import the CSS file for styling
+<<<<<<< HEAD
+
+=======
 import CustomerNavbar from "../../components/CustomerNavbar";
 const CustomerPayment = () => {
   // State to hold the selected payment method
@@ -17,6 +20,8 @@ const CustomerPayment = () => {
   };
 
   return (
+<<<<<<< HEAD
+=======
     <div className="Payment">
       <CustomerNavbar />
     <div className="payment-container">
