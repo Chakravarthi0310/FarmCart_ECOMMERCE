@@ -1,0 +1,53 @@
+.wishlist-container {
+    padding: 16px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+  }
+  
+  .wishlist-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+  
+  .wishlist-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .wishlist-item {
+    padding: 12px;
+    border-radius: 6px;
+    background: #f3f4f6;
+    margin-bottom: 10px;
+  }
+  
+  .wishlist-price {
+    font-size: 1rem;
+    color: #16a34a;
+    font-weight: bold;
+  }
+  
+  .wishlist-add-to-cart {
+    background: #16a34a;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+  
+  .wishlist-add-to-cart:hover {
+    background: #15803d;
+  }
+  
+  .no-items {
+    color: #6b7280;
+    text-align: center;
+  }
+  
