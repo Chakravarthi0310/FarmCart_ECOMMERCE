@@ -16,6 +16,7 @@ import CustomerOrders from "./pages/Customers/CustomerOrders";
 import CustomerWishlist from "./pages/Customers/CustomerWishlist";
 import CustomerNotifications from "./pages/Customers/CustomerNotifications";
 import CustomerSubscriptions from "./pages/Customers/CustomerSubscriptions"; 
+import CustomerMessage from "./pages/Customers/CustomerMessage";
 import Home from "./pages/Home";
 // import ProtectedRoute from "./pages/routes/ProtectedRoute";
 import FarmerProfile from "./pages/Farmers/FarmerProfile";
@@ -36,7 +37,11 @@ function App() {
       <Route path="/farmer-dashboard" element={<FarmerDashboard />} />
       <Route path="/farmer-register" element={<FarmerRegister />} />
       <Route path="/customer-register" element={<CustomerRegister />} />
-      
+      <Route path="/farmer-profile" element={<FarmerProfile />} />
+      <Route path="/farmer-orders" element={<FarmerOrders />} />
+      <Route path="/farmer-notifications" element={<FarmerNotifications />} />
+      <Route path="/farmer-edit" element={<FarmerEdit />} />
+
       <Route path="/add-item" element={<AddNewItem />} />
       <Route path="/item/:id" element={<ItemDetails />} />
       <Route path="/customer-dashboard" element={<CustomerDashboard />} />
@@ -45,7 +50,8 @@ function App() {
        <Route path="/customer-cart" element={<CustomerCart />} />
        <Route path="/customer-pay" element={<CustomerPayment/>}/>
        <Route path="/customer-notification" element={<CustomerNotifications/>}/>
-
+       <Route path="/customer-subscriptions" element={<CustomerSubscriptions/>}/>
+       <Route path="/customer-message" element={<CustomerMessage />} />
        <Route path="/customer-wishlist" element={<CustomerWishlist/>}/>
        <Route path="/customer-orders" element={<CustomerOrders/>}/>
     </Routes>

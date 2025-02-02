@@ -43,7 +43,7 @@ const CustomerWishlist = () => {
   return (
 
     <div className="Wishlist">
-      <CustomerNavbar />
+     <CustomerNavbar />
     <div className="wishlist-container">
       <h2 className="wishlist-title">Your Wishlist</h2>
       {wishlist.length > 0 ? (
