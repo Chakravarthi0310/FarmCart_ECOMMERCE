@@ -13,8 +13,12 @@ const FarmerLogin = () => {
     e.preventDefault();
 
     const success = await login( "farmer",{ phone, password },); // Passing phone instead of email
-
+    console.log(success);
     if (success) {
+      // Assuming 'login' returns a token on success
+      const token = success; // Adjust according to your login response
+      localStorage.setItem("authToken", token); // Store token in localStorage
+
       alert("✅ Farmer Login Successful!");
       navigate("/farmer-dashboard"); // Redirect to dashboard
     }
