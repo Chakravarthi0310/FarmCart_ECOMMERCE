@@ -1,7 +1,6 @@
 import {useState} from "react";
 import { registerCustomer,loginCustomer,registerFarmer,loginFarmer } from "../services/authService";
 
-
 const useAuth = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -15,12 +14,13 @@ const useAuth = () => {
       const response = role === "farmer" 
         ? await loginFarmer(credentials) 
         : await loginCustomer(credentials);
-      
-      setUser(response.data);
-      return response.data;
+
+      localStorage.setItem("userRole", role);
+      setUser(response); // Assuming the response contains the necessary user data
+      return response;
     } catch (err) {
-        console.log(err);
-      setError(err.response?.data?.message || "Login failed",err);
+      console.error("Login error:", err);
+      setError(err.response?.data?.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -35,10 +35,11 @@ const useAuth = () => {
         ? await registerFarmer(userData) 
         : await registerCustomer(userData);
 
-      setUser(response.data);
-      return response.data;
+      setUser(response); // Assuming the response contains the user data
+      return response;
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
+      console.error("Registration error:", err);
+      setError(err.response?.data?.message || "Registration failed. Please try again.");
     } finally {
       setLoading(false);
     }
