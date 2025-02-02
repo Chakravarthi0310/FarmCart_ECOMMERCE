@@ -5,7 +5,7 @@ const farmerSchema = new mongoose.Schema({
     password: { type: String, required: true },
     phone: { type: String, required: true },
     address: { type: String, required: true },
-    verificationStatus: { type: String, default: "pending" },
+    verificationStatus: { type: String, default: "Pending" },
     products: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product"

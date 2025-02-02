@@ -3,26 +3,31 @@ const API_BASE_URL = "http://localhost:5000/api/farmer";
 
 
 
-
 export const addProduct = async (productData) => {
   try {
     // Retrieve the auth token from localStorage
     const authToken = localStorage.getItem("authToken");
-
     if (!authToken) {
       throw new Error("No authentication token found. Please log in.");
     }
 
-    // Send POST request
-    const response = await axios.post(`${API_BASE_URL}/products`, productData, {
+    // Create FormData object for handling file uploads
+    const formData = new FormData();
+    for (const key in productData) {
+      formData.append(key, productData[key]);
+    }
+
+    // Send POST request with FormData
+    const response = await axios.post(`${API_BASE_URL}/products`, formData, {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${authToken}`,
       },
     });
 
     console.log("✅ Product added successfully:", response.data);
-    return response.data; // Return the response data (e.g., success message or product details)
+    return response.data; // Return the response data (success message or product details)
+
   } catch (error) {
     console.error("❌ Error adding product:", error.response ? error.response.data : error.message);
     throw error; // Re-throw the error to handle it in the UI
