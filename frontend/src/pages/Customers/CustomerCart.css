@@ -1,0 +1,147 @@
+/* CustomerCart.css */
+
+.cart-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cart-title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  .cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .cart-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+  }
+  
+  .item-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 20px;
+    border-radius: 8px;
+  }
+  
+  .item-details {
+    flex: 1;
+  }
+  
+  .item-details h3 {
+    margin: 0 0 5px;
+  }
+  
+  .item-details p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  
+  .quantity-controls button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s ease;
+  }
+  
+  .quantity-controls button:hover {
+    background: #005bb5;
+  }
+  
+  .remove-item {
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .remove-item:hover {
+    background: #c0392b;
+  }
+  
+  .cart-summary {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  /* Payment Form Styles */
+  .payment-form {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .payment-form h3 {
+    margin: 0;
+    font-size: 22px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .payment-option {
+    font-size: 18px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .payment-option input[type="radio"] {
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+  
+  .payment-button {
+    padding: 12px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .payment-button:hover {
+    background-color: #218838;
+  }
+  
