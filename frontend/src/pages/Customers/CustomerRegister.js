@@ -134,11 +134,11 @@ const CustomerRegister = () => {
       alert("❌ Passwords do not match!");
       return;
     }
-    const userData = { name,email, password, mobile,address };
+    const userData = { name,email, password, phone:mobile,address };
     try {
-      await register("customer", userData);
+      const response = await register("customer", userData);
       alert("✅ Customer Registered Successfully!");
-      navigate("/customer-dashboard"); // Redirect after successful registration
+      // navigate("/customer-dashboard"); // Redirect after successful registration
     } catch (err) {
       console.error("Registration failed", err);
     }

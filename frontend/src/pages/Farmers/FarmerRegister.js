@@ -10,7 +10,8 @@ const FarmerRegister = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   
-  const { register, loading, error } = useAuth(); // Use the register function from the authentication hook
+  
+  const { user, loading, error,login,register } = useAuth(); // Use the register function from the authentication hook
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -21,12 +22,13 @@ const FarmerRegister = () => {
       return;
     }
 
-    const userData = { name, password, mobile,address };
+    const userData = { name, password, phone:mobile,address };
 
     try {
-      await register("farmer", userData);
+      const response = await register("farmer", userData);
       alert("✅ Farmer Registered Successfully!");
-      navigate("/farmer-dashboard"); // Redirect after successful registration
+      console.log(response)
+      // navigate("/farmer-dashboard"); // Redirect after successful registration
     } catch (err) {
       console.error("Registration failed", err);
     }

@@ -17,6 +17,9 @@ const CustomerLogin = () => {
     const success = await login("customer",{ email, password },); // Passing phone instead of email
 
     if (success) {
+      const token = success; // Adjust according to your login response
+      localStorage.setItem("authToken", token); // Store token in localStorage
+
       alert("✅ Customer Login Successful!");
       navigate("/customer-dashboard"); // Redirect to dashboard
     }
