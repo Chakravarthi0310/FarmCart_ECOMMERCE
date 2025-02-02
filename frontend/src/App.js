@@ -21,7 +21,8 @@ function App() {
       <Route path="/admin-login" element={<AdminLogin />} />
       <Route path="/farmer-login" element={<FarmerLogin />} />
       <Route path="/customer-login" element={<CustomerLogin />} />
-      <Route path="/farmer-dahsboard" element={<ProtectedRoute role="farmer"><FarmerDashboard/></ProtectedRoute>}></Route>
+      <Route path="/farmer-dashboard" element={<FarmerDashboard/>} />
+      {/* <Route path="/farmer-dahsboard" element={<ProtectedRoute role="farmer"><FarmerDashboard/></ProtectedRoute>}></Route> */}
       <Route path="/customer-dashboard" element={<ProtectedRoute role="customer"><CustomerDashboard/></ProtectedRoute>}></Route>
       <Route path="/farmer-register" element={<FarmerRegister />} />
       <Route path="/customer-register" element={<CustomerRegister />} />

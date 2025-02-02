@@ -10,11 +10,19 @@ const orderRoutes = require("./routes/orderRoutes");
 const mapApiRoutes = require("./routes/map_routes");
 connectDB();
 
-app.use(cors({
-    origin: "http://localhost:3001",  // Allow requests from frontend
-    methods: "GET,POST,PUT,DELETE",
-    credentials: true
-}));
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", req.headers.origin || "*"); // Allow any frontend origin
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.header("Access-Control-Allow-Credentials", "true");
+
+    if (req.method === "OPTIONS") {
+        return res.sendStatus(200); // Handle preflight requests
+    }
+
+    next();
+});
+
 
  
 app.use(express.json());
