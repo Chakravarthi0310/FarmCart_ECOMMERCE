@@ -1,81 +1,117 @@
 import { useState } from "react";
-import { 
-  viewOwnProducts, 
-  addProduct, 
-  viewOrders, 
-  updateOrderStatu
+import {
+  addProduct,
+  viewOwnProducts,
+  viewOrders,
+  updateOrderStatus,
+  deleteProduct,
+  updateProfile,
 } from "../services/farmerService";
 
-const useFarmerServices = (token) => {
-  const [products, setProducts] = useState([]);
-  const [orders, setOrders] = useState([]);
+const useFarmer = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Fetch farmer's products
-  const fetchFarmerProducts = async () => {
+  // Add Product
+  const handleAddProduct = async (productData) => {
+    const token = localStorage.getItem("token");
+
+    setLoading(true);
+    setError(null);
+  
+    try {
+      const formData = productData;
+      console.log("Original item data");
+      console.log(productData)
+  
+      const response = await addProduct(formData);
+      return response;
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to add product.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
+  // View Own Products
+  const handleViewOwnProducts = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await viewOwnProducts(token);
-      setProducts(response.data);
+      return await viewOwnProducts();
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to fetch products");
+      setError(err.response?.data?.message || "Failed to fetch products.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Add a new product
-  const createProduct = async (data) => {
+  // View Orders
+  const handleViewOrders = async () => {
     setLoading(true);
     setError(null);
     try {
-      await addProduct(data, token);
+      return await viewOrders();
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to add product");
+      setError(err.response?.data?.message || "Failed to fetch orders.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Fetch farmer's orders
-  const fetchOrders = async () => {
+  // Update Order Status
+  const handleUpdateOrderStatus = async (orderId, status) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await viewOrders(token);
-      setOrders(response.data);
+      return await updateOrderStatus(orderId, status);
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to fetch orders");
+      setError(err.response?.data?.message || "Failed to update order status.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Update order status
-  const updateOrder = async (orderId, status) => {
+  // Delete Product
+  const handleDeleteProduct = async (productId, token) => {
     setLoading(true);
     setError(null);
     try {
-      await updateOrderStatus(orderId, status, token);
+      return await deleteProduct(productId, token);
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to update order status");
+      setError(err.response?.data?.message || "Failed to delete product.");
     } finally {
       setLoading(false);
     }
   };
 
-  return { 
-    products, 
-    orders, 
-    loading, 
-    error, 
-    fetchFarmerProducts, 
-    createProduct, 
-    fetchOrders, 
-    updateOrder 
+  // Update Profile
+  const handleUpdateProfile = async (userData) => {
+    const token = localStorage.getItem("token");
+    console.log(token);
+    setLoading(true);
+    setError(null);
+    try {
+      return await updateProfile(userData, token);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to update profile.",err);
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    loading,
+    error,
+    handleAddProduct,
+    handleViewOwnProducts,
+    handleViewOrders,
+    handleUpdateOrderStatus,
+    handleDeleteProduct,
+    handleUpdateProfile,
   };
 };
 
-export default useFarmerServices;
+export default useFarmer;

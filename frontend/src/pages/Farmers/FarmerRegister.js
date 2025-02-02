@@ -26,6 +26,16 @@ const FarmerRegister = () => {
 
     try {
       const response = await register("farmer", userData);
+      const success = await login( "farmer",{ phone:mobile, password },); // Passing phone instead of email
+      console.log(success);
+      if (success) {
+        // Assuming 'login' returns a token on success
+        const token = success; // Adjust according to your login response
+  
+      }
+
+  
+  
       alert("✅ Farmer Registered Successfully!");
       console.log(response)
       navigate("/farmer-dashboard"); // Redirect after successful registration

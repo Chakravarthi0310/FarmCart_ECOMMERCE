@@ -38,7 +38,7 @@ const FarmerProfile = () => {
               <strong>Name:</strong> {farmerData.name}
             </p>
             <p>
-              <strong>Mobile:</strong> {farmerData.mobile}
+              <strong>Mobile:</strong> {farmerData.phone}
             </p>
             <p>
               <strong>Address:</strong> {farmerData.address}
@@ -46,7 +46,7 @@ const FarmerProfile = () => {
           </div>
           <button
             className="edit-profile-button"
-           onClick={() => navigate("/farmer-edit")}
+            onClick={() => navigate("/farmer-edit")}
           >
             Edit Profile
           </button>
