@@ -1,11 +1,13 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4b43306ea086bae47d296e5e22dd675bb7b6b2de
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import AdminLogin from "./pages/Admin/AdminLogin";
 import FarmerLogin from "./pages/Farmers/FarmerLogin";
 import CustomerLogin from "./pages/Customers/CustomerLogin";
 import FarmerRegister from "./pages/Farmers/FarmerRegister";
 import CustomerRegister from "./pages/Customers/CustomerRegister";
-import AdminDashboard from "./pages/Admin/AdminDashboard";
 import FarmerDashboard from "./pages/Farmers/FarmerDashboard";
 import AddNewItem from "./pages/Farmers/AddNewItem";
 import ItemDetails from "./pages/Farmers/ItemDetails";
@@ -15,6 +17,7 @@ import CustomerEdit from "./pages/Customers/CustomerEdit";
 import CustomerCart from "./pages/Customers/CustomerCart"; 
 import CustomerPayment from "./pages/Customers/CustomerPayment"; 
 import CustomerOrders from "./pages/Customers/CustomerOrders";
+import CustomerWishlist from "./pages/Customers/CustomerWishlist";
 import CustomerNotifications from "./pages/Customers/CustomerNotifications";
 import Home from "./pages/Home";
 // import ProtectedRoute from "./pages/routes/ProtectedRoute";
@@ -28,7 +31,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/admin-login" element={<AdminLogin />} />
+      
       <Route path="/farmer-login" element={<FarmerLogin />} />
       <Route path="/customer-login" element={<CustomerLogin />} />
       {/* <Route path="/farmer-dashboard" element={<ProtectedRoute role="farmer"><FarmerDashboard/></ProtectedRoute>}></Route>
@@ -36,7 +39,7 @@ function App() {
       <Route path="/farmer-dashboard" element={<FarmerDashboard />} />
       <Route path="/farmer-register" element={<FarmerRegister />} />
       <Route path="/customer-register" element={<CustomerRegister />} />
-      <Route path="/admin-dashboard" element={<AdminDashboard />} />
+      
       <Route path="/add-item" element={<AddNewItem />} />
       <Route path="/item/:id" element={<ItemDetails />} />
       <Route path="/customer-dashboard" element={<CustomerDashboard />} />
@@ -45,6 +48,8 @@ function App() {
        <Route path="/customer-cart" element={<CustomerCart />} />
        <Route path="/customer-pay" element={<CustomerPayment/>}/>
        <Route path="/customer-notification" element={<CustomerNotifications/>}/>
+
+       <Route path="/customer-wishlist" element={<CustomerWishlist/>}/>
        <Route path="/customer-orders" element={<CustomerOrders/>}/>
        <Route path="/farmer-orders" element={<FarmerOrders />} />
        <Route path="/farmer-profile" element={<FarmerProfile/>}/>
