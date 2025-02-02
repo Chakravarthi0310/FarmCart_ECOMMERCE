@@ -4,6 +4,10 @@ const Farmer = require("../models/Farmer");
 const Product = require("../models/Product");
 const Order = require("../models/Order");
 const bcrypt = require("bcrypt");
+const multer = require("multer");
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 dotenv.config();
 
@@ -111,27 +115,43 @@ exports.viewOwnProducts = async(req, res) => {
 //Add Product
 exports.addProduct = async (req, res) => {
     try {
-      const farmerId = req.customer.id;
-      const { name, category, marketRate, price, quantity, expiryDate } = req.body; // Include expiryDate
-  
-      const newProduct = new Product({
-        name,
-        category,
-        marketRate,
-        price,
-        quantity,
-        expiryDate, // Now correctly assigned
-        farmer: farmerId,
-      });
-  
-      await newProduct.save();
-      res.status(201).json({ message: "Product added successfully", product: newProduct });
-  
+        const farmerId = req.customer.id;
+        const { name, category, marketRate, price, quantity, expiryDate } = req.body;
+
+        // Validate required fields
+        if (!name || !category || !marketRate || !price || !quantity || !expiryDate) {
+            return res.status(400).json({ message: "All fields are required." });
+        }
+
+        const newProduct = new Product({
+            name,
+            category,
+            marketRate,
+            price,
+            quantity,
+            expiryDate,
+            farmer: farmerId,
+            status: "Pending",
+            ratings: 0,
+            reviews: []
+        });
+
+        // Handle image upload (if provided)
+        if (req.file) {
+            newProduct.image = {
+                data: req.file.buffer,
+                contentType: req.file.mimetype
+            };
+        }
+
+        await newProduct.save();
+        res.status(201).json({ message: "Product added successfully", product: newProduct });
+
     } catch (e) {
-      res.status(500).json({ message: "Error adding product", error: e.message });
+        res.status(500).json({ message: "Error adding product", error: e.message });
     }
-  };
-  
+};
+
 
 //View Orders
 exports.viewOrders = async(req, res) => {

@@ -31,6 +31,7 @@ exports.registerCustomer = async (req,res)=>{
               address: newCustomer.address,
           },
       });
+
     }catch(e){
         res.status(500).json({message:"Error registering customer", error:e.message});
         

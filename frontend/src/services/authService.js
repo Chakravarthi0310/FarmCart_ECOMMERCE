@@ -25,7 +25,7 @@ export const loginCustomer = async (loginData) => {
         "Content-Type": "application/json",
       },
     });
-    return response.data; // You can save the token in localStorage or state
+    return response.data.token; // You can save the token in localStorage or state
   } catch (error) {
     console.error("Error logging in customer", error);
     throw error;
@@ -56,7 +56,7 @@ export const loginFarmer = async (loginData) => {
         "Content-Type": "application/json",
       },
     });
-    return response.data; // You can save the token in localStorage or state
+    return response.data.token; // You can save the token in localStorage or state
   } catch (error) {
     console.error("Error logging in farmer", error);
     throw error;

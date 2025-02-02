@@ -5,7 +5,7 @@
   padding: 40px 20px;
   min-height: 80vh;
   
-  background-image: url("/src/assets/farm-bg.jpg"); 
+  background-image: url("C:\Users\haris\FarmCart_ECOMMERCE\frontend\src\assets\farm-bg.jpg"); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat; 
@@ -55,4 +55,8 @@
 
 .edit-profile-button:hover {
   background-color: #005bb5;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
