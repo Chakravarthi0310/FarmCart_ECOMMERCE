@@ -7,6 +7,8 @@ const productSchema = new mongoose.Schema({
     marketRate: { type: Number, require: true },
     price: { type: Number, require: true },
     quantity: { type: Number, require: true },
+    expiryDate :{type:Date,required:true},
+    
     farmer: { type: mongoose.Schema.Types.ObjectId, ref: "Farmer", required: true },
     status: { type: String, default: "Pending" },
 }, { timestamps: true });

@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "http://localhost:5000/api/farmer";
 
 
 
@@ -14,7 +14,7 @@ export const addProduct = async (productData) => {
     }
 
     // Send POST request
-    const response = await axios.post(`${API_BASE_URL}/farmer/products`, productData, {
+    const response = await axios.post(`${API_BASE_URL}/products`, productData, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${authToken}`,
@@ -91,3 +91,48 @@ export const updateOrderStatus = async (orderId, status) => {
   }
 };
 
+
+export const deleteProduct = async (productId, token) => {
+  try {
+    const response = await axios.delete(
+      `${API_BASE_URL}/products/${productId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    alert("Product deleted successfully!");
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting product:", error.response?.data || error.message);
+    alert(error.response?.data?.message || "Failed to delete product.");
+  }
+};
+
+
+
+const updateProfile = async (userData, token) => {
+  try {
+    const response = await axios.put(
+      "http://localhost:5000/api/farmer/profile", // Adjust the API URL
+      userData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // ✅ Send the token
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log(response.data);
+    alert("Profile updated successfully!");
+    return response.data;
+  } catch (error) {
+    console.error("Error updating profile:", error.response?.data || error.message);
+    alert(error.response?.data?.message || "Failed to update profile.");
+  }
+};
