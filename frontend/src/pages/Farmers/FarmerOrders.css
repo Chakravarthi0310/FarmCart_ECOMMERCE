@@ -1,0 +1,20 @@
+.orders-container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .orders-container table {
+    width: 60%;
+    margin: auto;
+    border-collapse: collapse;
+  }
+  
+  .orders-container th, .orders-container td {
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+  
+  .orders-container th {
+    background-color: #f4f4f4;
+  }
+  
