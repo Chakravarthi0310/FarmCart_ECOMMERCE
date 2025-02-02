@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import FarmerLogin from "./pages/Farmers/FarmerLogin";
@@ -16,9 +15,17 @@ import CustomerPayment from "./pages/Customers/CustomerPayment";
 import CustomerOrders from "./pages/Customers/CustomerOrders";
 import CustomerWishlist from "./pages/Customers/CustomerWishlist";
 import CustomerNotifications from "./pages/Customers/CustomerNotifications";
+<<<<<<< HEAD
 import ProductDetails from "./pages/Customers/ProductDetails";
+=======
+import CustomerSubscriptions from "./pages/Customers/CustomerSubscriptions"; 
+>>>>>>> a7df0998bbf73af63eac7cf64b5a67e516e89dfd
 import Home from "./pages/Home";
-import ProtectedRoute from "./pages/routes/ProtectedRoute";
+// import ProtectedRoute from "./pages/routes/ProtectedRoute";
+import FarmerProfile from "./pages/Farmers/FarmerProfile";
+import FarmerOrders from "./pages/Farmers/FarmerOrders";
+import FarmerNotifications from "./pages/Farmers/FarmerNotifications";
+import FarmerEdit from "./pages/Farmers/FarmerEdit";
 
 
 function App() {
@@ -28,8 +35,9 @@ function App() {
       
       <Route path="/farmer-login" element={<FarmerLogin />} />
       <Route path="/customer-login" element={<CustomerLogin />} />
-      <Route path="/farmer-dashboard" element={<ProtectedRoute role="farmer"><FarmerDashboard/></ProtectedRoute>}></Route>
-      <Route path="/customer-dashboard" element={<ProtectedRoute role="customer"><CustomerDashboard/></ProtectedRoute>}></Route>
+      {/* <Route path="/farmer-dashboard" element={<ProtectedRoute role="farmer"><FarmerDashboard/></ProtectedRoute>}></Route>
+      <Route path="/customer-dashboard" element={<ProtectedRoute role="customer"><CustomerDashboard/></ProtectedRoute>}></Route> */}
+      <Route path="/farmer-dashboard" element={<FarmerDashboard />} />
       <Route path="/farmer-register" element={<FarmerRegister />} />
       <Route path="/customer-register" element={<CustomerRegister />} />
       
@@ -41,6 +49,7 @@ function App() {
        <Route path="/customer-cart" element={<CustomerCart />} />
        <Route path="/customer-pay" element={<CustomerPayment/>}/>
        <Route path="/customer-notification" element={<CustomerNotifications/>}/>
+
        <Route path="/customer-wishlist" element={<CustomerWishlist/>}/>
        <Route path="/customer-orders" element={<CustomerOrders/>}/>
        <Route path="/product-details/:id" element={<ProductDetails/>}/>
@@ -49,4 +58,3 @@ function App() {
 }
 
 export default App;
-

@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CustomerNavbar from "../../components/CustomerNavbar";
-import "./CustomerEdit.css"; // Import CSS for styling
+import "./FarmerEdit.css"; // Import CSS for styling
+import Navbar from "./FarmerNavbar";
 
-const CustomerEdit = () => {
+const FarmerEdit = () => {
   // Prepopulate with existing data; in a real app, this might come from props, context, or an API
   const [name, setName] = useState("John Doe");
-  const[email,setEmail] = useState("john@example.com")
+//   const[email,setEmail] = useState("john@example.com")
   const [mobile, setMobile] = useState("123-456-7890");
   const [address, setAddress] = useState("123 Main Street, City, Country");
-  const [bankDetails, setBankDetails] = useState("Bank: XYZ | Account No: 1234567890");
+//   const [bankDetails, setBankDetails] = useState("Bank: XYZ | Account No: 1234567890");
 
   const navigate = useNavigate();
 
@@ -18,14 +18,13 @@ const CustomerEdit = () => {
     // Here, you would normally update the customer details via an API call
     alert("Profile updated successfully!");
     // After saving, navigate back to the customer profile page
-    navigate("/customer-Dashboard");
+    navigate("/farmer-Dashboard");
   };
 
   return (
-
-    <div className="Edit">
-      <CustomerNavbar />
-
+    <>
+      <Navbar/>
+    
     <div className="edit-container">
       <div className="edit-box">
         <h2 className="edit-title">Edit Profile</h2>
@@ -38,14 +37,14 @@ const CustomerEdit = () => {
             className="edit-input"
             required
           />
-                    <input
+                    {/* <input
             type="text"
             placeholder="Full Name"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="edit-input"
             required
-          />
+          /> */}
 
           <input
             type="text"
@@ -63,22 +62,22 @@ const CustomerEdit = () => {
             className="edit-input"
             required
           />
-          <input
+          {/* <input
             type="text"
             placeholder="Bank Account Details"
             value={bankDetails}
             onChange={(e) => setBankDetails(e.target.value)}
             className="edit-input"
             required
-          />
+          /> */}
           <button type="submit" className="save-button">
             Save Changes
           </button>
         </form>
       </div>
     </div>
-    </div>
+    </>
   );
 };
 
-export default CustomerEdit;
+export default FarmerEdit;

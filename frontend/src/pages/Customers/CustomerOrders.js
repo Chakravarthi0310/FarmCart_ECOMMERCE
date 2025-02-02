@@ -1,6 +1,6 @@
 import React from "react";
 import "./CustomerOrders.css";
-
+import CustomerNavbar from "../../components/CustomerNavbar";
 const CustomerOrders = () => {
   const orders = [
     {
@@ -33,6 +33,8 @@ const CustomerOrders = () => {
   ];
 
   return (
+    <div className="Orders">
+      <CustomerNavbar />
     <div className="orders-container">
       <h2 className="orders-title">My Orders</h2>
       <div className="orders-list">
@@ -55,6 +57,7 @@ const CustomerOrders = () => {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 };

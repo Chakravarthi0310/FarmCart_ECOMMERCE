@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CustomerPayment.css"; // Import the CSS file for styling
-
+import CustomerNavbar from "../../components/CustomerNavbar";
 const CustomerPayment = () => {
   // State to hold the selected payment method
   const [paymentMethod, setPaymentMethod] = useState("COD");
@@ -17,6 +17,8 @@ const CustomerPayment = () => {
   };
 
   return (
+    <div className="Payment">
+      <CustomerNavbar />
     <div className="payment-container">
       <div className="payment-box">
         <h2 className="payment-title">Choose Payment Method</h2>
@@ -48,6 +50,7 @@ const CustomerPayment = () => {
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 };

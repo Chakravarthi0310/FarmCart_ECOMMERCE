@@ -2,6 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./CustomerProfile.css"; // Import the CSS file for styling
 
+import "./../../components/CustomerNavbar"
+import CustomerNavbar from "./../../components/CustomerNavbar";
+
 const CustomerProfile = () => {
   const navigate = useNavigate();
 
@@ -15,6 +18,10 @@ const CustomerProfile = () => {
   };
 
   return (
+
+    <div className="Profile">
+      <CustomerNavbar />
+
     <div className="profile-container">
       <div className="profile-box">
         <h2 className="profile-title">Customer Profile</h2>
@@ -44,6 +51,8 @@ const CustomerProfile = () => {
         </button>
       </div>
     </div>
+    </div>
+
   );
 };
 

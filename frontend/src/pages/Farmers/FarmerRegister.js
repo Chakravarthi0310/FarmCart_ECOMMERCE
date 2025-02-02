@@ -34,7 +34,7 @@ const FarmerRegister = () => {
     }
   };
 
-  return (
+  return (  
     <div className="register-container">
       <div className="register-box">
         <h2 className="register-title">🚜 Farmer Registration</h2>
