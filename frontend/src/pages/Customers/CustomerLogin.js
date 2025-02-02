@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth"; // Importing custom authentication hook
-<<<<<<< HEAD
 
-=======
-//import CustomerNavbar from "../../components/CustomerNavbar";
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
-import "./CustomerLogin.css"; // Import CSS
-
-const CustomerLogin = () => {
+const CustomerLogin  = ()=>
+{
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -30,23 +25,20 @@ const CustomerLogin = () => {
   };
 
   return (
-<<<<<<< HEAD
-=======
-
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
     <div className="login-container">
       <div className="login-box">
         <h2 className="login-title">🚜 Customer Login</h2>
         <form onSubmit={handleLogin} className="login-form">
         <input
-  type="email"
-  placeholder="Enter Email"
-  value={email}
-  onChange={(e) => setemail(e.target.value)}
-  className="login-input"
-  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-  required
-/>          <input
+            type="email"
+            placeholder="Enter Email"
+            value={email}
+            onChange={(e) => setemail(e.target.value)}
+            className="login-input"
+            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+            required
+          />          
+          <input
             type="password"
             placeholder="Enter Password"
             value={password}
@@ -75,11 +67,7 @@ const CustomerLogin = () => {
           </p>
       </div>
     </div>
-<<<<<<< HEAD
-=======
-  
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
-  );
-};
+  )
+}
 
 export default CustomerLogin;

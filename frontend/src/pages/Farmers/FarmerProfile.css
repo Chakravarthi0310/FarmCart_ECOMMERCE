@@ -5,12 +5,9 @@
   padding: 40px 20px;
   min-height: 80vh;
   
-<<<<<<< HEAD
-  background: url("../../assets/farm-bg.jpg") no-repeat center center/cover;
-=======
+
   background-image: url("../../assets/farm-bg.jpg"); /* Replace with your actual image URL */
 
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat; 
@@ -60,8 +57,5 @@
 
 .edit-profile-button:hover {
   background-color: #005bb5;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
+

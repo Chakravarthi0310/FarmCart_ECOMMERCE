@@ -1,10 +1,7 @@
 import React from "react";
 import "./CustomerOrders.css";
-<<<<<<< HEAD
 
-=======
 import CustomerNavbar from "../../components/CustomerNavbar";
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
 const CustomerOrders = () => {
   const orders = [
     {
@@ -37,11 +34,10 @@ const CustomerOrders = () => {
   ];
 
   return (
-<<<<<<< HEAD
-=======
+
+
     <div className="Orders">
       <CustomerNavbar />
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
     <div className="orders-container">
       <h2 className="orders-title">My Orders</h2>
       <div className="orders-list">
@@ -65,10 +61,8 @@ const CustomerOrders = () => {
         ))}
       </div>
     </div>
-<<<<<<< HEAD
-=======
+
     </div>
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
   );
 };
 

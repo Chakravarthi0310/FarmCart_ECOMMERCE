@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-=======
+
 import CustomerNavbar from "../../components/CustomerNavbar";
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
 import "./CustomerEdit.css"; // Import CSS for styling
 
 const CustomerEdit = () => {
@@ -25,13 +23,11 @@ const CustomerEdit = () => {
   };
 
   return (
-<<<<<<< HEAD
-=======
 
     <div className="Edit">
       <CustomerNavbar />
 
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
+
     <div className="edit-container">
       <div className="edit-box">
         <h2 className="edit-title">Edit Profile</h2>
@@ -83,10 +79,7 @@ const CustomerEdit = () => {
         </form>
       </div>
     </div>
-<<<<<<< HEAD
-=======
     </div>
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
   );
 };
 

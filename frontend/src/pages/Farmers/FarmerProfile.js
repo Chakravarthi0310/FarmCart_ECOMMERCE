@@ -46,11 +46,7 @@ const FarmerProfile = () => {
           </div>
           <button
             className="edit-profile-button"
-<<<<<<< HEAD
-            onClick={() => navigate("/farmerProfile-edit")}
-=======
-            onClick={() => navigate("/farmer-edit")}
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
+           onClick={() => navigate("/farmer-edit")}
           >
             Edit Profile
           </button>

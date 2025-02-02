@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./CustomerWishlist.css"; // Import the CSS file
-<<<<<<< HEAD
 
-=======
 import CustomerNavbar from "../../components/CustomerNavbar";
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
 const CustomerWishlist = () => {
   // Dummy wishlist data
   const [wishlist, setWishlist] = useState([]);
@@ -45,12 +42,10 @@ const CustomerWishlist = () => {
   };
 
   return (
-<<<<<<< HEAD
-=======
+
 
     <div className="Wishlist">
      <CustomerNavbar />
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
     <div className="wishlist-container">
       <h2 className="wishlist-title">Your Wishlist</h2>
       {wishlist.length > 0 ? (
@@ -74,10 +69,7 @@ const CustomerWishlist = () => {
         <p className="no-items">No items in your wishlist.</p>
       )}
     </div>
-<<<<<<< HEAD
-=======
     </div>
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
   );
 };
 

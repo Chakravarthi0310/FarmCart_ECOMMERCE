@@ -1,16 +1,7 @@
 /* CustomerEdit.css */
 
 .edit-container {
-<<<<<<< HEAD
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px 20px;
-    min-height: 80vh;
-    background-color: #f5f5f5;
 
-    background: url("../../assets/farm-bg.jpg") no-repeat center center/cover;
-=======
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,7 +10,6 @@
 
 
     background-image: url("../../assets/farm-bg.jpg"); /* Replace with your actual image URL */
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
