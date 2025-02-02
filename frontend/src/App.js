@@ -21,6 +21,7 @@ import Home from "./pages/Home";
 import FarmerProfile from "./pages/Farmers/FarmerProfile";
 import FarmerOrders from "./pages/Farmers/FarmerOrders";
 import FarmerNotifications from "./pages/Farmers/FarmerNotifications";
+import FarmerEdit from "./pages/Farmers/FarmerEdit";
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
        <Route path="/farmer-orders" element={<FarmerOrders />} />
        <Route path="/farmer-profile" element={<FarmerProfile/>}/>
        <Route path="/farmer-notifications" element={<FarmerNotifications/>}/>
+       <Route path="/farmerProfile-edit" element={<FarmerEdit/>}/>
     </Routes>
   );
 }

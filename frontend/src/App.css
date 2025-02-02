@@ -2,6 +2,14 @@
   text-align: center;
 }
 
+body {
+  background-image: url("your-image-url.jpg"); /* Replace with your actual image URL */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Fixes the background in place */
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

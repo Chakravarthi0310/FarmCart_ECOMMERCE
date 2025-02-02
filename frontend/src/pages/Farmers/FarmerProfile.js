@@ -1,25 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./FarmerProfile.css"; // Import the CSS file for styling
 import Navbar from "./FarmerNavbar";
-import "./FarmerProfile.css";
 
 const FarmerProfile = () => {
-  const user = {
-    name: "John Doe",
-    email: "johndoe@example.com",
-    phone: "+91 98765 43210",
-    location: "Andhra Pradesh, India",
-  };
+  const navigate = useNavigate();
+  const [farmerData, setFarmerData] = useState(null); // State to store the fetched farmer data
+
+  useEffect(() => {
+    // Fetch farmer data from localStorage
+    const storedData = JSON.parse(localStorage.getItem("farmerData"));
+
+    if (storedData) {
+      setFarmerData(storedData); // Set the data to state if found in localStorage
+    } else {
+      // Use dummy data if no stored data is found
+      setFarmerData({
+        name: "John Doe",
+        mobile: "9876543210",
+        address: "123 Green Farm, Village Road, Country",
+      });
+    }
+  }, []);
+
+  if (!farmerData) {
+    return <p>Loading...</p>; // Show loading while the data is being fetched
+  }
 
   return (
     <>
       <Navbar />
       <div className="profile-container">
-        <h2>👤 Profile</h2>
-        <div className="profile-card">
-          <p><strong>Name:</strong> {user.name}</p>
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Phone:</strong> {user.phone}</p>
-          <p><strong>Location:</strong> {user.location}</p>
+        <div className="profile-box">
+          <h2 className="profile-title">Farmer Profile</h2>
+          <div className="profile-details">
+            <p>
+              <strong>Name:</strong> {farmerData.name}
+            </p>
+            <p>
+              <strong>Mobile:</strong> {farmerData.mobile}
+            </p>
+            <p>
+              <strong>Address:</strong> {farmerData.address}
+            </p>
+          </div>
+          <button
+            className="edit-profile-button"
+            onClick={() => navigate("/farmerProfile-edit")}
+          >
+            Edit Profile
+          </button>
         </div>
       </div>
     </>
