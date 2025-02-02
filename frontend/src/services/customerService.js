@@ -12,3 +12,26 @@ export const placeOrder = async (orderData, token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+
+const updateProfile = async (userData, token) => {
+  try {
+    const response = await axios.put(
+      "http://localhost:5000/api/customer/profile", // Adjust the API URL
+      userData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // ✅ Send the token
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log(response.data);
+    alert("Profile updated successfully!");
+    return response.data;
+  } catch (error) {
+    console.error("Error updating profile:", error.response?.data || error.message);
+    alert(error.response?.data?.message || "Failed to update profile.");
+  }
+};

@@ -3,9 +3,9 @@ POST http://localhost:5000/api/farmer/register
 Content-Type: application/json
 
 {
-    "name": "Rama Chandrae",
+    "name": "Jagadeesh",
     "password": "password123",
-    "phone": "1234567810",
+    "phone": "0000000000",
     "address": "123 Farm Lane"
 }
 
@@ -18,25 +18,47 @@ Content-Type: application/json
   "password": "password123"
 }
 
-### store token manually
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWExZmQ0MjVkMDY0ODgzY2FmNDNkYiIsImVtYWlsIjoiam9obkBleGFtcGxlLmNvbSIsImlhdCI6MTczODIzNTcxMiwiZXhwIjoxNzM4MjM5MzEyfQ.h7ITjFrPVoo21arTB0oD9UG9oDDeBvoFbCG3zTh_N2Y
 
+### store token manually
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWVlNWFkZDliY2JkMGE5YTJkODAyMyIsInBob25lIjoiMTIzNDU2NzgxMCIsImlhdCI6MTczODQ5MzgyOSwiZXhwIjoxNzM4NDk3NDI5fQ._CimgvC948vEZloXRq5aJ--qyaSAbuOUhdEMjRfx_qo
 ### Add Product
 POST http://localhost:5000/api/farmer/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWVlNWFkZDliY2JkMGE5YTJkODAyMyIsInBob25lIjoiMTIzNDU2NzgxMCIsImlhdCI6MTczODQ5MzE0NCwiZXhwIjoxNzM4NDk2NzQ0fQ.DXAeZkS-phc0_EfseQMMOgkjNxzJk0nwJaxquLIbSBU
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OTkyNTJjMzk3ZWUyZjQxNTAzZGY5MCIsImVtYWlsIjoiam9obkBleGFtcGxlLmNvbSIsImlhdCI6MTczODIzNDczMiwiZXhwIjoxNzM4MjM4MzMyfQ.iciPRFDiHZ0NFV4wAfDGpq0XE9ECDHkrsdSqkJF_BYM
 
 {
-    "name":"Organic Tomatoes",
-    "price":10.99,
-    "quantity":50
+  "name": "Organic Mangoes",
+  "category":"Fruits",
+  "marketRate": 20,
+  "price": 15.99,
+  "quantity": 100,
+  "expiryDate": "2025-06-15"
 }
+
+
+### Update Product
+PUT http://localhost:5000/api/farmer/products/679f4e832ef9df7e4a59b1a9
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWVlNWFkZDliY2JkMGE5YTJkODAyMyIsInBob25lIjoiMTIzNDU2NzgxMCIsImlhdCI6MTczODQ5MzA2NCwiZXhwIjoxNzM4NDk2NjY0fQ.nHS0nbua7SBnENz0hXa1hVH9Z1WkgeeGGW2EdoWyuwA
+Content-Type: application/json
+
+{
+  "name": "Organic Tomatoes",
+  "price": 15.99,
+  "quantity": 100,
+  "expiryDate": "2025-06-15"
+}
+
+### Delete Product
+DELETE http://localhost:5000/api/farmer/products/679f4e832ef9df7e4a59b1a9
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWVlNWFkZDliY2JkMGE5YTJkODAyMyIsInBob25lIjoiMTIzNDU2NzgxMCIsImlhdCI6MTczODQ5MzA2NCwiZXhwIjoxNzM4NDk2NjY0fQ.nHS0nbua7SBnENz0hXa1hVH9Z1WkgeeGGW2EdoWyuwA
+
+
+
 
 ### View Orders
 GET http://localhost:5000/api/farmer/orders
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OTkyNTJjMzk3ZWUyZjQxNTAzZGY5MCIsImVtYWlsIjoiam9obkBleGFtcGxlLmNvbSIsImlhdCI6MTczODIzNDczMiwiZXhwIjoxNzM4MjM4MzMyfQ.iciPRFDiHZ0NFV4wAfDGpq0XE9ECDHkrsdSqkJF_BYM
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWVlNWFkZDliY2JkMGE5YTJkODAyMyIsInBob25lIjoiMTIzNDU2NzgxMCIsImlhdCI6MTczODQ5MzE0NCwiZXhwIjoxNzM4NDk2NzQ0fQ.DXAeZkS-phc0_EfseQMMOgkjNxzJk0nwJaxquLIbSBU
 
 
 ### Update Order Status
@@ -50,15 +72,15 @@ Content-Type: application/json
 }
 
 ### Get Products
-GET http://localhost:5000/api/farmer/orders
+GET http://localhost:5000/api/farmer/products
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OTkyNTJjMzk3ZWUyZjQxNTAzZGY5MCIsImVtYWlsIjoiam9obkBleGFtcGxlLmNvbSIsImlhdCI6MTczODIzNDczMiwiZXhwIjoxNzM4MjM4MzMyfQ.iciPRFDiHZ0NFV4wAfDGpq0XE9ECDHkrsdSqkJF_BYM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWVlNWFkZDliY2JkMGE5YTJkODAyMyIsInBob25lIjoiMTIzNDU2NzgxMCIsImlhdCI6MTczODQ5MzE0NCwiZXhwIjoxNzM4NDk2NzQ0fQ.DXAeZkS-phc0_EfseQMMOgkjNxzJk0nwJaxquLIbSBU
 
 
 ### View Products
 
-GET http://localhost:5000/api/farmer/orders
-Authorization: Bearer {{token}}
+GET http://localhost:5000/api/farmer/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWVlNWFkZDliY2JkMGE5YTJkODAyMyIsInBob25lIjoiMTIzNDU2NzgxMCIsImlhdCI6MTczODQ5MzE0NCwiZXhwIjoxNzM4NDk2NzQ0fQ.DXAeZkS-phc0_EfseQMMOgkjNxzJk0nwJaxquLIbSBU
 
 ### Register Customer
 POST http://localhost:5000/api/customer/register
@@ -66,7 +88,7 @@ Content-Type: application/json
 
 {
     "name": "John Doe",
-    "email": "john@example.com",
+    "email": "john1@example.com",
     "password": "securepassword",
     "phone": "1234567890",
     "address": "123 Main Street"
@@ -83,7 +105,11 @@ Content-Type: application/json
 
 ### GET approved products
 GET http://localhost:5000/api/customer/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWExZmQ0MjVkMDY0ODgzY2FmNDNkYiIsImVtYWlsIjoiam9obkBleGFtcGxlLmNvbSIsImlhdCI6MTczODQ5NjQyNiwiZXhwIjoxNzM4NTAwMDI2fQ.sByq4OUbi7CN1iS2kln0tCAHKW4MpWLPTvSir8nRiMc
 
+### GET CUSTOMER ORDERS
+GET http://localhost:5000/api/customer/order
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWExZmQ0MjVkMDY0ODgzY2FmNDNkYiIsImVtYWlsIjoiam9obkBleGFtcGxlLmNvbSIsImlhdCI6MTczODQ5NjQyNiwiZXhwIjoxNzM4NTAwMDI2fQ.sByq4OUbi7CN1iS2kln0tCAHKW4MpWLPTvSir8nRiMc
 
 ### Register Admin
 POST http://localhost:5000/api/admin/register
@@ -108,7 +134,7 @@ GET http://localhost:5000/api/admin/farmers
 Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWE2MjU5YjliOGYwYTZhNmQ4YWEwOCIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJpYXQiOjE3MzgyMzQzODUsImV4cCI6MTczODIzNzk4NX0.CSj_G9c-SiSGzZnmXyifkyxi0E_zV48gv8Ck82yt4K0
 ### Get all products
 GET http://localhost:5000/api/admin/products
-Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWE2MjU5YjliOGYwYTZhNmQ4YWEwOCIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJpYXQiOjE3MzgyMzUzNjYsImV4cCI6MTczODIzODk2Nn0.zC4d5gpsZCC4594xCwEJZthGKAvAb_mgcaFWMyDResk
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWE2MjU5YjliOGYwYTZhNmQ4YWEwOCIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJpYXQiOjE3Mzg0OTY1NDksImV4cCI6MTczODUwMDE0OX0.U0dI1R3ZWT1FRZ0JcTfj2FL3FS7Zogdt-ELKyC6hPyU
 
 
 

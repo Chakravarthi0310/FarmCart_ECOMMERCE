@@ -1,18 +1,4 @@
-/* Navbar Styles
-.navbar {
-  background: #fff;
-  padding: 15px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-} */
 
-/* Container */
 .container {
   display: flex;
   align-items: center;

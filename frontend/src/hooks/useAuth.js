@@ -11,20 +11,33 @@ const useAuth = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = role === "farmer" 
-        ? await loginFarmer(credentials) 
-        : await loginCustomer(credentials);
+        const response = role === "farmer"
+            ? await loginFarmer(credentials)
+            : await loginCustomer(credentials);
 
-      localStorage.setItem("userRole", role);
-      setUser(response); // Assuming the response contains the necessary user data
-      return response;
+        if (response?.token) {
+            localStorage.setItem("userRole", role);
+            localStorage.setItem("token", response.token);
+
+            if (role === "farmer" && response?.farmer) {
+                localStorage.setItem("farmerData", JSON.stringify(response.farmer));
+                setUser(response.farmer);
+            } else if (role === "customer" && response?.customer) {
+                localStorage.setItem("customerData", JSON.stringify(response.customer));
+                setUser(response.customer);
+            } else {
+                throw new Error("Invalid response from server");
+            }
+        }
+
+        return response;
     } catch (err) {
-      console.error("Login error:", err);
-      setError(err.response?.data?.message || "Login failed. Please try again.");
+        console.error("Login error:", err);
+        setError(err.response?.data?.message || "Login failed. Please try again.");
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
+};
 
   // Register function
   const register = async (role, userData) => {
