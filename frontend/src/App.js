@@ -15,8 +15,18 @@ import CustomerPayment from "./pages/Customers/CustomerPayment";
 import CustomerOrders from "./pages/Customers/CustomerOrders";
 import CustomerWishlist from "./pages/Customers/CustomerWishlist";
 import CustomerNotifications from "./pages/Customers/CustomerNotifications";
+
+
+import ProductDetails from "./pages/Customers/ProductDetails";
+
 import CustomerSubscriptions from "./pages/Customers/CustomerSubscriptions"; 
+
 import CustomerMessage from "./pages/Customers/CustomerMessage";
+
+
+
+
+
 import Home from "./pages/Home";
 // import ProtectedRoute from "./pages/routes/ProtectedRoute";
 import FarmerProfile from "./pages/Farmers/FarmerProfile";
@@ -52,8 +62,18 @@ function App() {
        <Route path="/customer-notification" element={<CustomerNotifications/>}/>
        <Route path="/customer-subscriptions" element={<CustomerSubscriptions/>}/>
        <Route path="/customer-message" element={<CustomerMessage />} />
+
+       <Route path="/customer-subscriptions" element={<CustomerSubscriptions/>}/>
+
+ 
        <Route path="/customer-wishlist" element={<CustomerWishlist/>}/>
        <Route path="/customer-orders" element={<CustomerOrders/>}/>
+       <Route path="/product-details/:id" element={<ProductDetails/>}/>
+
+       <Route path="/farmer-profile" element={<FarmerProfile/>}/>
+       <Route path="/farmer-edit" element={<FarmerEdit/>}/>
+       <Route path="/farmer-orders" element={<FarmerOrders/>}/>
+       <Route path="/farmer-notification" element={<FarmerNotifications/>}/>
     </Routes>
   );
 }

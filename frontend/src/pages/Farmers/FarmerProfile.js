@@ -46,7 +46,7 @@ const FarmerProfile = () => {
           </div>
           <button
             className="edit-profile-button"
-            onClick={() => navigate("/farmerProfile-edit")}
+            onClick={() => navigate("/farmer-edit")}
           >
             Edit Profile
           </button>
