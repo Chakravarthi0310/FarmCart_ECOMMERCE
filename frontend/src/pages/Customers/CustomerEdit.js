@@ -1,22 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CustomerEdit.css"; // Import CSS for styling
 
 const CustomerEdit = () => {
-  // Prepopulate with existing data; in a real app, this might come from props, context, or an API
-  const [name, setName] = useState("John Doe");
-  const[email,setEmail] = useState("john@example.com")
-  const [mobile, setMobile] = useState("123-456-7890");
-  const [address, setAddress] = useState("123 Main Street, City, Country");
-  const [bankDetails, setBankDetails] = useState("Bank: XYZ | Account No: 1234567890");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setMobile] = useState("");
+  const [address, setAddress] = useState("");
+  // const [bankDetails, setBankDetails] = useState("");
 
   const navigate = useNavigate();
 
+  // Fetch the data from localStorage when the component mounts
+  useEffect(() => {
+    const customerData = JSON.parse(localStorage.getItem("customerData"));
+    if (customerData) {
+      setName(customerData.name);
+      setEmail(customerData.email);
+      setMobile(customerData.phone);
+      setAddress(customerData.address);
+      // setBankDetails(customerData.bankDetails);
+    }
+  }, []);
+
   const handleSave = (e) => {
     e.preventDefault();
-    // Here, you would normally update the customer details via an API call
+
+    // Save the updated data to localStorage
+    const updatedData = { name, email, phone, address};
+    localStorage.setItem("customerData", JSON.stringify(updatedData));
+
     alert("Profile updated successfully!");
-    // After saving, navigate back to the customer profile page
+    // Navigate back to the profile or dashboard page
     navigate("/customer-Dashboard");
   };
 
@@ -33,9 +48,10 @@ const CustomerEdit = () => {
             className="edit-input"
             required
           />
-                    <input
-            type="text"
-            placeholder="Full Name"
+
+          <input
+            type="email"
+            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="edit-input"
@@ -45,11 +61,12 @@ const CustomerEdit = () => {
           <input
             type="text"
             placeholder="Mobile Number"
-            value={mobile}
+            value={phone}
             onChange={(e) => setMobile(e.target.value)}
             className="edit-input"
             required
           />
+
           <input
             type="text"
             placeholder="Address"
@@ -58,14 +75,8 @@ const CustomerEdit = () => {
             className="edit-input"
             required
           />
-          <input
-            type="text"
-            placeholder="Bank Account Details"
-            value={bankDetails}
-            onChange={(e) => setBankDetails(e.target.value)}
-            className="edit-input"
-            required
-          />
+
+
           <button type="submit" className="save-button">
             Save Changes
           </button>

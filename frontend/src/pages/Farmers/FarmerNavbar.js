@@ -7,12 +7,11 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear authentication data from localStorage
-    localStorage.removeItem("authToken");  // Remove token
-    localStorage.removeItem("userData");   // Remove user data (if stored)
-
-    console.log("User logged out successfully.");
-
+    // Clear all local storage data
+    localStorage.clear();
+  
+    console.log("User logged out successfully. All local storage data cleared.");
+  
     // Redirect to the login page
     navigate("/");
   };

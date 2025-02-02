@@ -1,7 +1,10 @@
 .orders-container {
-    padding: 20px;
-    text-align: center;
-  }
+  padding: 20px;
+  text-align: center;
+  border-top: 20px;
+  margin-top: 80px; /* Add this to push content below navbar */
+}
+
   
   .orders-container table {
     width: 60%;

@@ -24,7 +24,14 @@ exports.registerFarmer = async(request, res) => {
             address,
         });
         await newFarmer.save();
-        res.status(201).json({ message: "Farmer registered successfully" });
+        res.status(201).json({  message: "Farmer Registered Successfully",
+            token,
+            farmer: {
+                id: newFarmer._id,
+                name: newFarmer.name,
+                phone: newFarmer.phone,
+                address: newFarmer.address,
+            }, });
     } catch (e) {
         res.status(500).json({ message: "error registering farmer", error: e.message });
     }

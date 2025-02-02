@@ -15,8 +15,7 @@ const CustomerNavbar = () => {
 
   const handleLogout = () => {
     // Clear authentication data from localStorage
-    localStorage.removeItem("authToken"); // Remove token
-    localStorage.removeItem("userData"); // Remove user data (if stored)
+    localStorage.clear()
 
     console.log("User logged out successfully.");
 

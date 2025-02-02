@@ -7,6 +7,12 @@ const FarmerDashboard = () => {
   const [items, setItems] = useState([
     { id: 1, name: "Tomatoes", price: "₹50/kg", image: "../../assets/tomatoes.jpg" },
     { id: 2, name: "Potatoes", price: "₹30/kg", image: "../../assets/potato.jpg" },
+    { id: 3, name: "Potatoes", price: "₹30/kg", image: "../../assets/potato.jpg" },
+    { id: 4, name: "Potatoes", price: "₹30/kg", image: "../../assets/potato.jpg" },
+    { id: 5, name: "Potatoes", price: "₹30/kg", image: "../../assets/potato.jpg" },
+    { id: 6, name: "Potatoes", price: "₹30/kg", image: "../../assets/potato.jpg" },
+    { id: 7, name: "Potatoes", price: "₹30/kg", image: "../../assets/potato.jpg" },
+    { id: 8, name: "Potatoes", price: "₹30/kg", image: "../../assets/potato.jpg" },
     // Add more items if needed
   ]);
 

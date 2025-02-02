@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 4b43306ea086bae47d296e5e22dd675bb7b6b2de
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import FarmerLogin from "./pages/Farmers/FarmerLogin";
@@ -20,7 +16,7 @@ import CustomerOrders from "./pages/Customers/CustomerOrders";
 import CustomerWishlist from "./pages/Customers/CustomerWishlist";
 import CustomerNotifications from "./pages/Customers/CustomerNotifications";
 import Home from "./pages/Home";
-// import ProtectedRoute from "./pages/routes/ProtectedRoute";
+import ProtectedRoute from "./pages/routes/ProtectedRoute";
 import FarmerProfile from "./pages/Farmers/FarmerProfile";
 import FarmerOrders from "./pages/Farmers/FarmerOrders";
 import FarmerNotifications from "./pages/Farmers/FarmerNotifications";
@@ -34,9 +30,9 @@ function App() {
       
       <Route path="/farmer-login" element={<FarmerLogin />} />
       <Route path="/customer-login" element={<CustomerLogin />} />
-      {/* <Route path="/farmer-dashboard" element={<ProtectedRoute role="farmer"><FarmerDashboard/></ProtectedRoute>}></Route>
-      <Route path="/customer-dashboard" element={<ProtectedRoute role="customer"><CustomerDashboard/></ProtectedRoute>}></Route> */}
-      <Route path="/farmer-dashboard" element={<FarmerDashboard />} />
+      <Route path="/farmer-dashboard" element={<ProtectedRoute role="farmer"><FarmerDashboard/></ProtectedRoute>}></Route>
+      <Route path="/customer-dashboard" element={<ProtectedRoute role="customer"><CustomerDashboard/></ProtectedRoute>}></Route>
+      {/* <Route path="/farmer-dashboard" element={<FarmerDashboard />} /> */}
       <Route path="/farmer-register" element={<FarmerRegister />} />
       <Route path="/customer-register" element={<CustomerRegister />} />
       

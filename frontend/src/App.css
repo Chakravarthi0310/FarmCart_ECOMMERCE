@@ -3,7 +3,7 @@
 }
 
 body {
-  background-image: url("your-image-url.jpg"); /* Replace with your actual image URL */
+  background-image: url("src/assets/farm-bg.png"); /* Replace with your actual image URL */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

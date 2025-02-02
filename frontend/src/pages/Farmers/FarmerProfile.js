@@ -9,10 +9,15 @@ const FarmerProfile = () => {
 
   useEffect(() => {
     // Fetch farmer data from localStorage
-    const storedData = JSON.parse(localStorage.getItem("farmerData"));
+    const storedData = localStorage.getItem("farmerData");
 
     if (storedData) {
-      setFarmerData(storedData); // Set the data to state if found in localStorage
+      try {
+        setFarmerData(JSON.parse(storedData)); // Parse and set farmer data
+      } catch (error) {
+        console.error("Error parsing farmer data from localStorage:", error);
+        setFarmerData(null);
+      }
     } else {
       // Use dummy data if no stored data is found
       setFarmerData({
@@ -24,7 +29,7 @@ const FarmerProfile = () => {
   }, []);
 
   if (!farmerData) {
-    return <p>Loading...</p>; // Show loading while the data is being fetched
+    return <p className="loading-text">Loading farmer profile...</p>; // Show loading while fetching
   }
 
   return (

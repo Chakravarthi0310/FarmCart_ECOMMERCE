@@ -15,10 +15,22 @@ exports.registerCustomer = async (req,res)=>{
         if(existingCustomer){
             return res.status(400).json({message: "Email already exist"});
         }
+        console.log("The registration data is good");
+
         const hashedPassword= await bcrypt.hash(password,10);
         const newCustomer = new Customer({name,email,password:hashedPassword,phone,address});
         await newCustomer.save();
-        res.status(201).json({message:"Customer registered successfully"});
+        res.status(201).json({
+          message: "Customer registered successfully",
+          token,
+          customer: {
+              id: newCustomer._id,
+              name: newCustomer.name,
+              email: newCustomer.email,
+              phone: newCustomer.phone,
+              address: newCustomer.address,
+          },
+      });
     }catch(e){
         res.status(500).json({message:"Error registering customer", error:e.message});
         
