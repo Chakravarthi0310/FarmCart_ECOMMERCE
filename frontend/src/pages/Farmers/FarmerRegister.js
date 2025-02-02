@@ -28,7 +28,7 @@ const FarmerRegister = () => {
       const response = await register("farmer", userData);
       alert("✅ Farmer Registered Successfully!");
       console.log(response)
-      // navigate("/farmer-dashboard"); // Redirect after successful registration
+      navigate("/farmer-dashboard"); // Redirect after successful registration
     } catch (err) {
       console.error("Registration failed", err);
     }

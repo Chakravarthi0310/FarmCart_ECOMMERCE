@@ -16,6 +16,7 @@ import CustomerPayment from "./pages/Customers/CustomerPayment";
 import CustomerOrders from "./pages/Customers/CustomerOrders";
 import CustomerWishlist from "./pages/Customers/CustomerWishlist";
 import CustomerNotifications from "./pages/Customers/CustomerNotifications";
+import ProductDetails from "./pages/Customers/ProductDetails";
 import Home from "./pages/Home";
 import ProtectedRoute from "./pages/routes/ProtectedRoute";
 
@@ -42,6 +43,7 @@ function App() {
        <Route path="/customer-notification" element={<CustomerNotifications/>}/>
        <Route path="/customer-wishlist" element={<CustomerWishlist/>}/>
        <Route path="/customer-orders" element={<CustomerOrders/>}/>
+       <Route path="/product-details/:id" element={<ProductDetails/>}/>
     </Routes>
   );
 }

@@ -23,12 +23,12 @@ const CustomerNavbar = () => {
         </div>
 
         {/* Search Bar */}
-        <div className="search-bar">
-          <input type="text" placeholder="Search..." />
-          <button className="search-btn">
-            <FaSearch />
-          </button>
-        </div>
+        {/* <div className="search-bar"> */}
+          {/* <input type="text" placeholder="Search..." /> */}
+          {/* <button className="search-btn"> */}
+            {/* <FaSearch /> */}
+          {/* </button> */}
+        {/* </div> */}
 
         {/* Account Dropdown, Wishlist, and Cart */}
         <div className="account">
