@@ -1,149 +1,149 @@
-/* Wrapper Styling */
-.wrapper {
-  width: 100%;
-  background-color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Navigation Bar */
-.navigation-bar {
-  padding: 15px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Navbar Container */
-.navbar-container {
+/* Navbar Styles */
+.navbar {
+  background: #fff;
+  padding: 15px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 90%;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Container */
+.container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
 }
 
 /* Logo */
-.logo img {
-  max-height: 60px;
-}
-
-/* Search Box */
-.search-area {
+.logo {
   display: flex;
   align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c3e50;
 }
 
-.search_box {
-  width: 250px;
+.logo-img {
+  width: 50px;
+  height: auto;
+  margin-right: 10px;
+}
+
+/* Search Bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #f4f4f4;
+  border-radius: 25px;
+  padding: 5px 10px;
+  width: 300px;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  background: transparent;
   padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  flex: 1;
 }
 
-.search_btn {
-  margin-left: 10px;
+.search-btn {
+  background: #2c3e50;
+  color: #fff;
+  border: none;
   padding: 8px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
 }
 
-/* Greeting */
-.greeting {
-  font-size: 18px;
-  font-weight: 600;
+.search-btn:hover {
+  background: #1a252f;
 }
 
-/* User Menu */
-.user-menu ul {
-  list-style: none;
+/* Account Section */
+.account {
   display: flex;
   align-items: center;
-  margin: 0;
-  padding: 0;
 }
 
-.user-menu ul li {
+/* Dropdown Menu */
+.dropdown {
+  position: relative;
   margin-right: 20px;
 }
 
-.user-menu a {
-  text-decoration: none;
-  font-size: 16px;
-  color: #333;
-  transition: color 0.3s;
+.dropdown-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #2c3e50;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
-.user-menu a:hover {
-  color: #28a745;
+.dropdown-btn .icon {
+  font-size: 1.2rem;
 }
 
 .dropdown-menu {
-  background-color: #222;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ddd;
+  list-style: none;
+  padding: 10px;
+  min-width: 150px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: block;
+  z-index: 1000;
   border-radius: 5px;
 }
 
-.dropdown-menu .dropdown-item {
-  color: white;
-  padding: 10px 15px;
-}
-
-.dropdown-menu .dropdown-item:hover {
-  background-color: #28a745;
-}
-
-/* Cart Icon */
-.user-menu i {
-  margin-right: 5px;
-}
-
-.bg-danger {
-  background-color: red !important;
-  color: white !important;
-}
-/* Dropdown Styling */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropbtn {
-  background-color: black;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  cursor: pointer;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: white;
-  min-width: 150px;
-  box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: black;
+.dropdown-menu li {
   padding: 10px;
-  text-decoration: none;
-  display: block;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
 }
 
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
+.dropdown-menu li:hover {
+  background: #f4f4f4;
 }
 
-.dropdown:hover .dropdown-content {
-  display: block;
+.divider {
+  height: 1px;
+  background: #ddd;
+  margin: 5px 0;
 }
 
-/* Wishlist & Cart */
-.wishlist-btn, .cart-btn {
-  margin-left: 15px;
-  color: black;
-  text-decoration: none;
+.logout {
+  color: red;
   font-weight: bold;
 }
 
-/* Remove Login Button */
-.login-btn {
-  display: none;
+/* Icons Section */
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.icon-link {
+  text-decoration: none;
+  color: #2c3e50;
+  font-size: 1.5rem;
+  transition: color 0.3s ease-in-out;
+}
+
+.icon-link:hover {
+  color: #1a252f;
 }

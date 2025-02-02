@@ -6,7 +6,7 @@ import "./FarmerDashboard.css"; // Import CSS
 const FarmerDashboard = () => {
   const [items, setItems] = useState([
     { id: 1, name: "Tomatoes", price: "₹50/kg", image: "../../assets/tomatoes.jpg" },
-    { id: 2, name: "Potatoes", price: "₹30/kg", image: "../../assets/potatoes.jpg" },
+    { id: 2, name: "Potatoes", price: "₹30/kg", image: "../../assets/potato.jpg" },
     // Add more items if needed
   ]);
 
