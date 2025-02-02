@@ -18,7 +18,7 @@ exports.registerCustomer = async (req,res)=>{
         const hashedPassword= await bcrypt.hash(password,10);
         const newCustomer = new Customer({name,email,password:hashedPassword,phone,address});
         await newCustomer.save();
-        
+
         res.status(201).json({message:"Customer registered successfully"});
     }catch(e){
         res.status(500).json({message:"Error registering customer", error:e.message});

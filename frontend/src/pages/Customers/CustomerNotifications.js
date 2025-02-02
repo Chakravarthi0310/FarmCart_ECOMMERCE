@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./CustomerNotifications.css"; // Import the CSS file
+<<<<<<< HEAD
 
+=======
+import CustomerNavbar from "../../components/CustomerNavbar";
+>>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
 const CustomerNotification = () => {
   // Dummy data for subscribed farmers and their new items
   const [notifications, setNotifications] = useState([]);
@@ -31,6 +35,12 @@ const CustomerNotification = () => {
   }, []);
 
   return (
+<<<<<<< HEAD
+=======
+
+    <div className="Notifications">
+      <CustomerNavbar />
+>>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
     <div className="notification-container">
       <h2 className="notification-title">Notifications</h2>
       {notifications.length > 0 ? (
@@ -49,6 +59,10 @@ const CustomerNotification = () => {
         <p className="no-notifications">No new notifications.</p>
       )}
     </div>
+<<<<<<< HEAD
+=======
+    </div>
+>>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
   );
 };
 

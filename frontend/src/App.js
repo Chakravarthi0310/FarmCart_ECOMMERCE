@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import FarmerLogin from "./pages/Farmers/FarmerLogin";
@@ -17,6 +20,21 @@ import CustomerPayment from "./pages/Customers/CustomerPayment";
 import CustomerOrders from "./pages/Customers/CustomerOrders";
 import CustomerWishlist from "./pages/Customers/CustomerWishlist";
 import CustomerNotifications from "./pages/Customers/CustomerNotifications";
+<<<<<<< HEAD
+=======
+
+
+import ProductDetails from "./pages/Customers/ProductDetails";
+
+import CustomerSubscriptions from "./pages/Customers/CustomerSubscriptions"; 
+
+import CustomerMessage from "./pages/Customers/CustomerMessage";
+
+
+
+
+
+>>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
 import Home from "./pages/Home";
 // import ProtectedRoute from "./pages/routes/ProtectedRoute";
 import FarmerProfile from "./pages/Farmers/FarmerProfile";
@@ -37,7 +55,15 @@ function App() {
       <Route path="/farmer-dashboard" element={<FarmerDashboard />} />
       <Route path="/farmer-register" element={<FarmerRegister />} />
       <Route path="/customer-register" element={<CustomerRegister />} />
+<<<<<<< HEAD
       
+=======
+      <Route path="/farmer-profile" element={<FarmerProfile />} />
+      <Route path="/farmer-orders" element={<FarmerOrders />} />
+      <Route path="/farmer-notifications" element={<FarmerNotifications />} />
+      <Route path="/farmer-edit" element={<FarmerEdit />} />
+
+>>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
       <Route path="/add-item" element={<AddNewItem />} />
       <Route path="/item/:id" element={<ItemDetails />} />
       <Route path="/customer-dashboard" element={<CustomerDashboard />} />
@@ -46,6 +72,7 @@ function App() {
        <Route path="/customer-cart" element={<CustomerCart />} />
        <Route path="/customer-pay" element={<CustomerPayment/>}/>
        <Route path="/customer-notification" element={<CustomerNotifications/>}/>
+<<<<<<< HEAD
 
        <Route path="/customer-wishlist" element={<CustomerWishlist/>}/>
        <Route path="/customer-orders" element={<CustomerOrders/>}/>
@@ -53,6 +80,22 @@ function App() {
        <Route path="/farmer-profile" element={<FarmerProfile/>}/>
        <Route path="/farmer-notifications" element={<FarmerNotifications/>}/>
        <Route path="/farmerProfile-edit" element={<FarmerEdit/>}/>
+=======
+       <Route path="/customer-subscriptions" element={<CustomerSubscriptions/>}/>
+       <Route path="/customer-message" element={<CustomerMessage />} />
+
+       <Route path="/customer-subscriptions" element={<CustomerSubscriptions/>}/>
+
+ 
+       <Route path="/customer-wishlist" element={<CustomerWishlist/>}/>
+       <Route path="/customer-orders" element={<CustomerOrders/>}/>
+       <Route path="/product-details/:id" element={<ProductDetails/>}/>
+
+       <Route path="/farmer-profile" element={<FarmerProfile/>}/>
+       <Route path="/farmer-edit" element={<FarmerEdit/>}/>
+       <Route path="/farmer-orders" element={<FarmerOrders/>}/>
+       <Route path="/farmer-notification" element={<FarmerNotifications/>}/>
+>>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
     </Routes>
   );
 }

@@ -144,6 +144,7 @@ const CustomerRegister = () => {
     }
   };
   return (
+
     <div className="register-container">
       <div className="register-box">
         <h2 className="register-title">🚜 Customer Registration</h2>
@@ -223,6 +224,7 @@ const CustomerRegister = () => {
         </p>
       </div>
     </div>
+
   );
 };
 

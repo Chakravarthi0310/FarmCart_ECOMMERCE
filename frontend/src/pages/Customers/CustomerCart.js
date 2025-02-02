@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CustomerCart.css"; // Import the CSS file for styling
+<<<<<<< HEAD
 
+=======
+import CustomerNavbar from "../../components/CustomerNavbar";
+>>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
 const CustomerCart = () => {
   const navigate = useNavigate();
 
@@ -71,6 +75,12 @@ const CustomerCart = () => {
   };
 
   return (
+<<<<<<< HEAD
+=======
+
+    <div className="Cart">
+      <CustomerNavbar />
+>>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
     <div className="cart-container">
       <h2 className="cart-title">Your Cart</h2>
       {cartItems.length === 0 ? (
@@ -133,6 +143,10 @@ const CustomerCart = () => {
         </>
       )}
     </div>
+<<<<<<< HEAD
+=======
+    </div>
+>>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
   );
 };
 
