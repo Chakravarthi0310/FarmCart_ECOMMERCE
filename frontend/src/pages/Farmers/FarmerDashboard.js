@@ -19,6 +19,7 @@ const FarmerDashboard = () => {
   return (
     <>
       <Navbar />
+      <div className="dashboard">
       <div className="dashboard-container">
         <h2 className="dashboard-title">📋 Your Items</h2>
 
@@ -42,6 +43,7 @@ const FarmerDashboard = () => {
             </div>
           ))}
         </div>
+      </div>
       </div>
     </>
   );

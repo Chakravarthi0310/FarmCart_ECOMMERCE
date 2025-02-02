@@ -12,7 +12,6 @@ const Navbar = () => {
   
     console.log("User logged out successfully. All local storage data cleared.");
   
-    // Redirect to the login page
     navigate("/");
   };
 

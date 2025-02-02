@@ -48,7 +48,7 @@ function App() {
       <Route path="/farmer-edit" element={<FarmerEdit />} />
       <Route path="/add-item" element={<AddNewItem />} />
       <Route path="/item/:id" element={<ItemDetails />} />
-      <Route path="/customer-dashboard" element={<CustomerDashboard />} />
+      {/* <Route path="/customer-dashboard" element={<CustomerDashboard />} /> */}
       <Route path="/customer-profile" element={<CustomerProfile />} />
        <Route path="/customer-edit" element={<CustomerEdit />} />
        <Route path="/customer-cart" element={<CustomerCart />} />

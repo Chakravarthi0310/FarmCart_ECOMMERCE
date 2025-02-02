@@ -21,7 +21,6 @@ const CustomerProfile = () => {
   }
 
   return (
-<<<<<<< HEAD
     <>
     <CustomerNavbar/>
     <div className="profile-container">
@@ -54,10 +53,7 @@ const CustomerProfile = () => {
       </div>
     </div>
     </>
-=======
-    </div>
 
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
   );
 };
 

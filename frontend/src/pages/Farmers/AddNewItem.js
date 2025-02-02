@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import Navbar from "./FarmerNavbar"; // Import Navbar
 import "./AddNewItem.css"; // Import your custom CSS
+import useFarmer from "../../hooks/useFarmer";
 
 const AddNewItem = () => {
   const [newItem, setNewItem] = useState({
     name: "",
     category: "",
-    marketPrice: "",
+    marketRate: "",  // Ensure correct field name
     price: "",
     quantity: "",
+    expiryDate: "",
     image: null,
   });
 
   const [previewImage, setPreviewImage] = useState(null);
+  const { handleAddProduct } = useFarmer();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -26,28 +29,25 @@ const AddNewItem = () => {
     }
   };
 
-  const handleAddItem = () => {
-    const { name, category, marketPrice, price, quantity, image } = newItem;
+  const handleAddItem = async () => {
+    const { name, category, marketRate, price, quantity, expiryDate, image } = newItem;
 
-    if (!name || !category || !marketPrice || !price || !quantity || !image) {
+    if (!name || !category || !marketRate || !price || !quantity || !expiryDate || !image) {
       alert("❌ Please fill all fields and upload an image!");
       return;
     }
 
-    // Logic to send new item data to the backend (e.g., API call)
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("category", category);
-    formData.append("marketPrice", marketPrice);
-    formData.append("price", price);
-    formData.append("quantity", quantity);
-    formData.append("image", image); // Sending image file
+    try {
+      console.log(newItem);
+      await handleAddProduct(newItem);
+      alert("✅ Product submitted successfully!");
 
-    console.log("Item submitted for approval:", newItem);
-
-    // Reset form
-    setNewItem({ name: "", category: "", marketPrice: "", price: "", quantity: "", image: null });
-    setPreviewImage(null);
+      // Reset form
+      setNewItem({ name: "", category: "", marketRate: "", price: "", quantity: "", expiryDate: "", image: null });
+      setPreviewImage(null);
+    } catch (error) {
+      alert("❌ Error submitting product: " + error);
+    }
   };
 
   return (
@@ -79,8 +79,8 @@ const AddNewItem = () => {
         <input
           type="text"
           placeholder="Market Price (₹/kg)"
-          value={newItem.marketPrice}
-          onChange={(e) => setNewItem({ ...newItem, marketPrice: e.target.value })}
+          value={newItem.marketRate}
+          onChange={(e) => setNewItem({ ...newItem, marketRate: e.target.value })}
           className="input-field"
         />
 
@@ -97,6 +97,14 @@ const AddNewItem = () => {
           placeholder="Quantity (kg)"
           value={newItem.quantity}
           onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })}
+          className="input-field"
+        />
+
+        <input
+          type="date"
+          placeholder="Expiry Date"
+          value={newItem.expiryDate}
+          onChange={(e) => setNewItem({ ...newItem, expiryDate: e.target.value })}
           className="input-field"
         />
 

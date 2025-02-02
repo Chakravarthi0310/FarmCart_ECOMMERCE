@@ -27,27 +27,20 @@ const CustomerNavbar = () => {
     <nav className="navbar">
       <div className="container">
         {/* Logo and Website Name */}
-        <div className="logo">
+        <div className="logo" onClick={() => navigate("/farmer-dashboard")}>
           <img src="/assets/logo.jpg" className="logo-img" alt="Logo" />
           <span className="FarmCart">FarmCart</span>
         </div>
 
         {/* Search Bar */}
-<<<<<<< HEAD
-        <div className="search-bar">
+
+        {/* <div className="search-bar">
           <input type="text" placeholder="Search..." />
           <button className="search-btn">
             <FaSearch />
           </button>
-        </div>
-=======
-        {/* <div className="search-bar"> */}
-          {/* <input type="text" placeholder="Search..." /> */}
-          {/* <button className="search-btn"> */}
-            {/* <FaSearch /> */}
-          {/* </button> */}
-        {/* </div> */}
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
+        </div> */}
+
 
         {/* Account Dropdown, Wishlist, and Cart */}
         <div className="account">

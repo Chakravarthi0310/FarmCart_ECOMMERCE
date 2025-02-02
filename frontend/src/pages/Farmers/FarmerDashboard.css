@@ -1,14 +1,17 @@
+dashboard{
+  background: url("../../assets/farm-bg.jpg") no-repeat center center/cover;
+  background-attachment: fixed;
+}
 .dashboard-container {
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
 
-  /* background-image: url("frontend\src\assets\farm-bg.jpg"); /* Replace with your actual image URL */
-    /* background-size: cover;
+  /* background-image: url("../../assets/farm-bg.jpg"); 
+    background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed; */ 
+    background-repeat: no-repeat; */
 }
 
 .dashboard-title {

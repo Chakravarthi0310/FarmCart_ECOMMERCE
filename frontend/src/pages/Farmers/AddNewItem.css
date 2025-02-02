@@ -30,6 +30,10 @@
     background:f4f4f4;
   }
 
+  .input-field[type=file]{
+    background:white;
+  }
+
   .image-preview {
     margin-top: 10px;
     text-align: center;

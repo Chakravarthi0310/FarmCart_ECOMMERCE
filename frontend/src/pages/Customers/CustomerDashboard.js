@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-import CustomerNavbar from "../../components/CustomerNavbar";
-import "./CustomerDashboard.css";
-
-const CustomerDashboard = () => {
-  return (
-    <div className="dashboard">
-      <CustomerNavbar />
-      
-=======
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 // import CustomerNavbar from "../../components/CustomerNavbar";
@@ -245,7 +234,6 @@ const CustomerDashboard = () => {
           <p className="no-results">No products found.</p>
         )}
       </div>
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
     </div>
   );
 };

@@ -1,164 +1,151 @@
-import { useState } from "react";
 import axios from "axios";
-
 const API_BASE_URL = "http://localhost:5000/api/farmer";
 
-const useFarmerActions = () => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  // ✅ Add Product
-  const addProduct = async (productData) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const authToken = localStorage.getItem("authToken");
-      if (!authToken) throw new Error("No authentication token found. Please log in.");
-
-      const formData = new FormData();
-      for (const key in productData) {
-        formData.append(key, productData[key]);
-      }
-
-      const response = await axios.post(`${API_BASE_URL}/products`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
-      setData(response.data);
-      return response.data;
-    } catch (err) {
-      setError(err.response?.data?.message || "Failed to add product.");
-    } finally {
-      setLoading(false);
+export const addProduct = async (productData) => {
+  try {
+    // Retrieve the auth token from localStorage
+    const authToken = localStorage.getItem("token");
+    if (!authToken) {
+      throw new Error("No authentication token found. Please log in.");
     }
-  };
 
-  // ✅ View Own Products
-  const viewOwnProducts = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const authToken = localStorage.getItem("authToken");
-      if (!authToken) throw new Error("No authentication token found.");
-      
-      const response = await axios.get(`${API_BASE_URL}/products`, {
-        headers: { Authorization: `Bearer ${authToken}` },
-      });
-      setData(response.data);
-      return response.data;
-    } catch (err) {
-      setError(err.response?.data?.message || "Failed to fetch products.");
-    } finally {
-      setLoading(false);
+    // ✅ Ensure productData is properly formatted as FormData
+    const formData = new FormData();
+    formData.append("name", productData.name);
+    formData.append("category", productData.category);
+    formData.append("marketRate", productData.marketRate);
+    formData.append("price", productData.price);
+    formData.append("quantity", productData.quantity);
+    
+    if (productData.image) {
+      formData.append("image", productData.image);
+    } else {
+      console.warn("⚠ Warning: No image selected.");
     }
-  };
 
-  // ✅ View Orders
-  const viewOrders = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const authToken = localStorage.getItem("authToken");
-      if (!authToken) throw new Error("No authentication token found.");
-
-      const response = await axios.get(`${API_BASE_URL}/orders`, {
-        headers: { Authorization: `Bearer ${authToken}` },
-      });
-      setData(response.data);
-      return response.data;
-    } catch (err) {
-      setError(err.response?.data?.message || "Failed to fetch orders.");
-    } finally {
-      setLoading(false);
+    // ✅ Debugging: Check if all fields are included
+    console.log("🚀 FormData being sent:");
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
     }
-  };
 
-  // ✅ Update Order Status
-  const updateOrderStatus = async (orderId, status) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const authToken = localStorage.getItem("authToken");
-      if (!authToken) throw new Error("No authentication token found.");
+    // Send POST request with FormData
+    const response = await axios.post(`${API_BASE_URL}/products`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
 
-      const response = await axios.put(`${API_BASE_URL}/orders`, { orderId, status }, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
-      setData(response.data);
-      return response.data;
-    } catch (err) {
-      setError(err.response?.data?.message || "Failed to update order status.");
-    } finally {
-      setLoading(false);
-    }
-  };
+    console.log("✅ Product added successfully:", response.data);
+    return response.data;
 
-  // ✅ Delete Product
-  const deleteProduct = async (productId) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const authToken = localStorage.getItem("authToken");
-      if (!authToken) throw new Error("No authentication token found.");
-
-      const response = await axios.delete(`${API_BASE_URL}/products/${productId}`, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-          "Content-Type": "application/json",
-        },
-      });
-      setData(response.data);
-      alert("Product deleted successfully!");
-      return response.data;
-    } catch (err) {
-      setError(err.response?.data?.message || "Failed to delete product.");
-      alert(error.response?.data?.message || "Failed to delete product.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // ✅ Update Profile
-  const updateProfile = async (userData) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const authToken = localStorage.getItem("authToken");
-      if (!authToken) throw new Error("No authentication token found.");
-      
-      const response = await axios.put(`${API_BASE_URL}/profile`, userData, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-          "Content-Type": "application/json",
-        },
-      });
-      setData(response.data);
-      alert("Profile updated successfully!");
-      return response.data;
-    } catch (err) {
-      setError(err.response?.data?.message || "Failed to update profile.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return {
-    data,
-    loading,
-    error,
-    addProduct,
-    viewOwnProducts,
-    viewOrders,
-    updateOrderStatus,
-    deleteProduct,
-    updateProfile,
-  };
+  } catch (error) {
+    console.error("❌ Error adding product:", error.response ? error.response.data : error.message);
+    throw error;
+  }
 };
 
-export default useFarmerActions;
+export const viewOwnProducts = async () => {
+  try {
+    const authToken = localStorage.getItem("authToken");
+
+    if (!authToken) throw new Error("No authentication token found.");
+
+    const response = await axios.get(`${API_BASE_URL}/products`, {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    console.log("✅ Products fetched:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("❌ Error fetching products:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const viewOrders = async () => {
+  try {
+    const authToken = localStorage.getItem("authToken");
+
+    if (!authToken) throw new Error("No authentication token found.");
+
+    const response = await axios.get(`${API_BASE_URL}/orders`, {
+      headers: { Authorization: `Bearer ${authToken}` },
+    });
+
+    console.log("✅ Orders fetched:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("❌ Error fetching orders:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const updateOrderStatus = async (orderId, status) => {
+  try {
+    const authToken = localStorage.getItem("authToken");
+
+    if (!authToken) throw new Error("No authentication token found.");
+
+    const response = await axios.put(
+      `${API_BASE_URL}/orders`,
+      { orderId, status },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+
+    console.log("✅ Order status updated:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("❌ Error updating order status:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const deleteProduct = async (productId, token) => {
+  try {
+    const response = await axios.delete(
+      `${API_BASE_URL}/products/${productId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    alert("Product deleted successfully!");
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting product:", error.response?.data || error.message);
+    alert(error.response?.data?.message || "Failed to delete product.");
+  }
+};
+
+export const updateProfile = async (userData, token) => {
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/profile`, // Adjust the API URL
+      userData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // ✅ Fixed template literal issue
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log(response.data);
+    alert("Profile updated successfully!");
+    return response.data;
+  } catch (error) {
+    console.error("Error updating profile:", error.response?.data || error.message);
+    alert(error.response?.data?.message || "Failed to update profile.");
+  }
+};

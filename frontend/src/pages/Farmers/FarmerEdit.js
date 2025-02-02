@@ -31,23 +31,29 @@ const FarmerEdit = () => {
     setFarmer({ ...farmer, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
   const handleSave = async (e) => {
     e.preventDefault();
-
+  
     try {
-      const response = await axios.put(`${API_BASE_URL}/update/${farmer.id}`, farmer);
-      
+      const response = await axios.put(
+        `${API_BASE_URL}/update/${farmer.id}`, 
+        farmer, 
+        { headers: { "Content-Type": "application/json" } } // Ensure JSON format
+      );
+  
       if (response.data.success) {
-        localStorage.setItem("farmerData", JSON.stringify(farmer));
+        localStorage.setItem("farmerData", JSON.stringify(response.data.farmer)); // Update local storage
         alert("✅ Profile updated successfully!");
         navigate("/farmer-dashboard");
+      } else {
+        alert("❌ Failed to update profile. Try again.");
       }
     } catch (err) {
       console.error("Update failed:", err);
-      alert("❌ Failed to update profile. Try again.");
+      alert("❌ Error updating profile.");
     }
   };
+  
 
   return (
     <>

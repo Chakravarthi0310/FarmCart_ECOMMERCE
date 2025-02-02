@@ -1,31 +1,10 @@
-<<<<<<< HEAD
-.dashboard {
-    padding-top: 0px;
-    text-align: center;
-  }
-  
-  .dashboard-content {
-    padding: 40px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    width: 80%;
-    margin: auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  h1 {
-    color: #333;
-  }
-  
-  p {
-    font-size: 18px;
-  }
-  
-=======
 /* General styles */
 .dashboard {
   font-family: Arial, sans-serif;
   padding: 20px;
+
+  background: url("../../assets/farm-bg.jpg") no-repeat center center/cover;
+  background-attachment: fixed;
 }
 
 /* Filter container (holds category bar and filter toggle button) */
@@ -215,4 +194,3 @@
   color: #888;
   grid-column: 1/-1;
 }
->>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be
