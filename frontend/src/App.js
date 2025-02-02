@@ -15,11 +15,11 @@ import CustomerPayment from "./pages/Customers/CustomerPayment";
 import CustomerOrders from "./pages/Customers/CustomerOrders";
 import CustomerWishlist from "./pages/Customers/CustomerWishlist";
 import CustomerNotifications from "./pages/Customers/CustomerNotifications";
-<<<<<<< HEAD
+
 import ProductDetails from "./pages/Customers/ProductDetails";
-=======
+
 import CustomerSubscriptions from "./pages/Customers/CustomerSubscriptions"; 
->>>>>>> a7df0998bbf73af63eac7cf64b5a67e516e89dfd
+
 import Home from "./pages/Home";
 // import ProtectedRoute from "./pages/routes/ProtectedRoute";
 import FarmerProfile from "./pages/Farmers/FarmerProfile";
