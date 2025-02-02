@@ -49,10 +49,15 @@ function App() {
        <Route path="/customer-cart" element={<CustomerCart />} />
        <Route path="/customer-pay" element={<CustomerPayment/>}/>
        <Route path="/customer-notification" element={<CustomerNotifications/>}/>
-
+       <Route path="/customer-subscriptions" element={<CustomerSubscriptions/>}/>
        <Route path="/customer-wishlist" element={<CustomerWishlist/>}/>
        <Route path="/customer-orders" element={<CustomerOrders/>}/>
        <Route path="/product-details/:id" element={<ProductDetails/>}/>
+
+       <Route path="/farmer-profile" element={<FarmerProfile/>}/>
+       <Route path="/farmer-edit" element={<FarmerEdit/>}/>
+       <Route path="/farmer-orders" element={<FarmerOrders/>}/>
+       <Route path="/farmer-notification" element={<FarmerNotifications/>}/>
     </Routes>
   );
 }
