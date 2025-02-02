@@ -1,12 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "./Home.css"; // Importing Home styles
+import "./Button.css"; // Importing button styles
 
 const Home = () => {
   const navigate = useNavigate();
-// const bt=()=>{
-//     console.log("clicked");
-//     navigate("/admin-login");
-// }
+
   return (
     <div className="flex flex-col items-center justify-center h-screen space-y-4">
        <h1 className="text-3xl font-bold">Welcome to the Portal</h1>
@@ -27,7 +26,7 @@ const Home = () => {
         onClick={() => navigate("/customer-login")}
         className="bg-blue-500 text-white px-4 py-2 rounded-lg"
       >
-        Buyer
+        Consumer
       </button>
     </div>
   );
