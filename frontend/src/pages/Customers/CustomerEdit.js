@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CustomerNavbar from "../../components/CustomerNavbar";
 import "./CustomerEdit.css"; // Import CSS for styling
 
 const CustomerEdit = () => {
@@ -21,6 +22,10 @@ const CustomerEdit = () => {
   };
 
   return (
+
+    <div className="Edit">
+      <CustomerNavbar />
+
     <div className="edit-container">
       <div className="edit-box">
         <h2 className="edit-title">Edit Profile</h2>
@@ -71,6 +76,7 @@ const CustomerEdit = () => {
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 };

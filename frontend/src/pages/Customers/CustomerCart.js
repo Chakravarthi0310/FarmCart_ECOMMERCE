@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CustomerCart.css"; // Import the CSS file for styling
-
+import CustomerNavbar from "../../components/CustomerNavbar";
 const CustomerCart = () => {
   const navigate = useNavigate();
 
@@ -71,6 +71,9 @@ const CustomerCart = () => {
   };
 
   return (
+
+    <div className="Cart">
+      <CustomerNavbar />
     <div className="cart-container">
       <h2 className="cart-title">Your Cart</h2>
       {cartItems.length === 0 ? (
@@ -132,6 +135,7 @@ const CustomerCart = () => {
           </form>
         </>
       )}
+    </div>
     </div>
   );
 };

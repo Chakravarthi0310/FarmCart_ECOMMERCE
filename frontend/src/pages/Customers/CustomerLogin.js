@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth"; // Importing custom authentication hook
-
+import CustomerNavbar from "../../components/CustomerNavbar";
 import "./CustomerLogin.css"; // Import CSS
 
 const CustomerLogin = () => {
@@ -26,6 +26,9 @@ const CustomerLogin = () => {
   };
 
   return (
+
+    <div className="Login">
+      <CustomerNavbar />
     <div className="login-container">
       <div className="login-box">
         <h2 className="login-title">🚜 Customer Login</h2>
@@ -66,6 +69,7 @@ const CustomerLogin = () => {
           </button>
           </p>
       </div>
+    </div>
     </div>
   );
 };
