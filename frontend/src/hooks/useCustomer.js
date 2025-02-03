@@ -5,7 +5,11 @@ import {
   placeOrder,
   getCustomerOrders,
   addToWishlist,
-  getWishlist
+  getWishlist,
+  getCart,
+  removeFromCart,
+  removeFromWishlist,
+  addToCart,
 } from "../services/customerService";
 
 const useCustomer = () => {
@@ -74,6 +78,7 @@ const useCustomer = () => {
     try {
       const token = localStorage.getItem("token");
       return await addToWishlist(productId, token);
+
     } catch (err) {
       setError(err.response?.data?.message || "Failed to place order.");
     } finally {
@@ -94,6 +99,59 @@ const useCustomer = () => {
       setLoading(false);
     }
   }
+  const handleGetCart = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const token = localStorage.getItem("token");
+      return await getCart(token);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to fetch cart.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  const handleAddToCart = async (productId) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const token = localStorage.getItem("token");
+      return await addToCart(productId, token);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to add to cart.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  const handleRemoveFromCart = async (productId) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const token = localStorage.getItem("token");
+      return await removeFromCart(productId, token);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to remove from cart.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  const handleRemoveFromWishlist = async (productId) => {
+    setLoading(true);
+    setError(null);
+    try {
+      console.log("USe customer",productId);
+      const token = localStorage.getItem("token");
+      return await removeFromWishlist(productId, token);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to remove from wishlist.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
 
   return {
     loading,
@@ -103,7 +161,11 @@ const useCustomer = () => {
     handlePlaceOrder,
     handleGetCustomerOrders,
     handleAddToWishList,
-    handleGetWishlist
+    handleGetWishlist,
+    handleRemoveFromCart,
+    handleAddToCart,
+    handleGetCart,
+    handleRemoveFromWishlist
   };
 };
 

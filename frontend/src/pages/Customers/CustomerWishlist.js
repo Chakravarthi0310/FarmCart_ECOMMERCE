@@ -1,74 +1,82 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import "./CustomerWishlist.css"; // Import the CSS file
+import useCustomer from "../../hooks/useCustomer";
 
 import CustomerNavbar from "../../components/CustomerNavbar";
+
 const CustomerWishlist = () => {
-  // Dummy wishlist data
+  const { handleGetWishlist, handleRemoveFromWishlist,handleAddToCart, loading, error } = useCustomer(); // Include remove function
   const [wishlist, setWishlist] = useState([]);
+    const hasFetched = useRef(false); 
+  
 
   useEffect(() => {
-    // Simulating an API fetch with dummy data
-    const dummyWishlist = [
-      {
-        id: 1,
-        foodName: "Organic Tomatoes",
-        foodType: "Vegetable",
-        price: "$5 per kg",
-        farmerName: "John Doe",
-        farmerPhone: "123-456-7890",
-      },
-      {
-        id: 2,
-        foodName: "Fresh Strawberries",
-        foodType: "Fruit",
-        price: "$8 per box",
-        farmerName: "Emma Smith",
-        farmerPhone: "987-654-3210",
-      },
-      {
-        id: 3,
-        foodName: "Farm Fresh Eggs",
-        foodType: "Dairy",
-        price: "$3 per dozen",
-        farmerName: "Liam Johnson",
-        farmerPhone: "456-789-1230",
-      },
-    ];
-    setWishlist(dummyWishlist);
+    if (hasFetched.current) return;
+    hasFetched.current = true;
+    const fetchWishlist = async () => {
+      const response = await handleGetWishlist();
+      console.log(response.data);
+      setWishlist(response.data.wishList);
+ 
+    };
+
+    fetchWishlist();
   }, []);
 
-  const handleAddToCart = (item) => {
-    alert(`${item.foodName} added to cart!`);
+  const handleAddCart = async (productId) => {
+    try{
+      await handleRemoveFromWishlist(productId);
+      alert("Added to cart successfully");
+    }catch(e){
+      alert(e);
+
+    }
+  };
+
+  const handleRemoveItem = async (itemId) => {
+    await handleRemoveFromWishlist(itemId); // Call API to remove item
+    setWishlist(wishlist.filter(item => item._id !== itemId)); // Update UI
   };
 
   return (
-
-
     <div className="Wishlist">
-     <CustomerNavbar />
-    <div className="wishlist-container">
-      <h2 className="wishlist-title">Your Wishlist</h2>
-      {wishlist.length > 0 ? (
-        <ul className="wishlist-list">
-          {wishlist.map((item) => (
-            <li key={item.id} className="wishlist-item">
-              <p><strong>{item.foodName}</strong> ({item.foodType})</p>
-              <p className="wishlist-price">Price: {item.price}</p>
-              <p>Farmer: {item.farmerName}</p>
-              <p>Contact: {item.farmerPhone}</p>
-              <button 
-                className="wishlist-add-to-cart" 
-                onClick={() => handleAddToCart(item)}
-              >
-                Add to Cart
-              </button>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="no-items">No items in your wishlist.</p>
-      )}
-    </div>
+      <CustomerNavbar />
+      <div className="wishlist-container">
+        <h2 className="wishlist-title">Your Wishlist</h2>
+        {wishlist.length > 0 ? (
+          <ul className="wishlist-list">
+            {wishlist.map((item) => (
+              <li key={item._id} className="wishlist-item">
+                <img src={item.imageUrl} alt={item.foodName} className="wishlist-image" />
+                <div className="wishlist-details">
+                  <h3><strong>{item.name}</strong></h3>
+                  <p><strong>Category:</strong> {item.category}</p>
+                  <p className="wishlist-price"><strong>Price:</strong> {item.price}</p>
+                  <p><strong>Farmer:</strong> {item.farmer.name}</p>
+                  <p><strong>Contact:</strong> {item.farmer.phone}</p>
+                  <p><strong>Address:</strong> {item.farmer.address}</p>
+                  <div className="wishlist-buttons">
+                    <button 
+                      className="wishlist-add-to-cart" 
+                      onClick={() => handleAddToCart(item._id)}
+                    >
+                      Add to Cart
+                    </button>
+                    <button 
+                      className="wishlist-remove" 
+                      onClick={() => handleRemoveItem(item._id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="no-items">No items in your wishlist.</p>
+        )}
+      </div>
     </div>
   );
 };

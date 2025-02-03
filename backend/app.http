@@ -99,7 +99,7 @@ POST http://localhost:5000/api/customer/login
 Content-Type: application/json
 
 {
-    "email": "john@example.com",
+    "email": "john1@example.com",
     "password": "securepassword"
 }
 
@@ -177,6 +177,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWExZmQ0M
         }
     ]
 }
+
+### Add Product to Wishlist
+POST http://localhost:5000/api/customer/wishlist
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTA1Y2IwMmE0MDAwMzIxMmM2NDRlNCIsImVtYWlsIjoiam9objFAZXhhbXBsZS5jb20iLCJpYXQiOjE3Mzg1NjM4MDUsImV4cCI6MTczODU2NzQwNX0.K2CFzPJwbt7Ea1OE_u-9nin3x9MjoG57JSRmhu0-UC0
+
+{
+    "productId": "679fbd464fbaf47d67d1d3ec"
+}
+
+
 
 ### get geo coordinates
 GET http://localhost:5000/api/location/geocode?address=New York

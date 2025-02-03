@@ -6,6 +6,7 @@ export const getApprovedProducts = async (token) => {
     const response = await axios.get(`${API_BASE_URL}/products`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    console.log("Customer service",response);
     return response.data;
   } catch (error) {
     console.error("Error fetching approved products:", error.response?.data?.message || error.message);
@@ -65,6 +66,7 @@ export const getCustomerOrders = async (token) => {
 export const addToWishlist = async (productId,token) => {
 
   try {
+    console.log(productId,token);
     const response = await axios.post(
       `${API_BASE_URL}/wishlist`,
       { productId },
@@ -75,6 +77,10 @@ export const addToWishlist = async (productId,token) => {
         },
       }
     );
+
+    console.log(response);
+    console.log("Added to wishlist successfully",response);
+
     return response.data;
   } catch (error) {
     console.error("Error adding to wishlist:", error.response?.data?.message || error.message);
@@ -88,12 +94,80 @@ export const getWishlist = async (token) => {
     const response = await axios.get(`${API_BASE_URL}/wishlist`, {
       headers: { Authorization: `Bearer ${token}` }, // ✅ Include token
     });
-    return response.data.wishlist; // Return wishlist array
+    console.log("From service");
+    console.log(response)
+    return response; // Return wishlist array
   } catch (error) {
     console.error("Error fetching wishlist:", error.response?.data?.message || error.message);
     throw error;
   }
 };
 
+export const removeFromWishlist = async (productId, token) => {
+  try {
+    console.log("Services",productId);
+    const response = await axios.delete(
+      `${API_BASE_URL}/wishlist/${productId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log(response.data.message);
+    return response.data.wishList; // Returns updated wishlist
+  } catch (error) {
+    console.error("Error removing from wishlist:", error.response?.data?.message || error.message);
+  }
+};
 
+export const addToCart = async (productId, token) => {
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/cart`,
+      { productId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log(response.data.message);
+    return response.data.cart; // Returns updated cart
+  } catch (error) {
+    console.error("Error adding to cart:", error.response?.data?.message || error.message);
+  }
+};
+
+export const removeFromCart = async (productId, token) => {
+  try {
+    const response = await axios.delete(
+      `${API_BASE_URL}/cart/${productId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log(response.data.message);
+    return response.data.cart; // Returns updated cart
+  } catch (error) {
+    console.error("Error removing from cart:", error.response?.data?.message || error.message);
+  }
+};
+
+export const getCart = async (token) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/cart`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(response);
+    console.log("Cart:", response.data.cart);
+    return response.data.cart;
+  } catch (error) {
+    console.error("Error fetching cart:", error.response?.data?.message || error.message);
+  }
+};
 

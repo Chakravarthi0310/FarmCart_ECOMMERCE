@@ -27,59 +27,202 @@ exports.registerCustomer = async (req,res)=>{
 
     }
 };
+const mongoose = require('mongoose');
 
 exports.addToWishlist = async (req, res) => {
   try {
-      const { productId } = req.body;
-      const customerId = req.customer.id;
-      console.log(customerId,productId);
+    const { productId } = req.body;
+    const customerId = req.customer.id;
 
-      // Validate inputs
-      if (!customerId || !productId) {
-          return res.status(400).json({ message: "Customer ID and Product ID are required" });
-      }
+    console.log(customerId, productId);
 
-      // Check if customer exists
-      const customer = await Customer.findById(customerId);
-      if (!customer) {
-          return res.status(404).json({ message: "Customer not found" });
-      }
+    // Validate inputs
+    if (!customerId || !productId) {
+      return res.status(400).json({ message: "Customer ID and Product ID are required" });
+    }
 
-      // Check if product exists
-      const product = await Product.findById(productId);
-      if (!product) {
-          return res.status(404).json({ message: "Product not found" });
-      }
+    // Convert productId to ObjectId
+    const productObjectId = new mongoose.Types.ObjectId(productId);
 
-      // Check if the product is already in the wishlist
-      if (customer.wishlist.includes(productId)) {
-          return res.status(400).json({ message: "Product is already in wishlist" });
-      }
+    // Check if customer exists
+    const customer = await Customer.findById(customerId);
+    if (!customer || !Array.isArray(customer.wishList)) {
+      return res.status(404).json({ message: "Customer not found or wishList is invalid" });
+    }
 
-      // Add product to wishlist
-      customer.wishlist.push(productId);
-      await customer.save();
+    // Check if the product is already in the wishList
+    const isAlreadyInwishList = customer.wishList.some(id => id.equals(productObjectId));
 
-      res.status(200).json({ message: "Product added to wishlist", wishlist: customer.wishlist });
+    console.log("wishList:", customer.wishList, "Checking Product:", productObjectId);
+    
+    if (isAlreadyInwishList) {
+      return res.status(400).json({ message: "Product is already in wishList" });
+    }
+
+    // Add product to wishList
+    customer.wishList.push(productObjectId);
+    await customer.save(); // Save changes
+
+    res.status(200).json({ message: "Product added to wishList", wishList: customer.wishList });
   } catch (error) {
-      res.status(500).json({ message: "Internal Server Error", error: error.message });
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 };
+exports.removeFromWishlist = async (req, res) => {
+  try {
+    const {itemId} = req.params;
+    const customerId = req.customer.id;
+
+
+    console.log(customerId, itemId);
+    productId=itemId;
+
+    // Validate inputs
+    if (!customerId || !productId) {
+      return res.status(400).json({ message: "Customer ID and Product ID are required" });
+    }
+
+    // Convert productId to ObjectId
+    const productObjectId = new mongoose.Types.ObjectId(productId);
+
+    // Check if customer exists
+    const customer = await Customer.findById(customerId);
+    if (!customer || !Array.isArray(customer.wishList)) {
+      return res.status(404).json({ message: "Customer not found or wishList is invalid" });
+    }
+
+    // Check if the product is already in the wishList
+    const isAlreadyInwishList = customer.wishList.some(id => id.equals(productObjectId));
+
+    console.log("wishList:", customer.wishList, "Checking Product:", productObjectId);
+    
+    if (!isAlreadyInwishList) {
+      return res.status(400).json({ message: "Product not found in wishList" });
+    }
+
+    // Add product to wishList
+    customer.wishList.pull(productObjectId);
+    await customer.save(); // Save changes
+
+    res.status(200).json({ message: "Product removed from wishList", wishList: customer.wishList });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+};
+
+exports.addToCart = async (req, res) => {
+  try {
+    const customerId = req.customer.id;
+    const { productId } = req.body; // Get product ID from request body
+
+    // Find the customer
+    const customer = await Customer.findById(customerId);
+    if (!customer) {
+      return res.status(404).json({ message: "Customer not found" });
+    }
+
+    // Check if the product exists
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    // Check if the product is already in the cart
+    if (customer.cart.includes(productId)) {
+      return res.status(400).json({ message: "Product already in cart" });
+    }
+
+    // Add product to cart
+    customer.cart.push(productId);
+    await customer.save();
+
+    res.status(200).json({ message: "Product added to cart", cart: customer.cart });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+};
+exports.removeFromCart = async (req, res) => {
+  try {
+    const customerId = req.customer.id;
+    const { productId } = req.params; // Get product ID from request body
+
+    // Find the customer
+    const customer = await Customer.findById(customerId);
+    if (!customer) {
+      return res.status(404).json({ message: "Customer not found" });
+    }
+
+    // Check if the product exists
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    // Check if the product is already in the cart
+    if (!customer.cart.includes(productId)) {
+      return res.status(400).json({ message: "Product not found in cart" });
+    }
+
+    // Add product to cart
+    customer.cart.pull(productId);
+    await customer.save();
+
+    res.status(200).json({ message: "Product removed from cart", cart: customer.cart });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+};
+
 exports.getWishlist = async (req, res) => {
   try {
     const customerId = req.customer.id;
 
-      // Check if customer exists
-      const customer = await Customer.findById(customerId).populate("wishlist");
-      if (!customer) {
-          return res.status(404).json({ message: "Customer not found" });
-      }
+    // Check if customer exists and populate wishlist with product and farmer details
+    const customer = await Customer.findById(customerId)
+      .populate({
+        path: "wishList",
+        populate: {
+          path: "farmer", // Populate farmer details
+          select: "name phone address", // Only get required fields
+        },
+      });
 
-      res.status(200).json({ wishlist: customer.wishlist });
+    if (!customer) {
+      return res.status(404).json({ message: "Customer not found" });
+    }
+    console.log(customer.wishList);
+
+    res.status(200).json({ wishList: customer.wishList });
   } catch (error) {
-      res.status(500).json({ message: "Internal Server Error", error: error.message });
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 };
+
+exports.getCart = async (req, res) => {
+  try {
+    const customerId = req.customer.id;
+
+    // Check if customer exists and populate wishlist with product and farmer details
+    const customer = await Customer.findById(customerId)
+      .populate({
+        path: "cart",
+        populate: {
+          path: "farmer", // Populate farmer details
+          select: "name phone address", // Only get required fields
+        },
+      });
+
+    if (!customer) {
+      return res.status(404).json({ message: "Customer not found" });
+    }
+    console.log(customer.cart);
+
+    res.status(200).json({ cart: customer.cart });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+};
+
 
 exports.loginCustomer = async (req,res)=>{
     try{
