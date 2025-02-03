@@ -14,6 +14,7 @@ const useAuth = () => {
         const response = role === "farmer"
             ? await loginFarmer(credentials)
             : await loginCustomer(credentials);
+          console.log(response);
 
         if (response?.token) {
             localStorage.setItem("userRole", role);
