@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaSearch, FaHeart, FaShoppingCart, FaUser } from "react-icons/fa";
+import { FaHeart, FaShoppingCart, FaUser } from "react-icons/fa";
 import { FaBellConcierge } from "react-icons/fa6";
+import logo from "../assets/logo.jpg"; // Correct import for logo
+
 import "./CustomerNavbar.css"; // Import the CSS file
 
 const CustomerNavbar = () => {
@@ -14,13 +16,9 @@ const CustomerNavbar = () => {
   };
 
   const handleLogout = () => {
-    // Clear authentication data from localStorage
-    localStorage.clear()
-
+    localStorage.clear(); // Clear authentication data
     console.log("User logged out successfully.");
-
-    // Redirect to the login page
-    navigate("/");
+    navigate("/"); // Redirect to login page
   };
 
   return (
@@ -28,18 +26,14 @@ const CustomerNavbar = () => {
       <div className="container">
         {/* Logo and Website Name */}
         <div className="logo" onClick={() => navigate("/customer-dashboard")}>
-          <img src="/assets/logo.jpg" className="logo-img" alt="Logo" />
+          <img src={logo} className="logo-img" alt="logo" /> {/* Corrected logo import */}
           <span className="FarmCart">FarmCart</span>
         </div>
-
-        {/* Search Bar */}
-    
-
 
         {/* Account Dropdown, Wishlist, and Cart */}
         <div className="account">
           {/* My Account Dropdown */}
-          <div 
+          <div
             className="dropdown"
             onMouseEnter={() => setDropdownOpen(true)}
             onMouseLeave={() => setDropdownOpen(false)}
