@@ -1,100 +1,110 @@
 import { useState } from "react";
-import axios from "axios";
+import {
+  getApprovedProducts,
+  updateProfile,
+  placeOrder,
+  getCustomerOrders,
+  addToWishlist,
+  getWishlist
+} from "../services/customerService";
 
-const API_BASE_URL = "http://localhost:5000/api/customer";
-
-const useCustomerService = () => {
-  const [data, setData] = useState(null);
+const useCustomer = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // ✅ Fetch Approved Products
-  const getApprovedProducts = async (token) => {
+  // Fetch Approved Products
+  const handleGetApprovedProducts = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`${API_BASE_URL}/products`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setData(response.data);
-      return response.data;
+      const token = localStorage.getItem("token");
+      return await getApprovedProducts(token);
     } catch (err) {
-      console.error("Error fetching approved products:", err);
       setError(err.response?.data?.message || "Failed to fetch products.");
     } finally {
       setLoading(false);
     }
   };
 
-  // ✅ Update Profile
-  const updateProfile = async (userData, token) => {
+  // Update Profile
+  const handleUpdateProfile = async (userData) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.put(`${API_BASE_URL}/profile`, userData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-      setData(response.data);
-      alert("Profile updated successfully!");
-      return response.data;
+      const token = localStorage.getItem("token");
+      return await updateProfile(userData, token);
     } catch (err) {
-      console.error("Error updating profile:", err);
-      setError(err.response?.data?.message || "Profile update failed.");
+      setError(err.response?.data?.message || "Failed to update profile.");
     } finally {
       setLoading(false);
     }
   };
 
-  // ✅ Place Order
-  const placeOrder = async (customerId, products, token) => {
+  // Place Order
+  const handlePlaceOrder = async (customerId, products) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post(
-        `${API_BASE_URL}/products/order`,
-        { customerId, products },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setData(response.data);
-      return response.data;
+      const token = localStorage.getItem("token");
+      return await placeOrder(customerId, products, token);
     } catch (err) {
-      console.error("Error placing order:", err);
-      setError(err.response?.data?.message || "Order placement failed.");
+      setError(err.response?.data?.message || "Failed to place order.");
     } finally {
       setLoading(false);
     }
   };
 
-  // ✅ Fetch Customer Orders
-  const getCustomerOrders = async (token) => {
+  // Get Customer Orders
+  const handleGetCustomerOrders = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`${API_BASE_URL}/products/order`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setData(response.data.orders);
-      return response.data.orders;
+      const token = localStorage.getItem("token");
+      return await getCustomerOrders(token);
     } catch (err) {
-      console.error("Error fetching customer orders:", err);
       setError(err.response?.data?.message || "Failed to fetch orders.");
     } finally {
       setLoading(false);
     }
   };
 
+  const handleAddToWishList = async (productId)=>{
+    setLoading(true);
+    setError(null);
+    try {
+      const token = localStorage.getItem("token");
+      return await addToWishlist(productId, token);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to place order.");
+    } finally {
+      setLoading(false);
+    }
+
+  };
+
+  const handleGetWishlist = async(req,res)=>{
+    setLoading(true);
+    setError(null);
+    try {
+      const token = localStorage.getItem("token");
+      return await getWishlist(token);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to place order.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return {
-    data,
     loading,
     error,
-    getApprovedProducts,
-    updateProfile,
-    placeOrder,
-    getCustomerOrders,
+    handleGetApprovedProducts,
+    handleUpdateProfile,
+    handlePlaceOrder,
+    handleGetCustomerOrders,
+    handleAddToWishList,
+    handleGetWishlist
   };
 };
 
-export default useCustomerService;
+export default useCustomer;

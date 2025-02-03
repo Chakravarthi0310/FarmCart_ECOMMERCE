@@ -26,7 +26,7 @@ import CustomerMessage from "./pages/Customers/CustomerMessage";
 
 
 
-
+import "./index.css"
 
 import Home from "./pages/Home";
 // import ProtectedRoute from "./pages/routes/ProtectedRoute";

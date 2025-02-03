@@ -1,106 +1,19 @@
 
-// import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import CustomerNavbar from "../../components/CustomerNavbar";
-// import "./CustomerDashboard.css";
 
-// const dummyProducts = [
-//   { id: 1, name: "Apple", category: "fruits", price: "₹100/kg", expiry: "10 days", image: "/apple.jpg" },
-//   { id: 2, name: "Carrot", category: "vegetables", price: "₹50/kg", expiry: "5 days", image: "/carrot.jpg" },
-//   { id: 3, name: "Rice", category: "grains", price: "₹80/kg", expiry: "6 months", image: "/rice.jpg" },
-//   { id: 4, name: "Milk", category: "dairy", price: "₹60/L", expiry: "3 days", image: "/milk.jpg" },
-//   { id: 5, name: "Eggs", category: "poultry", price: "₹6/egg", expiry: "7 days", image: "/eggs.jpg" }
-// ];
-
-// const CustomerDashboard = () => {
-//   const [searchTerm, setSearchTerm] = useState("");
-//   const [selectedCategory, setSelectedCategory] = useState("all");
-//   const navigate = useNavigate();
-
-//   const filteredProducts = dummyProducts.filter(product =>
-//     (selectedCategory === "all" || product.category === selectedCategory) &&
-//     product.name.toLowerCase().includes(searchTerm.toLowerCase())
-//   );
-
-//   return (
-//     <div className="dashboard">
-//       <CustomerNavbar />
-      
-//       {/* Category Bar */}
-//       <div className="category-bar">
-//         {["all", "fruits", "vegetables", "grains", "dairy", "poultry"].map(category => (
-//           <button 
-//             key={category} 
-//             className={selectedCategory === category ? "active" : ""} 
-//             onClick={() => setSelectedCategory(category)}
-//           >
-//             {category.charAt(0).toUpperCase() + category.slice(1)}
-//           </button>
-//         ))}
-//       </div>
-      
-//       {/* Search Bar */}
-//       <div className="search-container">
-//         <input
-//           type="text"
-//           placeholder="Search for products..."
-//           value={searchTerm}
-//           onChange={(e) => setSearchTerm(e.target.value)}
-//         />
-//       </div>
-      
-//       {/* Product Display */}
-//       <div className="product-grid">
-//         {filteredProducts.length > 0 ? (
-//           filteredProducts.map((product) => (
-//             <div key={product.id} className="product-card">
-//               <img
-//                 src={product.image}
-//                 alt={product.name}
-//                 onClick={() => navigate(`/product-details/${product.id}`)}
-//               />
-//               <h3>{product.name}</h3>
-//               <p>{product.price}</p>
-//               <p>Expiry: {product.expiry}</p>
-//               <div className="buttons">
-//                 <button className="wishlist">❤️ Wishlist</button>
-//                 <button className="add-to-cart">🛒 Add to Cart</button>
-//               </div>
-//             </div>
-//           ))
-//         ) : (
-//           <p className="no-results">No products found.</p>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CustomerDashboard;
-
-
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomerNavbar from "../../components/CustomerNavbar";
 import "./CustomerDashboard.css";
+import useCustomer from "../../hooks/useCustomer";
 
-const dummyProducts = [
-  { id: 1, name: "Apple", category: "fruits", price: "₹100/kg", expiry: "10 days", rating: 4.5, image: "/apple.jpg" },
-  { id: 2, name: "Carrot", category: "vegetables", price: "₹50/kg", expiry: "5 days", rating: 3.8, image: "/carrot.jpg" },
-  { id: 3, name: "Rice", category: "grains", price: "₹80/kg", expiry: "6 months", rating: 4.2, image: "/rice.jpg" },
-  { id: 4, name: "Milk", category: "dairy", price: "₹60/L", expiry: "3 days", rating: 3.5, image: "/milk.jpg" },
-  { id: 5, name: "Eggs", category: "poultry", price: "₹6/egg", expiry: "7 days", rating: 4.0, image: "/eggs.jpg" },
-  // Additional dummy products
-  { id: 6, name: "Banana", category: "fruits", price: "₹40/kg", expiry: "7 days", rating: 4.1, image: "/banana.jpg" },
-  { id: 7, name: "Broccoli", category: "vegetables", price: "₹70/kg", expiry: "4 days", rating: 3.2, image: "/broccoli.jpg" },
-  { id: 8, name: "Wheat", category: "grains", price: "₹90/kg", expiry: "8 months", rating: 2.8, image: "/wheat.jpg" },
-  { id: 9, name: "Cheese", category: "dairy", price: "₹150/kg", expiry: "2 weeks", rating: 4.7, image: "/cheese.jpg" },
-  { id: 10, name: "Chicken", category: "poultry", price: "₹200/kg", expiry: "2 days", rating: 4.3, image: "/chicken.jpg" }
-];
+
 
 const CustomerDashboard = () => {
   // Main filter states used for filtering products:
+  const [products, setProducts] = useState([]);
+    const [wishlist, setWishlist] = useState([]);
+
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [ratingFilter, setRatingFilter] = useState("all");
@@ -110,8 +23,26 @@ const CustomerDashboard = () => {
   // Temporary states for the filter form (to allow changes before saving)
   const [filterCategory, setFilterCategory] = useState(selectedCategory);
   const [filterRating, setFilterRating] = useState(ratingFilter);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+    const { handleGetApprovedProducts, handleAddToWishList, handleGetWishlist } = useCustomer();
   const navigate = useNavigate();
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const approvedProducts = await handleGetApprovedProducts();
+        console.log(approvedProducts);
+        setProducts(approvedProducts);
+      } catch (err) {
+        setError("Failed to load products.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   // Apply filter changes and close the dropdown
   const applyFilters = () => {
@@ -120,8 +51,22 @@ const CustomerDashboard = () => {
     setFilterOpen(false);
   };
 
+  const toggleWishlist = async (productId) => {
+       try{
+      await handleAddToWishList(productId);
+          setWishlist((prevWishlist) =>
+            prevWishlist.includes(productId)
+              ? prevWishlist.filter((id) => id !== productId)
+              : [...prevWishlist, productId]
+          );
+      alert("Added to wishlist successfully");
+    }catch(e){
+      alert("Error adding to wishLIst")
+    }
+      };
+
   // Filtering products based on search, category, and rating
-  const filteredProducts = dummyProducts.filter(product => {
+  const filteredProducts = products.filter(product => {
     const categoryMatch = selectedCategory === "all" || product.category === selectedCategory;
     const searchMatch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
     let ratingMatch = true;
@@ -146,7 +91,7 @@ const CustomerDashboard = () => {
       {/* Top bar: Category Bar and Filter Toggle */}
       <div className="filter-container">
         <div className="category-bar">
-          {["all", "fruits", "vegetables", "grains", "dairy", "poultry"].map(category => (
+          {["all", "Fruits", "Vegetables", "Grains", "Dairy", "Poultry"].map(category => (
             <button 
               key={category} 
               className={selectedCategory === category ? "active" : ""} 
@@ -223,10 +168,15 @@ const CustomerDashboard = () => {
               />
               <h3>{product.name}</h3>
               <p>{product.price}</p>
-              <p>Expiry: {product.expiry}</p>
-              <p>Rating: {product.rating}</p>
+              <p>Expiry: {new Date(product.expiryDate).toLocaleDateString()}</p>
+              <p>Rating: {product.ratings}</p>
               <div className="buttons">
-                <button className="wishlist">❤️ Wishlist</button>
+                <button className="wishlist"
+                onClick={()=>toggleWishlist(product._id)}
+                                  style={{ color: wishlist.includes(product._id) ? "red" : "black" }}
+
+                
+                >❤️ Wishlist</button>
                 <button className="add-to-cart">🛒 Add to Cart</button>
               </div>
             </div>

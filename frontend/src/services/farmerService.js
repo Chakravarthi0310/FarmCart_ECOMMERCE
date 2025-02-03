@@ -51,7 +51,7 @@ export const addProduct = async (productData) => {
 
 export const viewOwnProducts = async () => {
   try {
-    const authToken = localStorage.getItem("authToken");
+    const authToken = localStorage.getItem("token");
 
     if (!authToken) throw new Error("No authentication token found.");
 

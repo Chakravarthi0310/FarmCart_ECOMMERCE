@@ -61,6 +61,39 @@ export const getCustomerOrders = async (token) => {
   }
 };
 
+// ✅ Add a product to the wishlist
+export const addToWishlist = async (productId,token) => {
+
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/wishlist`,
+      { productId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // ✅ Send token for authentication
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error adding to wishlist:", error.response?.data?.message || error.message);
+    throw error;
+  }
+};
+
+// ✅ Get wishlist of a customer
+export const getWishlist = async (token) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/wishlist`, {
+      headers: { Authorization: `Bearer ${token}` }, // ✅ Include token
+    });
+    return response.data.wishlist; // Return wishlist array
+  } catch (error) {
+    console.error("Error fetching wishlist:", error.response?.data?.message || error.message);
+    throw error;
+  }
+};
 
 
 

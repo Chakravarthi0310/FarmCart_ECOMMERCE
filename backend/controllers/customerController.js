@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const Customer = require("../models/Customer");
 const Order = require("../models/Order");
+const Product = require("../models/Product")
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -25,6 +26,59 @@ exports.registerCustomer = async (req,res)=>{
         
 
     }
+};
+
+exports.addToWishlist = async (req, res) => {
+  try {
+      const { productId } = req.body;
+      const customerId = req.customer.id;
+      console.log(customerId,productId);
+
+      // Validate inputs
+      if (!customerId || !productId) {
+          return res.status(400).json({ message: "Customer ID and Product ID are required" });
+      }
+
+      // Check if customer exists
+      const customer = await Customer.findById(customerId);
+      if (!customer) {
+          return res.status(404).json({ message: "Customer not found" });
+      }
+
+      // Check if product exists
+      const product = await Product.findById(productId);
+      if (!product) {
+          return res.status(404).json({ message: "Product not found" });
+      }
+
+      // Check if the product is already in the wishlist
+      if (customer.wishlist.includes(productId)) {
+          return res.status(400).json({ message: "Product is already in wishlist" });
+      }
+
+      // Add product to wishlist
+      customer.wishlist.push(productId);
+      await customer.save();
+
+      res.status(200).json({ message: "Product added to wishlist", wishlist: customer.wishlist });
+  } catch (error) {
+      res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+};
+exports.getWishlist = async (req, res) => {
+  try {
+    const customerId = req.customer.id;
+
+      // Check if customer exists
+      const customer = await Customer.findById(customerId).populate("wishlist");
+      if (!customer) {
+          return res.status(404).json({ message: "Customer not found" });
+      }
+
+      res.status(200).json({ wishlist: customer.wishlist });
+  } catch (error) {
+      res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
 };
 
 exports.loginCustomer = async (req,res)=>{
