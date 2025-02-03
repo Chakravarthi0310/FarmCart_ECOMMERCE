@@ -36,11 +36,11 @@ export const updateProfile = async (userData, token) => {
   }
 };
 
-export const placeOrder = async (customerId, products,token) => {
+export const placeOrder = async (products,token) => {
   try {
     const response = await axios.post(
-      `${API_BASE_URL}/products/order`,
-      { customerId, products },
+      `${API_BASE_URL}/order`,
+      { products },
       { headers: { Authorization: `Bearer ${token}` } }
     );
     return response.data;
@@ -52,7 +52,7 @@ export const placeOrder = async (customerId, products,token) => {
 
 export const getCustomerOrders = async (token) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/products/order`, {
+    const response = await axios.get(`${API_BASE_URL}/order`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data.orders;

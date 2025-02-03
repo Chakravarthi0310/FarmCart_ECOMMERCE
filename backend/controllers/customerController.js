@@ -156,7 +156,8 @@ exports.addToCart = async (req, res) => {
 exports.removeFromCart = async (req, res) => {
   try {
     const customerId = req.customer.id;
-    const { productId } = req.params; // Get product ID from request body
+    const { itemId } = req.params; // Get product ID from request body
+    const productId = itemId;
 
     // Find the customer
     const customer = await Customer.findById(customerId);

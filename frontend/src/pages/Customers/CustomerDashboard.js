@@ -228,9 +228,16 @@ const CustomerDashboard = () => {
             <div key={product.id} className="product-card">
               <img
                 className="product-image"
-                src={product.image}
-                alt={product.name}
-                onClick={() => navigate(`/product-details/${product.id}`)}
+                src={
+                  product.image?.data
+                    ? `data:${product.image.contentType};base64,${btoa(
+                        new Uint8Array(product.image.data.data).reduce(
+                          (data, byte) => data + String.fromCharCode(byte),
+                          ""
+                        )
+                      )}`
+                    : "../../assets/default.jpg"
+                }                onClick={() => navigate(`/product-details/${product.id}`)}
               />
               <h3>{product.name}</h3>
               <p>{product.price}</p>
