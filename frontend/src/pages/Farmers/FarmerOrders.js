@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "./FarmerNavbar";
 import "./FarmerOrders.css";
-
+import useFarmer from "../../hooks/useFarmer";
 const FarmerOrders = () => {
   const [orders] = useState([
     { id: 101, item: "Tomatoes", quantity: "20kg", status: "Delivered" },

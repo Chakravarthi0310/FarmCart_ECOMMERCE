@@ -27,8 +27,9 @@ const CustomerNavbar = () => {
     <nav className="navbar">
       <div className="container">
         {/* Logo and Website Name */}
-        <div className="logo" onClick={()=>navigate("/customer-dashboard")}>
-          <img src="/logo.png" className="logo-img" alt="Logo" />
+
+        <div className="logo" onClick={() => navigate("/customer-dashboard")}>
+          <img src="/assets/logo.jpg" className="logo-img" alt="Logo" />
           <span className="FarmCart">FarmCart</span>
         </div>
 

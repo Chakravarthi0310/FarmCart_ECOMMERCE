@@ -144,4 +144,20 @@
   .payment-button:hover {
     background-color: #218838;
   }
-  
+  .quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity-input {
+  width: 50px;
+  text-align: center;
+  font-size: 16px;
+  padding: 5px;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+}

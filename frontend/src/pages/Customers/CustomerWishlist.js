@@ -49,7 +49,16 @@ const CustomerWishlist = () => {
           <ul className="wishlist-list">
             {wishlist.map((item) => (
               <li key={item._id} className="wishlist-item">
-                <img src={item.imageUrl} alt={item.foodName} className="wishlist-image" />
+                <img src={
+                      item.image?.data
+                        ? `data:${item.image.contentType};base64,${btoa(
+                            new Uint8Array(item.image.data.data).reduce(
+                              (data, byte) => data + String.fromCharCode(byte),
+                              ""
+                            )
+                          )}`
+                        : "../../assets/default.jpg"
+                    } alt={item.foodName} className="wishlist-image" />
                 <div className="wishlist-details">
                   <h3><strong>{item.name}</strong></h3>
                   <p><strong>Category:</strong> {item.category}</p>

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useCustomer from "../../hooks/useCustomer";
-import CustomerNavbar from "../../components/CustomerNavbar";
 import "./ProductDetails.css";
-
+import CustomerNavbar from "../../components/CustomerNavbar";
 const ProductDetails = () => {
   const { id } = useParams(); // product ID from URL
   const navigate = useNavigate();
@@ -44,18 +43,18 @@ const ProductDetails = () => {
   }, [id, handleGetApprovedProducts]);
 
   const addToWishlist = async () => {
-       try{
+    try {
       await handleAddToWishList(product._id);
-      alert("Added to wishlist successfully");
-    }catch(e){
-      alert("Error adding to wishLIst")
+      alert("Added to wishlist successfully!");
+    } catch (err) {
+      alert("Error adding to wishlist.");
     }
   };
-  
-  const addToCart = async () => {
+
+  const addToCartlist = async () => {
     try {
       await handleAddToCart(product._id);
-      alert("Added to cart successfully!");
+      alert("Added to card successfully!");
     } catch (err) {
       alert("Error adding to wishlist.");
     }
@@ -71,13 +70,27 @@ const ProductDetails = () => {
   if (!product) return null;
 
   return (
+    <>
+    <customerNavbar/>
     <div className="product-details-container">
-      <CustomerNavbar />
+      
+      <button className="back-btn" onClick={() => navigate(-1)}>
+        ⬅ Back
+      </button>
 
       <div className="product-main">
         {/* Left: Product Image */}
         <div className="product-image-container">
-          <img src={product.image} alt={product.name} className="product-main-image" />
+        <img src={
+                      product.image?.data
+                        ? `data:${product.image.contentType};base64,${btoa(
+                            new Uint8Array(product.image.data.data).reduce(
+                              (data, byte) => data + String.fromCharCode(byte),
+                              ""
+                            )
+                          )}`
+                        : "../../assets/default.jpg"
+                    } alt={product.name} className="item-image" />
         </div>
 
         {/* Right: Product Details */}
@@ -99,7 +112,7 @@ const ProductDetails = () => {
 
           {/* Action Buttons */}
           <div className="details-buttons">
-            <button className="cart-btn" onClick={addToCart}>🛒 Add to Cart</button>
+            <button className="cart-btn" onClick={addToCartlist}>🛒 Add to Cart</button>
             <button className="wishlist-btn" onClick={addToWishlist}>
               ❤️ Add to Wishlist
             </button>
@@ -129,6 +142,7 @@ const ProductDetails = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

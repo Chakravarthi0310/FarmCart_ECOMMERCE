@@ -131,7 +131,16 @@ const placeOrder = async (e) => {
                     checked={selectedItems[item.id]}
                     onChange={() => toggleSelection(item.id)}
                   />
-                  <img src={item.image} alt={item.name} className="item-image" />
+                  <img src={
+                      item.image?.data
+                        ? `data:${item.image.contentType};base64,${btoa(
+                            new Uint8Array(item.image.data.data).reduce(
+                              (data, byte) => data + String.fromCharCode(byte),
+                              ""
+                            )
+                          )}`
+                        : "../../assets/default.jpg"
+                    } alt={item.name} className="item-image" />
                   <div className="item-details">
                     <h3>{item.name}</h3>
                     <p>Price: ₹{item.price} per {item.unit}</p>
