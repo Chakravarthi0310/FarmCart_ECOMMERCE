@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./CustomerNotifications.css"; // Import the CSS file
+
 import CustomerNavbar from "../../components/CustomerNavbar";
 const CustomerNotification = () => {
   // Dummy data for subscribed farmers and their new items

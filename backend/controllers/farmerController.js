@@ -28,7 +28,14 @@ exports.registerFarmer = async(request, res) => {
             address,
         });
         await newFarmer.save();
-        res.status(201).json({ message: "Farmer registered successfully" });
+        res.status(201).json({  message: "Farmer Registered Successfully",
+            token,
+            farmer: {
+                id: newFarmer._id,
+                name: newFarmer.name,
+                phone: newFarmer.phone,
+                address: newFarmer.address,
+            }, });
     } catch (e) {
         res.status(500).json({ message: "error registering farmer", error: e.message });
     }
@@ -109,12 +116,24 @@ exports.viewOwnProducts = async(req, res) => {
 exports.addProduct = async (req, res) => {
     try {
         const farmerId = req.customer.id;
-        const { name, category, marketRate, price, quantity, expiryDate } = req.body;
+        const { name, category, marketRate, price, quantity, expiryDate ,image} = req.body;
 
         // Validate required fields
-        if (!name || !category || !marketRate || !price || !quantity || !expiryDate) {
-            return res.status(400).json({ message: "All fields are required." });
-        }
+        const missingFields = [];
+
+if (!name) missingFields.push("name");
+if (!category) missingFields.push("category");
+if (!marketRate) missingFields.push("marketRate");
+if (!price) missingFields.push("price");
+if (!quantity) missingFields.push("quantity");
+if (!expiryDate) missingFields.push("expiryDate");
+
+if (missingFields.length > 0) {
+    return res.status(400).json({
+        message: `Missing required fields: ${missingFields.join(", ")}`
+    });
+}
+
 
         const newProduct = new Product({
             name,

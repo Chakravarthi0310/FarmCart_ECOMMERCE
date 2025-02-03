@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./CustomerSubscriptions.css";
 import CustomerNavbar from "../../components/CustomerNavbar";
 
 const CustomerSubscriptions = () => {
-  // Dummy data for subscribed and unsubscribed farmers
+  const navigate = useNavigate();
+
   const [subscribedFarmers, setSubscribedFarmers] = useState([
     {
       id: 1,
@@ -22,6 +24,7 @@ const CustomerSubscriptions = () => {
       products: ["Strawberries", "Blueberries", "Apples"],
     },
   ]);
+
   const [unsubscribedFarmers, setUnsubscribedFarmers] = useState([
     {
       id: 3,
@@ -40,15 +43,16 @@ const CustomerSubscriptions = () => {
       products: ["Lettuce", "Spinach", "Kale"],
     },
   ]);
-  const [showSubscribed, setShowSubscribed] = useState(true); // Toggle between subscribed and unsubscribed view
 
-  // Handle Subscribe action
+  const [showSubscribed, setShowSubscribed] = useState(true);
+
+  // Handle Subscribe
   const handleSubscribe = (farmer) => {
     setSubscribedFarmers([...subscribedFarmers, farmer]);
     setUnsubscribedFarmers(unsubscribedFarmers.filter((f) => f.id !== farmer.id));
   };
 
-  // Handle Unsubscribe action
+  // Handle Unsubscribe
   const handleUnsubscribe = (farmer) => {
     setUnsubscribedFarmers([...unsubscribedFarmers, farmer]);
     setSubscribedFarmers(subscribedFarmers.filter((f) => f.id !== farmer.id));
@@ -58,12 +62,10 @@ const CustomerSubscriptions = () => {
     <div className="subscriptions">
       <CustomerNavbar />
       <div className="subscriptions-container">
-        {/* Display the title only when subscribed farmers are shown */}
-        {showSubscribed && (
-          <h2 className="subscriptions-title">Your Subscriptions</h2>
-        )}
+        <h2 className="subscriptions-title">
+          {showSubscribed ? "Your Subscriptions" : "Available Farmers"}
+        </h2>
 
-        {/* Toggle Button */}
         <button
           className="toggle-button"
           onClick={() => setShowSubscribed(!showSubscribed)}
@@ -71,7 +73,6 @@ const CustomerSubscriptions = () => {
           {showSubscribed ? "View Unsubscribed Farmers" : "View Subscribed Farmers"}
         </button>
 
-        {/* Show Subscribed Farmers */}
         {showSubscribed ? (
           <div className="subscribed-farmers">
             {subscribedFarmers.length > 0 ? (
@@ -83,13 +84,15 @@ const CustomerSubscriptions = () => {
                     <p>Phone: {farmer.phone}</p>
                     <p>Products: {farmer.products.join(", ")}</p>
                     <div className="action-buttons">
-                      <button
-                        className="unsubscribe-btn"
-                        onClick={() => handleUnsubscribe(farmer)}
-                      >
+                      <button className="unsubscribe-btn" onClick={() => handleUnsubscribe(farmer)}>
                         Unsubscribe
                       </button>
-                      <button className="message-btn">Message</button>
+                      <button
+                        className="message-btn"
+                        onClick={() => navigate("/customer-message", { state: { farmer } })}
+                      >
+                        Message
+                      </button>
                       <button className="view-btn">View</button>
                     </div>
                   </li>
@@ -100,7 +103,6 @@ const CustomerSubscriptions = () => {
             )}
           </div>
         ) : (
-          // Show Unsubscribed Farmers
           <div className="unsubscribed-farmers">
             {unsubscribedFarmers.length > 0 ? (
               <ul className="farmers-list">
@@ -110,10 +112,7 @@ const CustomerSubscriptions = () => {
                     <p>Location: {farmer.location}</p>
                     <p>Phone: {farmer.phone}</p>
                     <p>Products: {farmer.products.join(", ")}</p>
-                    <button
-                      className="subscribe-btn"
-                      onClick={() => handleSubscribe(farmer)}
-                    >
+                    <button className="subscribe-btn" onClick={() => handleSubscribe(farmer)}>
                       Subscribe
                     </button>
                   </li>

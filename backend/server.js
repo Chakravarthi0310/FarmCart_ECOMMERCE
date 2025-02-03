@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const multer = require("multer");
+const upload = multer({ storage: multer.memoryStorage() }); // Store images in memory buffer
+
 const connectDB = require("./config/db");
 const farmerRoutes = require("./routes/farmerRoutes");
 const customerRoutes = require("./routes/customerRoutes");

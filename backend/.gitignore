@@ -1,2 +1,7 @@
 .env
+<<<<<<< HEAD
 farmcart-852fb-firebase-adminsdk-fbsvc-b4c12b12b9.json
+node_modules/
+=======
+farmcart-852fb-firebase-adminsdk-fbsvc-b4c12b12b9.json
+>>>>>>> eb69791d8ece63bcdf22eeed5c46f699c68911be

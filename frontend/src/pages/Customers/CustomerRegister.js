@@ -125,7 +125,7 @@ const CustomerRegister = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
-  const { register, loading, error } = useAuth(); // Use the register function from the authentication hook
+  const { register,login, loading, error } = useAuth(); // Use the register function from the authentication hook
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -136,6 +136,7 @@ const CustomerRegister = () => {
     const userData = { name,email, password, phone:mobile,address };
     try {
       const response = await register("customer", userData);
+      const success = await login("customer",{ email, password },);
       alert("✅ Customer Registered Successfully!");
       navigate("/customer-dashboard"); // Redirect after successful registration
     } catch (err) {
@@ -143,8 +144,6 @@ const CustomerRegister = () => {
     }
   };
   return (
-    <div className="Register">
-      
     <div className="register-container">
       <div className="register-box">
         <h2 className="register-title">🚜 Customer Registration</h2>
@@ -224,7 +223,7 @@ const CustomerRegister = () => {
         </p>
       </div>
     </div>
-    </div>
+
   );
 };
 

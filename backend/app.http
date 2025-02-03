@@ -14,21 +14,21 @@ POST http://localhost:5000/api/farmer/login
 Content-Type: application/json
 
 {
-  "phone": "1234567810",
-  "password": "password123"
+  "phone": "8688094300",
+  "password": "1234"
 }
 
 
 ### store token manually
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWVlNWFkZDliY2JkMGE5YTJkODAyMyIsInBob25lIjoiMTIzNDU2NzgxMCIsImlhdCI6MTczODQ5MzgyOSwiZXhwIjoxNzM4NDk3NDI5fQ._CimgvC948vEZloXRq5aJ--qyaSAbuOUhdEMjRfx_qo
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWZiZDA0NGZiYWY0N2Q2N2QxZDNlOCIsInBob25lIjoiMDAwMDAwMDAwMCIsImlhdCI6MTczODUyMTg4MCwiZXhwIjoxNzM4NTI1NDgwfQ.m-0TrEbnY4MX50clffmxPzLcXm4p2c2Mo_g3lYy0kfE
 ### Add Product
 POST http://localhost:5000/api/farmer/products
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWVlNWFkZDliY2JkMGE5YTJkODAyMyIsInBob25lIjoiMTIzNDU2NzgxMCIsImlhdCI6MTczODQ5MzE0NCwiZXhwIjoxNzM4NDk2NzQ0fQ.DXAeZkS-phc0_EfseQMMOgkjNxzJk0nwJaxquLIbSBU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWZiNmE0NWJlZjdhYmQ3ZjRkMTNmNiIsInBob25lIjoiODY4ODA5NDMwMCIsImlhdCI6MTczODUyNjYyMSwiZXhwIjoxNzM4NTMwMjIxfQ.6mYmE4OwybsUenJvPEgqfSXOaLzoZ-pby0rfnJC2rSE
 Content-Type: application/json
 
 {
-  "name": "Organic Mangoes",
-  "category":"Fruits",
+  "name": "Organic Potatoes",
+  "category":"Vegetables",
   "marketRate": 20,
   "price": 15.99,
   "quantity": 100,
@@ -74,13 +74,13 @@ Content-Type: application/json
 ### Get Products
 GET http://localhost:5000/api/farmer/products
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWVlNWFkZDliY2JkMGE5YTJkODAyMyIsInBob25lIjoiMTIzNDU2NzgxMCIsImlhdCI6MTczODQ5MzE0NCwiZXhwIjoxNzM4NDk2NzQ0fQ.DXAeZkS-phc0_EfseQMMOgkjNxzJk0nwJaxquLIbSBU
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWZiNmE0NWJlZjdhYmQ3ZjRkMTNmNiIsInBob25lIjoiODY4ODA5NDMwMCIsImlhdCI6MTczODUyNjIzMCwiZXhwIjoxNzM4NTI5ODMwfQ.Rp5hnkfFTAnm51VfvyK7jSeVxU8NAzpx05I2mBp0PMM
 
 ### View Products
 
 GET http://localhost:5000/api/farmer/products
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWVlNWFkZDliY2JkMGE5YTJkODAyMyIsInBob25lIjoiMTIzNDU2NzgxMCIsImlhdCI6MTczODQ5MzE0NCwiZXhwIjoxNzM4NDk2NzQ0fQ.DXAeZkS-phc0_EfseQMMOgkjNxzJk0nwJaxquLIbSBU
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWZiNmE0NWJlZjdhYmQ3ZjRkMTNmNiIsInBob25lIjoiODY4ODA5NDMwMCIsImlhdCI6MTczODUyNjYyMSwiZXhwIjoxNzM4NTMwMjIxfQ.6mYmE4OwybsUenJvPEgqfSXOaLzoZ-pby0rfnJC2rSE
 
 ### Register Customer
 POST http://localhost:5000/api/customer/register
@@ -99,7 +99,7 @@ POST http://localhost:5000/api/customer/login
 Content-Type: application/json
 
 {
-    "email": "john@example.com",
+    "email": "john1@example.com",
     "password": "securepassword"
 }
 
@@ -177,6 +177,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWExZmQ0M
         }
     ]
 }
+
+### Add Product to Wishlist
+POST http://localhost:5000/api/customer/wishlist
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTA1Y2IwMmE0MDAwMzIxMmM2NDRlNCIsImVtYWlsIjoiam9objFAZXhhbXBsZS5jb20iLCJpYXQiOjE3Mzg1NjM4MDUsImV4cCI6MTczODU2NzQwNX0.K2CFzPJwbt7Ea1OE_u-9nin3x9MjoG57JSRmhu0-UC0
+
+{
+    "productId": "679fbd464fbaf47d67d1d3ec"
+}
+
+
 
 ### get geo coordinates
 GET http://localhost:5000/api/location/geocode?address=New York

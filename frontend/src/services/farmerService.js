@@ -1,20 +1,36 @@
+
 import axios from "axios";
 const API_BASE_URL = "http://localhost:5000/api/farmer";
-
-
 
 export const addProduct = async (productData) => {
   try {
     // Retrieve the auth token from localStorage
-    const authToken = localStorage.getItem("authToken");
+    const authToken = localStorage.getItem("token");
     if (!authToken) {
       throw new Error("No authentication token found. Please log in.");
     }
 
-    // Create FormData object for handling file uploads
+    // ✅ Ensure productData is properly formatted as FormData
     const formData = new FormData();
-    for (const key in productData) {
-      formData.append(key, productData[key]);
+    formData.append("name", productData.name);
+    formData.append("category", productData.category);
+    formData.append("marketRate", productData.marketRate);
+    formData.append("price", productData.price);
+    formData.append("quantity", productData.quantity);
+
+    formData.append("expiryDate",productData.expiryDate);
+    
+    if (productData.image) {
+      formData.append("image", productData.image);
+    } else {
+
+      console.warn("⚠️ Warning: No image selected.");
+    }
+
+    // ✅ Debugging: Check if all fields are included
+    console.log("🚀 FormData being sent:");
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
     }
 
     // Send POST request with FormData
@@ -26,16 +42,17 @@ export const addProduct = async (productData) => {
     });
 
     console.log("✅ Product added successfully:", response.data);
-    return response.data; // Return the response data (success message or product details)
+    return response.data;
 
   } catch (error) {
     console.error("❌ Error adding product:", error.response ? error.response.data : error.message);
-    throw error; // Re-throw the error to handle it in the UI
+    throw error;
   }
 };
+
 export const viewOwnProducts = async () => {
   try {
-    const authToken = localStorage.getItem("authToken");
+    const authToken = localStorage.getItem("token");
 
     if (!authToken) throw new Error("No authentication token found.");
 
@@ -69,7 +86,6 @@ export const viewOrders = async () => {
     throw error;
   }
 };
-
 
 export const updateOrderStatus = async (orderId, status) => {
   try {

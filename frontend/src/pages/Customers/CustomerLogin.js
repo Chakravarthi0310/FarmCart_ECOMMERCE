@@ -4,7 +4,8 @@ import useAuth from "../../hooks/useAuth"; // Importing custom authentication ho
 // import CustomerNavbar from "../../components/CustomerNavbar";
 import "./CustomerLogin.css"; // Import CSS
 
-const CustomerLogin = () => {
+const CustomerLogin  = ()=>
+{
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -26,22 +27,20 @@ const CustomerLogin = () => {
   };
 
   return (
-
-    <div className="Login">
-      
     <div className="login-container">
       <div className="login-box">
         <h2 className="login-title">🚜 Customer Login</h2>
         <form onSubmit={handleLogin} className="login-form">
         <input
-  type="email"
-  placeholder="Enter Email"
-  value={email}
-  onChange={(e) => setemail(e.target.value)}
-  className="login-input"
-  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-  required
-/>          <input
+            type="email"
+            placeholder="Enter Email"
+            value={email}
+            onChange={(e) => setemail(e.target.value)}
+            className="login-input"
+            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+            required
+          />          
+          <input
             type="password"
             placeholder="Enter Password"
             value={password}
@@ -70,8 +69,7 @@ const CustomerLogin = () => {
           </p>
       </div>
     </div>
-    </div>
-  );
-};
+  )
+}
 
 export default CustomerLogin;

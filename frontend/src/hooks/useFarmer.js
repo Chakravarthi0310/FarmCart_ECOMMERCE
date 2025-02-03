@@ -14,10 +14,17 @@ const useFarmer = () => {
 
   // Add Product
   const handleAddProduct = async (productData) => {
+    const token = localStorage.getItem("token");
+
     setLoading(true);
     setError(null);
+  
     try {
-      const response = await addProduct(productData);
+      const formData = productData;
+      console.log("Original item data");
+      console.log(productData)
+  
+      const response = await addProduct(formData);
       return response;
     } catch (err) {
       setError(err.response?.data?.message || "Failed to add product.");
@@ -25,6 +32,8 @@ const useFarmer = () => {
       setLoading(false);
     }
   };
+  
+
 
   // View Own Products
   const handleViewOwnProducts = async () => {

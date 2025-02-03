@@ -13,22 +13,28 @@ const CustomerNavbar = () => {
     setDropdownOpen(false); // Close dropdown after navigation
   };
 
+  const handleLogout = () => {
+    // Clear authentication data from localStorage
+    localStorage.clear()
+
+    console.log("User logged out successfully.");
+
+    // Redirect to the login page
+    navigate("/customer-login");
+  };
+
   return (
     <nav className="navbar">
       <div className="container">
         {/* Logo and Website Name */}
-        <div className="logo">
+        <div className="logo" onClick={()=>navigate("/customer-dashboard")}>
           <img src="/logo.png" className="logo-img" alt="Logo" />
           <span className="FarmCart">FarmCart</span>
         </div>
 
         {/* Search Bar */}
-        {/* <div className="search-bar"> */}
-          {/* <input type="text" placeholder="Search..." /> */}
-          {/* <button className="search-btn"> */}
-            {/* <FaSearch /> */}
-          {/* </button> */}
-        {/* </div> */}
+    
+
 
         
 
@@ -55,7 +61,7 @@ const CustomerNavbar = () => {
                   Subscriptions
                 </li>
                 <li className="divider"></li>
-                <li onClick={() => handleNavigation("/logout")} className="logout">
+                <li onClick={() => handleNavigation("/customer-login")} className="logout">
                   Logout
                 </li>
               </ul>

@@ -1,40 +1,172 @@
-import { getApprovedProducts,placeOrder } from "../services/customerService";
-
 import { useState } from "react";
+import {
+  getApprovedProducts,
+  updateProfile,
+  placeOrder,
+  getCustomerOrders,
+  addToWishlist,
+  getWishlist,
+  getCart,
+  removeFromCart,
+  removeFromWishlist,
+  addToCart,
+} from "../services/customerService";
 
-const useCustomerServices = (token) => {
-  const [products, setProducts] = useState([]);
+const useCustomer = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Fetch approved products
-  const fetchProducts = async () => {
+  // Fetch Approved Products
+  const handleGetApprovedProducts = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await getApprovedProducts(token);
-      setProducts(response.data);
+      const token = localStorage.getItem("token");
+      return await getApprovedProducts(token);
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to fetch products");
+      setError(err.response?.data?.message || "Failed to fetch products.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Place an order
-  const orderProduct = async (orderData) => {
+  // Update Profile
+  const handleUpdateProfile = async (userData) => {
     setLoading(true);
     setError(null);
     try {
-      await placeOrder(orderData, token);
+      const token = localStorage.getItem("token");
+      return await updateProfile(userData, token);
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to place order");
+      setError(err.response?.data?.message || "Failed to update profile.");
     } finally {
       setLoading(false);
     }
   };
 
-  return { products, loading, error, fetchProducts, orderProduct };
+  // Place Order
+  const handlePlaceOrder = async (customerId, products) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const token = localStorage.getItem("token");
+      return await placeOrder(customerId, products, token);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to place order.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Get Customer Orders
+  const handleGetCustomerOrders = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const token = localStorage.getItem("token");
+      return await getCustomerOrders(token);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to fetch orders.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAddToWishList = async (productId)=>{
+    setLoading(true);
+    setError(null);
+    try {
+      const token = localStorage.getItem("token");
+      return await addToWishlist(productId, token);
+
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to place order.");
+    } finally {
+      setLoading(false);
+    }
+
+  };
+
+  const handleGetWishlist = async(req,res)=>{
+    setLoading(true);
+    setError(null);
+    try {
+      const token = localStorage.getItem("token");
+      return await getWishlist(token);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to place order.");
+    } finally {
+      setLoading(false);
+    }
+  }
+  const handleGetCart = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const token = localStorage.getItem("token");
+      return await getCart(token);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to fetch cart.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  const handleAddToCart = async (productId) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const token = localStorage.getItem("token");
+      return await addToCart(productId, token);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to add to cart.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  const handleRemoveFromCart = async (productId) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const token = localStorage.getItem("token");
+      return await removeFromCart(productId, token);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to remove from cart.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  const handleRemoveFromWishlist = async (productId) => {
+    setLoading(true);
+    setError(null);
+    try {
+      console.log("USe customer",productId);
+      const token = localStorage.getItem("token");
+      return await removeFromWishlist(productId, token);
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to remove from wishlist.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
+  return {
+    loading,
+    error,
+    handleGetApprovedProducts,
+    handleUpdateProfile,
+    handlePlaceOrder,
+    handleGetCustomerOrders,
+    handleAddToWishList,
+    handleGetWishlist,
+    handleRemoveFromCart,
+    handleAddToCart,
+    handleGetCart,
+    handleRemoveFromWishlist
+  };
 };
 
-export default useCustomerServices;
+export default useCustomer;

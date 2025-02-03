@@ -1,141 +1,197 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./CustomerCart.css"; // Import the CSS file for styling
+import "./CustomerCart.css";
+
 import CustomerNavbar from "../../components/CustomerNavbar";
+import useCustomer from "../../hooks/useCustomer";
+
 const CustomerCart = () => {
   const navigate = useNavigate();
-
-  // Dummy items in cart with numeric price values and an initial quantity.
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Tomatoes",
-      price: 50, // Price per unit (e.g., per kg)
-      unit: "kg",
-      image: "../../assets/tomatoes.jpg",
-      quantity: 1,
-    },
-    {
-      id: 2,
-      name: "Potatoes",
-      price: 30, // Price per unit (e.g., per kg)
-      unit: "kg",
-      image: "../../assets/potato.jpg",
-      quantity: 1,
-    },
-    // Add more items if needed
-  ]);
-
-  // Payment method state (default to Cash on Delivery)
+  const { handleGetCart,handleRemoveFromCart } = useCustomer();
+  const [cartItems, setCartItems] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState("COD");
+  const [errors, setErrors] = useState({});
+  const [selectedItems, setSelectedItems] = useState({});
+  
 
-  // Increase the quantity of an item
-  const increaseQuantity = (id) => {
+  useEffect(() => {
+    const fetchCart = async () => {
+      const response = await handleGetCart();
+      if (response) {
+        setCartItems(response);
+        const initialSelection = response.reduce((acc, item) => {
+          acc[item.id] = true;
+          return acc;
+        }, {});
+        setSelectedItems(initialSelection);
+      }
+    };
+    fetchCart();
+  }, []);
+
+  const removeItem= async (productId,itemName)=>{
+    try{
+      await handleRemoveFromCart(productId);
+      alert("Removed ",itemName);
+    }catch(err){
+      alert(err);
+    }
+  }
+
+  const updateQuantity = (id, newQuantity) => {
     setCartItems(
       cartItems.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+        item.id === id
+          ? {
+              ...item,
+              quantity: newQuantity > item.stock ? item.stock : newQuantity,
+            }
+          : item
       )
     );
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [id]: newQuantity > cartItems.find((item) => item.id === id)?.stock ? "Exceeds available stock" : "",
+    }));
   };
-
-  // Decrease the quantity of an item (but not below 1)
+  const increaseQuantity = (id) => {
+    const item = cartItems.find((item) => item.id === id);
+    if (item.quantity < item.stock) {
+      updateQuantity(id, item.quantity + 1);
+    }
+  };
   const decreaseQuantity = (id) => {
-    setCartItems(
-      cartItems.map((item) => {
-        if (item.id === id && item.quantity > 1) {
-          return { ...item, quantity: item.quantity - 1 };
-        }
-        return item;
-      })
-    );
+    const item = cartItems.find((item) => item.id === id);
+    if (item.quantity > 1) {
+      updateQuantity(id, item.quantity - 1);
+    }
   };
 
-  // Optionally, a function to remove an item from the cart
-  const removeItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
+  const handleQuantityChange = (id, value) => {
+    const newQuantity = Number(value);
+    if (isNaN(newQuantity) || newQuantity < 1) return;
+    updateQuantity(id, newQuantity);
   };
 
-  // Calculate the total price dynamically
-  const totalPrice = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
+  const toggleSelection = (id) => {
+    setSelectedItems((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  const selectedTotalPrice = cartItems.reduce(
+    (total, item) => (selectedItems[item.id] ? total + item.price * item.quantity : total),
     0
   );
 
-  // Handle the payment process
-  const handlePayment = (e) => {
-    e.preventDefault();
-    // Simulate payment processing
-    alert(`Proceeding with payment.\nPayment Method: ${paymentMethod}\nTotal Amount: ₹${totalPrice}`);
-    // In a real app, proceed to payment gateway or success page
-    navigate("/customer-dashboard");
-  };
+  const { handlePlaceOrder } = useCustomer(); // Import handlePlaceOrder
+
+const placeOrder = async (e) => {
+  e.preventDefault();
+  
+  const selectedCartItems = cartItems.filter((item) => selectedItems[item.id]);
+  
+  if (selectedCartItems.length === 0) {
+    alert("Please select at least one item to proceed with payment.");
+    return;
+  }
+
+  const customerId = localStorage.getItem("customerId"); // Assuming customer ID is stored in localStorage
+  const orderItems = selectedCartItems;
+
+  try {
+    const response = await handlePlaceOrder(customerId, orderItems);
+    if (response) {
+      alert("Order placed successfully! Order ID:");
+      navigate("/customer-dashboard");
+    } else {
+      alert("Failed to place order. Please try again.");
+    }
+  } catch (error) {
+    alert("Error placing order: " + error.message);
+  }
+};
+
 
   return (
-
     <div className="Cart">
       <CustomerNavbar />
-    <div className="cart-container">
-      <h2 className="cart-title">Your Cart</h2>
-      {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        <>
-          <div className="cart-items">
-            {cartItems.map((item) => (
-              <div key={item.id} className="cart-item">
-                <img src={item.image} alt={item.name} className="item-image" />
-                <div className="item-details">
-                  <h3>{item.name}</h3>
-                  <p>
-                    Price: ₹{item.price} per {item.unit}
-                  </p>
-                  <div className="quantity-controls">
-                    <button onClick={() => decreaseQuantity(item.id)}>-</button>
-                    <span>{item.quantity}</span>
-                    <button onClick={() => increaseQuantity(item.id)}>+</button>
-                  </div>
-                  <p>Subtotal: ₹{item.price * item.quantity}</p>
-                </div>
-                <button className="remove-item" onClick={() => removeItem(item.id)}>
+      <div className="cart-container">
+        <h2 className="cart-title">Your Cart</h2>
+        {cartItems.length === 0 ? (
+          <p>Your cart is empty.</p>
+        ) : (
+          <>
+            <div className="cart-items">
+              {cartItems.map((item) => (
+                <div key={item.id} className="cart-item">
+                  <input
+                    type="checkbox"
+                    checked={selectedItems[item.id]}
+                    onChange={() => toggleSelection(item.id)}
+                  />
+                  <img src={item.image} alt={item.name} className="item-image" />
+                  <div className="item-details">
+                    <h3>{item.name}</h3>
+                    <p>Price: ₹{item.price} per {item.unit}</p>
+                    <p>Available Stock: {item.stock}</p>
+                    <div className="quantity-controls">
+                      <button onClick={() => updateQuantity(item.id, item.quantity - 1)} disabled={item.quantity <= 1}>-</button>
+                      <input
+                        type="number"
+                        value={item.quantity}
+                        onChange={(e) => handleQuantityChange(item.id, e.target.value)}
+                        className="quantity-input"
+                        min="1"
+                        max={item.stock}
+                      />
+                      <button onClick={() => updateQuantity(item.id, item.quantity + 1)} disabled={item.quantity >= item.stock}>+</button>
+                    </div>
+                    <button className="remove-item" onClick={() => {removeItem(item._id,item.name)}}>
                   Remove
                 </button>
-              </div>
-            ))}
-          </div>
-          <div className="cart-summary">
-            <h3>Total: ₹{totalPrice}</h3>
-          </div>
-          <form onSubmit={handlePayment} className="payment-form">
-            <h3>Select Payment Method</h3>
-            <div className="payment-options">
-              <label className="payment-option">
-                <input
-                  type="radio"
-                  name="payment"
-                  value="COD"
-                  checked={paymentMethod === "COD"}
-                  onChange={(e) => setPaymentMethod(e.target.value)}
-                />
-                Cash on Delivery
-              </label>
-              <label className="payment-option">
-                <input
-                  type="radio"
-                  name="payment"
-                  value="PhonePay"
-                  checked={paymentMethod === "PhonePay"}
-                  onChange={(e) => setPaymentMethod(e.target.value)}
-                />
-                PhonePay
-              </label>
+
+                    {errors[item.id] && <p className="error">{errors[item.id]}</p>}
+                    <p>Subtotal: ₹{item.price * item.quantity}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-            <button type="submit" className="payment-button">
-              Proceed to Payment
-            </button>
-          </form>
-        </>
-      )}
-    </div>
+            <div className="cart-summary">
+              <h3>Total: ₹{selectedTotalPrice}</h3>
+            </div>
+            <form onSubmit={placeOrder} className="payment-form">
+              <h3>Select Payment Method</h3>
+              <div className="payment-options">
+                <label className="payment-option">
+                  <input
+                    type="radio"
+                    name="payment"
+                    value="COD"
+                    checked={paymentMethod === "COD"}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  />
+                  Cash on Delivery
+                </label>
+                <label className="payment-option">
+                  <input
+                    type="radio"
+                    name="payment"
+                    value="PhonePay"
+                    checked={paymentMethod === "PhonePay"}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  />
+                  PhonePay
+                </label>
+              </div>
+              <button type="submit" className="payment-button" >
+                Place Order
+              </button>
+            </form>
+          </>
+        )}
+      </div>
     </div>
   );
 };
