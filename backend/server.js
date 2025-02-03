@@ -4,7 +4,7 @@ const cors = require("cors");
 const app = express();
 const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() }); // Store images in memory buffer
-
+const bodyParser = require("body-parser");
 const connectDB = require("./config/db");
 const farmerRoutes = require("./routes/farmerRoutes");
 const customerRoutes = require("./routes/customerRoutes");
@@ -12,6 +12,9 @@ const adminRoutes = require("./routes/adminRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const mapApiRoutes = require("./routes/map_routes");
 connectDB();
+
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", req.headers.origin || "*"); // Allow any frontend origin

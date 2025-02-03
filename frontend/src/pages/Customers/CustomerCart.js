@@ -103,7 +103,7 @@ const placeOrder = async (e) => {
   try {
     const response = await handlePlaceOrder(customerId, orderItems);
     if (response) {
-      alert(`Order placed successfully! Order ID: ${response.orderId}`);
+      alert("Order placed successfully! Order ID:");
       navigate("/customer-dashboard");
     } else {
       alert("Failed to place order. Please try again.");

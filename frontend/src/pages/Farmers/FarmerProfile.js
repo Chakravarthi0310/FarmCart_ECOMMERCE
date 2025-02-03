@@ -43,7 +43,7 @@ const FarmerProfile = () => {
               <strong>Name:</strong> {farmerData.name}
             </p>
             <p>
-              <strong>phone:</strong> {farmerData.phone}
+              <strong>Mobile:</strong> {farmerData.phone}
             </p>
             <p>
               <strong>Address:</strong> {farmerData.address}

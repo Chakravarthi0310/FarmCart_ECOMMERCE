@@ -274,7 +274,7 @@ exports.getCustomerOrders = async (req, res) => {
   
       console.log("Fetching orders for customer:", customerId);
   
-      const orders = await Order.find({ customer: customerId, status:"Approved" }).populate("products.product");
+      const orders = await Order.find({ customer: customerId }).populate("products.product");
   
       if (!orders.length) {
         return res.status(404).json({ message: "No orders found for this customer" });
