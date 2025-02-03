@@ -112,7 +112,6 @@
 
 // export default CustomerRegister;
 import useAuth from "../../hooks/useAuth"; // Import the authentication hook
-import CustomerNavbar from "../../components/CustomerNavbar";
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -145,7 +144,7 @@ const CustomerRegister = () => {
   };
   return (
     <div className="Register">
-      <CustomerNavbar />
+      
     <div className="register-container">
       <div className="register-box">
         <h2 className="register-title">🚜 Customer Registration</h2>

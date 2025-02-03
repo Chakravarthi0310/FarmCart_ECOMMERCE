@@ -48,10 +48,10 @@ exports.loginAdmin = async (req, res) => {
 
 exports.changeStatusFarmer = async (req, res) => {
     try {
-        const { id, verificationStatus } = req.body;
-        if (!["approved", "rejected"].includes(verificationStatus)) {
-            return res.status(400).json({ error: "Invalid verification status" });
-        }
+   const { id, verificationStatus } = req.body;
+   if (!["approved", "rejected"].includes(verificationStatus)) {
+     return res.status(400).json({ error: "Invalid verification status" });
+ }
 
  const farmer = await Farmer.findByIdAndUpdate(
   id,

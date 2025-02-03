@@ -22,7 +22,7 @@ import ProductDetails from "./pages/Customers/ProductDetails";
 import CustomerSubscriptions from "./pages/Customers/CustomerSubscriptions"; 
 
 
-import CustomerSubscriptions from "./pages/Customers/CustomerSubscriptions"; 
+
 
 import Home from "./pages/Home";
 // import ProtectedRoute from "./pages/routes/ProtectedRoute";

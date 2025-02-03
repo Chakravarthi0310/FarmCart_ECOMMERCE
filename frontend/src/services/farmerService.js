@@ -120,7 +120,7 @@ export const deleteProduct = async (productId, token) => {
 
 
 
-const updateProfile = async (userData, token) => {
+export const updateProfile = async (userData, token) => {
   try {
     const response = await axios.put(
       "http://localhost:5000/api/farmer/profile", // Adjust the API URL
