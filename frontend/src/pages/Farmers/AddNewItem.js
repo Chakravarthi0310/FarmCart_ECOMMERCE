@@ -107,6 +107,14 @@ const AddNewItem = () => {
           className="input-field"
         />
 
+        <input
+          type="date"
+          placeholder="Expiry Date"
+          value={newItem.expiryDate}
+          onChange={(e) => setNewItem({ ...newItem, expiryDate: e.target.value })}
+          className="input-field"
+        />
+
         {/* Image Upload Field */}
         <input
           type="file"

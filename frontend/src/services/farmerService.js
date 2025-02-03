@@ -2,7 +2,6 @@
 import axios from "axios";
 const API_BASE_URL = "http://localhost:5000/api/farmer";
 
-
 export const addProduct = async (productData) => {
   try {
     // Retrieve the auth token from localStorage
@@ -18,11 +17,13 @@ export const addProduct = async (productData) => {
     formData.append("marketRate", productData.marketRate);
     formData.append("price", productData.price);
     formData.append("quantity", productData.quantity);
+
     formData.append("expiryDate",productData.expiryDate);
     
     if (productData.image) {
       formData.append("image", productData.image);
     } else {
+
       console.warn("⚠️ Warning: No image selected.");
     }
 
@@ -85,7 +86,6 @@ export const viewOrders = async () => {
     throw error;
   }
 };
-
 
 export const updateOrderStatus = async (orderId, status) => {
   try {

@@ -30,6 +30,10 @@
     background:f4f4f4;
   }
 
+  .input-field[type=file]{
+    background:white;
+  }
+
   .image-preview {
     margin-top: 10px;
     text-align: center;
@@ -43,18 +47,7 @@
     object-fit: cover;
     border: 1px solid #ddd;
     padding: 5px;
-    background:f4f4f4;
   }
-
-  input[type="file"] {
-    background-color: white;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-    cursor: pointer;
-  }
-  
   
   
   .submit-button {

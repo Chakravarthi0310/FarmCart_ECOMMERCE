@@ -18,6 +18,14 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+body {
+  background-image: url("src/assets/farm-bg.png"); /* Replace with your actual image URL */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Fixes the background in place */
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);

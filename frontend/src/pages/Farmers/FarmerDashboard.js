@@ -25,9 +25,11 @@ const FarmerDashboard = () => {
     fetchProducts();
   }, [handleViewOwnProducts]);
 
+
   return (
     <>
       <Navbar />
+      <div className="dashboard">
       <div className="dashboard-container">
         <h2 className="dashboard-title">📋 Your Items</h2>
 
@@ -90,6 +92,7 @@ const FarmerDashboard = () => {
             <p className="no-items">No items found.</p>
           )}
         </div>
+      </div>
       </div>
     </>
   );

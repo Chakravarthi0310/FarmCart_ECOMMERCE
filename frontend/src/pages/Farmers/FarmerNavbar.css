@@ -1,7 +1,6 @@
 /* Navbar Styles */
 .navbar {
 
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -76,4 +75,3 @@ body {
   margin: 0;
   padding-top: 70px; /* Adjust this value based on your navbar height */
 }
-

@@ -35,7 +35,6 @@ const CustomerOrders = () => {
 
   return (
 
-
     <div className="Orders">
       <CustomerNavbar />
     <div className="orders-container">

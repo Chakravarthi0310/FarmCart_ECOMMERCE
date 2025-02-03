@@ -15,8 +15,7 @@ const CustomerNavbar = () => {
 
   const handleLogout = () => {
     // Clear authentication data from localStorage
-    localStorage.removeItem("authToken"); // Remove token
-    localStorage.removeItem("userData"); // Remove user data (if stored)
+    localStorage.clear()
 
     console.log("User logged out successfully.");
 
@@ -28,25 +27,14 @@ const CustomerNavbar = () => {
     <nav className="navbar">
       <div className="container">
         {/* Logo and Website Name */}
-        <div className="logo">
+        <div className="logo" onClick={() => navigate("/farmer-dashboard")}>
           <img src="/assets/logo.jpg" className="logo-img" alt="Logo" />
           <span className="FarmCart">FarmCart</span>
         </div>
 
         {/* Search Bar */}
+    
 
-        <div className="search-bar">
-          <input type="text" placeholder="Search..." />
-          <button className="search-btn">
-            <FaSearch />
-          </button>
-        </div>
-        {/* <div className="search-bar"> */}
-          {/* <input type="text" placeholder="Search..." /> */}
-          {/* <button className="search-btn"> */}
-            {/* <FaSearch /> */}
-          {/* </button> */}
-        {/* </div> */}
 
         {/* Account Dropdown, Wishlist, and Cart */}
         <div className="account">

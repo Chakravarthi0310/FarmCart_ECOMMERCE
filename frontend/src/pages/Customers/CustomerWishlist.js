@@ -39,6 +39,8 @@ const CustomerWishlist = () => {
   };
 
   return (
+
+
     <div className="Wishlist">
       <CustomerNavbar />
       <div className="wishlist-container">

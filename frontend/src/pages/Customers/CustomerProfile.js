@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 
+
 import { useNavigate } from "react-router-dom";
 import "./CustomerProfile.css"; // Import the CSS file for styling
-
-
 import "./../../components/CustomerNavbar"
 import CustomerNavbar from "./../../components/CustomerNavbar";
 
@@ -25,15 +24,15 @@ const [customerData, setcustomerData] = useState(); // State to store the fetche
         address: "123 Green Farm, Village Road, Country",
       });
     }
-  }, []);
+    },[]);
+
+ 
 
   if (!customerData) {
     return <p>Loading...</p>; // Show loading while the data is being fetched
   }
 
   return (
-
-
     <div className="Profile">
       <CustomerNavbar />
 
@@ -63,8 +62,9 @@ const [customerData, setcustomerData] = useState(); // State to store the fetche
         </button>
       </div>
     </div>
-
     </div>
+  
+
 
   );
 };

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .dashboard {
     padding-top: 0px;
     text-align: center;
@@ -20,10 +21,14 @@
     font-size: 18px;
   }
   
+=======
 /* General styles */
 .dashboard {
   font-family: Arial, sans-serif;
   padding: 20px;
+
+  background: url("../../assets/farm-bg.jpg") no-repeat center center/cover;
+  background-attachment: fixed;
 }
 
 /* Filter container (holds category bar and filter toggle button) */

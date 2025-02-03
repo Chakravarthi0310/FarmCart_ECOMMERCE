@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CustomerCart.css"; // Import the CSS file for styling
+
 import CustomerNavbar from "../../components/CustomerNavbar";
 import useCustomer from "../../hooks/useCustomer"; // Import the custom hook
 
@@ -61,73 +62,72 @@ const CustomerCart = () => {
   };
 
   return (
+
     <div className="Cart">
       <CustomerNavbar />
-      <div className="cart-container">
-        <h2 className="cart-title">Your Cart</h2>
-
-        {loading ? (
-          <p>Loading cart...</p>
-        ) : error ? (
-          <p>Error fetching cart: {error}</p>
-        ) : cartItems.length === 0 ? (
-          <p>Your cart is empty.</p>
-        ) : (
-          <>
-            <div className="cart-items">
-              {cartItems.map((item) => (
-                <div key={item.id} className="cart-item">
-                  <img src={item.image} alt={item.name} className="item-image" />
-                  <div className="item-details">
-                    <h3>{item.name}</h3>
-                    <p>Price: ₹{item.price} per {item.unit}</p>
-                    <div className="quantity-controls">
-                      <button onClick={() => decreaseQuantity(item.id)}>-</button>
-                      <span>{item.quantity}</span>
-                      <button onClick={() => increaseQuantity(item.id)}>+</button>
-                    </div>
-                    <p>Subtotal: ₹{item.price * item.quantity}</p>
+    <div className="cart-container">
+      <h2 className="cart-title">Your Cart</h2>
+      {cartItems.length === 0 ? (
+        <p>Your cart is empty.</p>
+      ) : (
+        <>
+          <div className="cart-items">
+            {cartItems.map((item) => (
+              <div key={item.id} className="cart-item">
+                <img src={item.image} alt={item.name} className="item-image" />
+                <div className="item-details">
+                  <h3>{item.name}</h3>
+                  <p>
+                    Price: ₹{item.price} per {item.unit}
+                  </p>
+                  <div className="quantity-controls">
+                    <button onClick={() => decreaseQuantity(item.id)}>-</button>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => increaseQuantity(item.id)}>+</button>
                   </div>
-                  <button className="remove-item" onClick={() => removeItem(item.id)}>Remove</button>
+                  <p>Subtotal: ₹{item.price * item.quantity}</p>
                 </div>
-              ))}
-            </div>
-
-            <div className="cart-summary">
-              <h3>Total: ₹{totalPrice}</h3>
-            </div>
-
-            <form onSubmit={handlePayment} className="payment-form">
-              <h3>Select Payment Method</h3>
-              <div className="payment-options">
-                <label className="payment-option">
-                  <input
-                    type="radio"
-                    name="payment"
-                    value="COD"
-                    checked={paymentMethod === "COD"}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                  />
-                  Cash on Delivery
-                </label>
-                <label className="payment-option">
-                  <input
-                    type="radio"
-                    name="payment"
-                    value="PhonePay"
-                    checked={paymentMethod === "PhonePay"}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                  />
-                  PhonePay
-                </label>
+                <button className="remove-item" onClick={() => removeItem(item.id)}>
+                  Remove
+                </button>
               </div>
-              <button type="submit" className="payment-button">
-                Proceed to Payment
-              </button>
-            </form>
-          </>
-        )}
-      </div>
+            ))}
+          </div>
+          <div className="cart-summary">
+            <h3>Total: ₹{totalPrice}</h3>
+          </div>
+          <form onSubmit={handlePayment} className="payment-form">
+            <h3>Select Payment Method</h3>
+            <div className="payment-options">
+              <label className="payment-option">
+                <input
+                  type="radio"
+                  name="payment"
+                  value="COD"
+                  checked={paymentMethod === "COD"}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                />
+                Cash on Delivery
+              </label>
+              <label className="payment-option">
+                <input
+                  type="radio"
+                  name="payment"
+                  value="PhonePay"
+                  checked={paymentMethod === "PhonePay"}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                />
+                PhonePay
+              </label>
+            </div>
+            <button type="submit" className="payment-button">
+              Proceed to Payment
+            </button>
+          </form>
+        </>
+      )}
+    </div>
+
     </div>
   );
 };

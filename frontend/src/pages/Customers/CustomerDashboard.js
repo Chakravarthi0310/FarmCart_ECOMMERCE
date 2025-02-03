@@ -1,4 +1,70 @@
 
+// const CustomerDashboard = () => {
+//   const [searchTerm, setSearchTerm] = useState("");
+//   const [selectedCategory, setSelectedCategory] = useState("all");
+//   const navigate = useNavigate();
+
+//   const filteredProducts = dummyProducts.filter(product =>
+//     (selectedCategory === "all" || product.category === selectedCategory) &&
+//     product.name.toLowerCase().includes(searchTerm.toLowerCase())
+//   );
+
+//   return (
+//     <div className="dashboard">
+//       <CustomerNavbar />
+      
+//       {/* Category Bar */}
+//       <div className="category-bar">
+//         {["all", "fruits", "vegetables", "grains", "dairy", "poultry"].map(category => (
+//           <button 
+//             key={category} 
+//             className={selectedCategory === category ? "active" : ""} 
+//             onClick={() => setSelectedCategory(category)}
+//           >
+//             {category.charAt(0).toUpperCase() + category.slice(1)}
+//           </button>
+//         ))}
+//       </div>
+      
+//       {/* Search Bar */}
+//       <div className="search-container">
+//         <input
+//           type="text"
+//           placeholder="Search for products..."
+//           value={searchTerm}
+//           onChange={(e) => setSearchTerm(e.target.value)}
+//         />
+//       </div>
+      
+//       {/* Product Display */}
+//       <div className="product-grid">
+//         {filteredProducts.length > 0 ? (
+//           filteredProducts.map((product) => (
+//             <div key={product.id} className="product-card">
+//               <img
+//                 src={product.image}
+//                 alt={product.name}
+//                 onClick={() => navigate(`/product-details/${product.id}`)}
+//               />
+//               <h3>{product.name}</h3>
+//               <p>{product.price}</p>
+//               <p>Expiry: {product.expiry}</p>
+//               <div className="buttons">
+//                 <button className="wishlist">❤️ Wishlist</button>
+//                 <button className="add-to-cart">🛒 Add to Cart</button>
+//               </div>
+//             </div>
+//           ))
+//         ) : (
+//           <p className="no-results">No products found.</p>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default CustomerDashboard;
+
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
