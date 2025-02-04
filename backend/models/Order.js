@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema({
         quantity: { type: Number, required: true },
     }, ],
     totalPrice: { type: Number, required: true },
-    status: { type: String, default: "Processing" },
+    status: { type: String,enum:["Processing","Shipped","Delivered","Cancelled"], default: "Processing" },
 }, { timestamps: true });
 
 orderSchema.plugin(AutoIncrement, {

@@ -50,17 +50,15 @@ const useFarmer = () => {
 
   // View Orders
   const handleViewOrders = async () => {
-    setLoading(true);
-    setError(null);
     try {
-      return await viewOrders();
-    } catch (err) {
-      setError(err.response?.data?.message || "Failed to fetch orders.");
-    } finally {
-      setLoading(false);
+      const orders = await viewOrders();
+      return orders;
+    } catch (error) {
+      console.error("Error in handleViewOrders:", error);
+      return []; // return empty array on error
     }
   };
-
+  
   // Update Order Status
   const handleUpdateOrderStatus = async (orderId, status) => {
     setLoading(true);

@@ -184,6 +184,7 @@ exports.viewOrders = async(req, res) => {
 
 
 //Update order status
+//Update order status
 exports.updateOrderStatus = async(req,res)=>{
     try{
         const {orderId, status}=req.body;
@@ -196,7 +197,7 @@ exports.updateOrderStatus = async(req,res)=>{
             return res.status(404).json({message:"Order not found"});
         }
         const products=order.products;
-        if(status=="Delivered")
+        if(status=="Cancelled")
         {
             for(let item of products)
             {
@@ -206,15 +207,12 @@ exports.updateOrderStatus = async(req,res)=>{
                 }
 
                 // Reduce stock only if there is enough quantity
-                if (product.quantity >= item.quantity) {
-                    product.quantity -= item.quantity;
+                product.quantity+=item.quantity;
                     await product.save();
-                } else {
-                    return res.status(400).json({ message: `Not enough stock for product ${product.name}` });
-                }
+                
             }
         }
-        res.status(200).json({message:"Order status updated successfully",order});
+         res.status(200).json({message:"Order status updated successfully",order});
 
     }catch(e){
         res.status(500).json({message:"Error updating order status",error:e.message});
