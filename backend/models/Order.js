@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const orderSchema = new mongoose.Schema({
-    orderId: { type: Number, uniqe: true },
+    orderId: { type: Number, unique: true },
     customer: { type: mongoose.Schema.Types.ObjectId, ref: "Customer", required: true },
     products: [{
         product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: "true" },
