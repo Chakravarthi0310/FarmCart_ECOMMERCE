@@ -157,3 +157,21 @@ export const updateProfile = async (userData, token) => {
     alert(error.response?.data?.message || "Failed to update profile.");
   }
 };
+
+
+// export const viewSalesAnalysis = async () => {
+//   try {
+//     const authToken = localStorage.getItem("token");
+//     if (!authToken) throw new Error("No authentication token found.");
+
+//     const response = await axios.get(`${API_BASE_URL}/sales-analysis`, {
+//       headers: { Authorization: `Bearer ${authToken}` },
+//     });
+
+//     console.log("✅ Sales analysis fetched:", response.data);
+//     return response.data;
+//   } catch (error) {
+//     console.error("❌ Error fetching sales analysis:", error.response?.data || error.message);
+//     throw error;
+//   }
+// };

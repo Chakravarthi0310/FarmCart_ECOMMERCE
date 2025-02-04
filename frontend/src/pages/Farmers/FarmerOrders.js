@@ -2,9 +2,24 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./FarmerNavbar";
 import "./FarmerOrders.css";
 import useFarmer from "../../hooks/useFarmer";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  LogarithmicScale, // Import Logarithmic Scale
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+// ✅ Register all required components
+ChartJS.register(CategoryScale, LinearScale, LogarithmicScale, BarElement, Title, Tooltip, Legend);
 
 const FarmerOrders = () => {
   const [orders, setOrders] = useState([]);
+  const [chartData, setChartData] = useState(null);
   const { handleViewOrders, loading, error } = useFarmer();
 
   useEffect(() => {
@@ -12,11 +27,61 @@ const FarmerOrders = () => {
       try {
         const fetchedOrders = await handleViewOrders();
         setOrders(fetchedOrders.orders);
-        console.log(fetchedOrders);
+        console.log("Fetched orders:", fetchedOrders.orders);
+
+        // Aggregate data for charting:
+        // For each order, process each product to calculate total quantity sold and total revenue.
+        const aggregated = {};
+        fetchedOrders.orders.forEach((order) => {
+          order.products.forEach((item) => {
+            // Use the product ID as key (assuming product._id exists)
+            const productId = item.product._id;
+            if (!aggregated[productId]) {
+              aggregated[productId] = {
+                name: item.product.name,
+                totalSold: 0,
+                totalRevenue: 0,
+              };
+            }
+            
+            aggregated[productId].totalSold += item.quantity;
+            console.log(item.product.name,aggregated[productId].totalSold);
+            // Use product price to compute revenue. (Make sure product.price is available.)
+            const price = item.product.price || 0;
+            aggregated[productId].totalRevenue += item.quantity * price;
+          });
+        });
+
+        // Prepare arrays for chart labels and datasets.
+        const labels = Object.values(aggregated).map((item) => item.name);
+        const totalSoldData = Object.values(aggregated).map(
+          (item) => item.totalSold
+        );
+        const totalRevenueData = Object.values(aggregated).map(
+          (item) => item.totalRevenue
+        );
+
+        // Create chart data object.
+        setChartData({
+          labels,
+          datasets: [
+            {
+              label: "Total Sold",
+              data: totalSoldData,
+              backgroundColor: "rgba(75, 192, 192, 0.6)",
+            },
+            {
+              label: "Total Revenue",
+              data: totalRevenueData,
+              backgroundColor: "rgba(255, 99, 132, 0.6)",
+            },
+          ],
+        });
       } catch (err) {
         console.error("Error fetching orders:", err);
       }
     };
+
     fetchOrders();
   }, []);
 
@@ -28,6 +93,53 @@ const FarmerOrders = () => {
 
         {loading && <p>Loading...</p>}
         {error && <p className="error">{error}</p>}
+
+        {/* Render the chart if chartData is available */}
+        {chartData && (
+          <div className="chart-wrapper">
+<Bar
+  data={chartData}
+  options={{
+    responsive: true,
+    plugins: {
+      legend: { position: "top" },
+      title: {
+        display: true,
+        text: "Product-wise Sales Analysis",
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            const label = context.dataset.label || "";
+            const value = context.raw; // Get the raw value of the bar
+            return `${label}: ${value.toLocaleString()} units`; // Customize tooltip text
+          },
+        },
+      },
+    },
+    scales: {
+      y: {
+        type: "logarithmic", // Ensures visibility for small values
+        min: 1, 
+        ticks: {
+          callback: function (value) {
+            return Number(value).toLocaleString();
+          },
+        },
+      },
+      x: {
+        ticks: {
+          autoSkip: false,
+          maxRotation: 45,
+          minRotation: 0,
+        },
+      },
+    },
+    barThickness: 30, // Ensures better visibility for small bars
+  }}
+/>
+          </div>
+        )}
 
         {orders.length > 0 ? (
           <div className="table-wrapper">
@@ -51,12 +163,16 @@ const FarmerOrders = () => {
                             alt={product.product.name}
                             className="product-image"
                           />
-                          <span>{product.product.name} - {product.quantity}</span>
+                          <span>
+                            {product.product.name} - {product.quantity}
+                          </span>
                         </div>
                       ))}
                     </td>
                     <td>
-                      <span className={`order.status ${order.status.toLowerCase()}`}>
+                      <span
+                        className={`order-status ${order.status.toLowerCase()}`}
+                      >
                         {order.status}
                       </span>
                     </td>

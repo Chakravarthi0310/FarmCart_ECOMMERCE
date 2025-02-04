@@ -6,6 +6,7 @@ import {
   updateOrderStatus,
   deleteProduct,
   updateProfile,
+  // viewSalesAnalysis,
 } from "../services/farmerService";
 
 const useFarmer = () => {
@@ -101,6 +102,22 @@ const useFarmer = () => {
     }
   };
 
+  
+//Sales Analysis Handler
+// const handleViewSalesAnalysis = async () => {
+//   setLoading(true);
+//   setError(null);
+//   try {
+//     return await viewSalesAnalysis();
+//   } catch (err) {
+//     setError(err.response?.data?.message || "Failed to fetch sales analysis.");
+//   } finally {
+//     setLoading(false);
+//   }
+// };
+
+
+
   return {
     loading,
     error,
@@ -110,6 +127,7 @@ const useFarmer = () => {
     handleUpdateOrderStatus,
     handleDeleteProduct,
     handleUpdateProfile,
+    // handleViewSalesAnalysis,
   };
 };
 
