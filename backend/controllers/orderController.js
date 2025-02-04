@@ -2,6 +2,7 @@ const Order = require("../models/Order");
 const Customer = require("../models/Customer");
 const Product=require("../models/Product");
 const Farmer = require("../models/Farmer")
+const Notification = require("../models/Notification")
 
 exports.removeFromCart = async (req, res) => {
   try {
@@ -64,6 +65,9 @@ exports.placeOrder = async (req,res)=>{
 
 
             product.quantity-=item.quantity;
+            const notificationMessage = `New order: ${item.quantity} units of ${product.name} by ${customer.name}`;
+            await Notification.create({ userId: product.farmer._id,userRole:"Farmer",title:"Got New Order", message: notificationMessage });
+         
 
             await product.save();
             await customer.save();

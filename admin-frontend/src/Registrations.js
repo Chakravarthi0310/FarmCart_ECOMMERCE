@@ -1,28 +1,33 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Table, Button, Tag, message } from "antd";
+import { Table, Button, Tag, message, Spin } from "antd";
+import useAdminActions from "./hooks/useAdminApi";
 
 const Registrations = () => {
-  const [registrations, setRegistrations] = useState([]);
+  const { loading, error, fetchFarmers, updateFarmerStatus } = useAdminActions();
+  const [farmers, setFarmers] = useState([]);
 
   useEffect(() => {
-    fetchRegistrations();
+    const fetchData = async () => {
+      try {
+        const response = await fetchFarmers();
+        console.log("Fetched Farmers:", response);
+        setFarmers(response || []); // Ensure it's always an array
+      } catch (e) {
+        console.error("Error fetching farmers:", e);
+      }
+    };
+    fetchData();
   }, []);
-
-  const fetchRegistrations = async () => {
-    const dummyData = [
-      { id: 1, farmerName: "John Doe", email: "john@example.com", phone: "1234567890", status: "pending" },
-      { id: 2, farmerName: "Alice Smith", email: "alice@example.com", phone: "9876543210", status: "approved" },
-      { id: 3, farmerName: "Bob Williams", email: "bob@example.com", phone: "4561237890", status: "rejected" },
-    ];
-    setRegistrations(dummyData);
-  };
 
   const handleApprove = async (id) => {
     try {
-      // Replace with actual API call
+      await updateFarmerStatus(id, "Approved");
       message.success("Registration approved!");
-      fetchRegistrations(); // Refresh registrations
+      setFarmers((prev) =>
+        prev.map((farmer) =>
+          farmer.id === id ? { ...farmer, status: "approved" } : farmer
+        )
+      );
     } catch (error) {
       message.error("Error approving registration");
     }
@@ -30,27 +35,38 @@ const Registrations = () => {
 
   const handleReject = async (id) => {
     try {
-      // Replace with actual API call
+      await updateFarmerStatus(id, "Rejected");
       message.success("Registration rejected!");
-      fetchRegistrations(); // Refresh registrations
+      setFarmers((prev) =>
+        prev.map((farmer) =>
+          farmer.id === id ? { ...farmer, status: "rejected" } : farmer
+        )
+      );
     } catch (error) {
       message.error("Error rejecting registration");
     }
   };
 
   const columns = [
-    { title: "Farmer Name", dataIndex: "farmerName", key: "farmerName" },
-    { title: "Email", dataIndex: "email", key: "email" },
+    { title: "Farmer Name", dataIndex: "name", key: "name" },
     { title: "Phone", dataIndex: "phone", key: "phone" },
-    { 
-      title: "Status", 
-      dataIndex: "status", 
-      key: "status",
-      render: (status) => (
-        <Tag color={status === "pending" ? "orange" : status === "approved" ? "green" : "red"}>
-          {status.toUpperCase()}
-        </Tag>
-      )
+    {
+      title: "Status",
+      dataIndex: "verificationStatus",
+      key: "verificationStatus",
+      render: (status) => {
+        const statusText = status ? status.toUpperCase() : "UNKNOWN"; // Prevents undefined error
+        const color =
+          status === "Pending"
+            ? "orange"
+            : status === "Approved"
+            ? "green"
+            : status === "Rejected"
+            ? "red"
+            : "gray";
+
+        return <Tag color={color}>{statusText}</Tag>;
+      },
     },
     {
       title: "Actions",
@@ -59,16 +75,16 @@ const Registrations = () => {
         <>
           <Button
             type="primary"
-            onClick={() => handleApprove(record.id)}
-            disabled={record.status === "approved" || record.status === "rejected"}
+            onClick={() => handleApprove(record._id)}
+            disabled={record.verificationStatus == "Approved"}
             style={{ marginRight: 8 }}
           >
             Approve
           </Button>
           <Button
             type="danger"
-            onClick={() => handleReject(record.id)}
-            disabled={record.status === "rejected" || record.status === "approved"}
+            onClick={() => handleReject(record._id)}
+            disabled={record.verificationStatus == "Rejected"}
           >
             Reject
           </Button>
@@ -77,7 +93,10 @@ const Registrations = () => {
     },
   ];
 
-  return <Table columns={columns} dataSource={registrations} rowKey="id" />;
+  if (loading) return <Spin size="large" />;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
+
+  return <Table columns={columns} dataSource={farmers} rowKey="id" />;
 };
 
 export default Registrations;

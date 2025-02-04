@@ -7,6 +7,7 @@ const upload = multer({ storage: multer.memoryStorage() }); // Store images in m
 const bodyParser = require("body-parser");
 const connectDB = require("./config/db");
 const farmerRoutes = require("./routes/farmerRoutes");
+const notificationRoutes = require("./routes/notificationRoutes")
 const customerRoutes = require("./routes/customerRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const orderRoutes = require("./routes/orderRoutes");
@@ -37,6 +38,7 @@ app.use("/api/customer",customerRoutes);
 app.use("/api/admin",adminRoutes);
 app.use("/api/orders",orderRoutes);
 app.use("/api/location",mapApiRoutes);
+app.use("/api/notification",notificationRoutes);
 
 app.listen(5000, () => {
     console.log("Server is running");

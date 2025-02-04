@@ -263,7 +263,7 @@ const CustomerDashboard = () => {
             </div>
           ))
         ) : (
-          <p className="no-results">No products found.</p>
+          <p className="no-results">Loading...</p>
         )}
       </div>
     </div>

@@ -34,7 +34,7 @@ import FarmerProfile from "./pages/Farmers/FarmerProfile";
 import FarmerOrders from "./pages/Farmers/FarmerOrders";
 import FarmerNotifications from "./pages/Farmers/FarmerNotifications";
 import FarmerEdit from "./pages/Farmers/FarmerEdit";
-
+import FarmerAnalysis from "./pages/Farmers/FarmerAnalysis";
 
 function App() {
   return (
@@ -63,6 +63,8 @@ function App() {
        <Route path="/farmer-profile" element={<FarmerProfile/>}/>
        <Route path="/farmer-notifications" element={<FarmerNotifications/>}/>
        <Route path="/farmer-edit" element={<FarmerEdit/>}/>
+        <Route path="/farmer-analysis" element={<FarmerAnalysis/>}/>
+
 
        <Route path="/customer-subscriptions" element={<CustomerSubscriptions/>}/>
        <Route path="/customer-message" element={<CustomerMessage />} />

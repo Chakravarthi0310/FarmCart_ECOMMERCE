@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import Navbar from "./FarmerNavbar"; 
-import { Link } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom"; 
 import useFarmer from "../../hooks/useFarmer"; 
 import "./FarmerDashboard.css"; 
 import { Edit, Trash2 } from "lucide-react";
+// import FarmerAnalysis   from "./FarmerAnalysis.js";
+
 
 const FarmerDashboard = () => {
   const [items, setItems] = useState([]);
@@ -31,6 +33,10 @@ const FarmerDashboard = () => {
       <Navbar />
       <div className="dashboard">
       <div className="dashboard-container">
+        {/* <div className="dashboard-analysis">
+        {/* // <h3>📊 View Sales Analysis</h3> */}
+            {/* //  <FarmerAnalysis/> */} 
+        {/* </div> */}
         <h2 className="dashboard-title">📋 Your Items</h2>
 
         <div className="items-list">

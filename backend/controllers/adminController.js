@@ -1,7 +1,9 @@
 const Farmer = require("../models/Farmer");
 const Product = require("../models/Product");
 const Admin = require("../models/Admin");
+const Order = require("../models/Order")
 const Customer = require("../models/Customer");
+const Notification = require("../models/Notification")
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
@@ -78,6 +80,10 @@ exports.changeStatusFarmer = async (req, res) => {
             { verificationStatus },
             { new: true }
         );
+        const notificationMessage = `Congrantulatoins! You are approved farmer now. Your products can be seen by customers`;
+
+        await Notification.create({ userId:id,userRole:"Farmer",title:"You are Approved", message: notificationMessage });
+
 
         if (!farmer) {
             return res.status(404).json({ error: "Farmer not found" });
@@ -92,6 +98,7 @@ exports.changeStatusFarmer = async (req, res) => {
 exports.changeStatusProduct = async (req, res) => {
     try {
         const { id, status } = req.body;
+console.log(id,status);
         if (!["Approved", "Rejected"].includes(status)) {
             return res.status(400).json({ error: "Invalid product status" });
         }
@@ -101,6 +108,7 @@ exports.changeStatusProduct = async (req, res) => {
             { status },
             { new: true }
         );
+        
 
         if (!product) {
             return res.status(404).json({ error: "Product not found" });
@@ -110,6 +118,64 @@ exports.changeStatusProduct = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: "Internal server error" });
     }
+};
+
+exports.updateOrderStatus = async (req,res) => {
+    try {
+        const {orderId,status}=req.body;
+        // Fetch order details
+        const order = await Order.findById(orderId).populate("products.product");
+
+        if (!order) {
+            return console.error("Order not found");
+        }
+
+        // Update order status
+        order.status = status;
+        await order.save();
+
+        // Notification messages for different statuses
+        const customerMessage = `Your order status has been updated to: ${status}.`;
+        
+        // Notify customer for every update
+        await Notification.create({
+            userId: order.customer,
+            userRole:"Customer",
+            message: customerMessage,
+            title: "Order Update",
+        });
+
+        console.log(`Customer notified: ${customerMessage}`);
+
+        // Notify farmers for specific statuses
+        for (const item of order.products) {
+            const farmer = item.farmer; // Get farmer details from product
+            if (farmer) {
+                let farmerMessage = "";
+                
+                if (status === "Confirmed") {
+                    farmerMessage = `Order for ${item.product.name} has been confirmed. Get ready for shipment!`;
+                } else if (status === "Delivered") {
+                    farmerMessage = `Order for ${item.product.name} has been successfully delivered.`;
+                }
+
+                if (farmerMessage) {
+                    await Notification.create({
+                        userId: farmer._id,
+                        userRole:"Farmer",
+                        message: farmerMessage,
+                        title: "Order Update",
+                    });
+
+                    console.log(`Farmer ${farmer._id} notified: ${farmerMessage}`);
+                }
+            }
+        }
+
+        console.log("All notifications sent successfully.");
+    } catch (error) {
+        console.error("Error updating order status:", error);
+    }
 };
 
 exports.getAllFarmers = async (req, res) => {
@@ -131,25 +197,31 @@ exports.getAllProducts = async (req, res) => {
         
 };
 
-exports.changeStatusProduct = async (req, res) => {
-try {
- const { id, status } = req.body;
- if (!["Approved", "Rejected"].includes(status)) {
-  return res.status(400).json({ error: "Invalid product status" });
- }
- const product = await Product.findByIdAndUpdate(
- id,
- { status },
- { new: true }
- );
-  if (!product) {
-  return res.status(404).json({ error: "Product not found" });
+
+exports.getAllOrders = async (req, res) => {
+  try {
+    const orders = await Order.find()
+      .populate("customer")  // Populate customer details
+      .populate({
+        path: "products.product", // Populate each product inside the array
+        model: "Product"
+      })
+      .lean(); // Converts Mongoose documents into plain objects
+
+    // Ensure each order has "Processing" as the default status if not set
+    // const processedOrders = orders.map(order => ({
+    //   ...order,
+    //   status: order.status || "Processing"
+    // }));
+
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch orders", error: error.message });
   }
-  res.status(200).json({ message: `Product ${status} successfully`, product });
- } catch (error) {
-  res.status(500).json({ error: "Internal server error" });
- }
 };
+
+
+
 
 exports.getAllFarmers = async (req, res) => {
  try {
