@@ -36,6 +36,7 @@ export const loginCustomer = async (loginData) => {
 
 export const registerFarmer = async (farmerData) => {
   try {
+    console.log("auth service",farmerData); 
     const response = await axios.post(
       `${API_BASE_URL}/farmer/register`, 
       farmerData, 
@@ -51,7 +52,7 @@ export const registerFarmer = async (farmerData) => {
 // Login Farmer and Store Token
 export const loginFarmer = async (loginData) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/farmer/login, loginData`, {
+    const response = await axios.post(`${API_BASE_URL}/farmer/login`,loginData, {
       headers: {
         "Content-Type": "application/json",
       },

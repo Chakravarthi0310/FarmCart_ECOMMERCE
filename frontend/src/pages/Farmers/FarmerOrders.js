@@ -1,39 +1,75 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./FarmerNavbar";
 import "./FarmerOrders.css";
+import useFarmer from "../../hooks/useFarmer";
 
 const FarmerOrders = () => {
-  const [orders] = useState([
-    { id: 101, item: "Tomatoes", quantity: "20kg", status: "Delivered" },
-    { id: 102, item: "Potatoes", quantity: "10kg", status: "Pending" },
-  ]);
+  const [orders, setOrders] = useState([]);
+  const { handleViewOrders, loading, error } = useFarmer();
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const fetchedOrders = await handleViewOrders();
+        setOrders(fetchedOrders.orders);
+        console.log(fetchedOrders);
+      } catch (err) {
+        console.error("Error fetching orders:", err);
+      }
+    };
+    fetchOrders();
+  }, []);
 
   return (
     <>
       <Navbar />
       <div className="orders-container">
-        <h2>📦 Your Orders</h2>
+        <h2 className="orders-title">📦 Your Orders</h2>
+
+        {loading && <p>Loading...</p>}
+        {error && <p className="error">{error}</p>}
+
         {orders.length > 0 ? (
-          <table>
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Item</th>
-                <th>Quantity</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order) => (
-                <tr key={order.id}>
-                  <td>{order.id}</td>
-                  <td>{order.item}</td>
-                  <td>{order.quantity}</td>
-                  <td>{order.status}</td>
+          <div className="table-wrapper">
+            <table className="orders-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Items</th>
+                  <th>Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {orders.map((order) => (
+                  <tr key={order._id}>
+                    <td>#{order.orderId}</td>
+                    <td>
+                      {order.products.map((product, index) => (
+                        <div key={index} className="product-item">
+                          <img src={
+                      product.product.image?.data
+                        ? `data:${product.product.image.contentType};base64,${btoa(
+                            new Uint8Array(product.product.image.data.data).reduce(
+                              (data, byte) => data + String.fromCharCode(byte),
+                              ""
+                            )
+                          )}`
+                        : "../../assets/default.jpg"
+                    } alt={product.product.image.name} className="item-image" />
+                          <span>{product.product.name} - {product.quantity}</span>
+                        </div>
+                      ))}
+                    </td>
+                    <td>
+                      <span className={`order-status ${order.status.toLowerCase()}`}>
+                        {order.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         ) : (
           <p>No orders found.</p>
         )}

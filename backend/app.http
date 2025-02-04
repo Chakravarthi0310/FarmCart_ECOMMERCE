@@ -14,8 +14,8 @@ POST http://localhost:5000/api/farmer/login
 Content-Type: application/json
 
 {
-  "phone": "8688094300",
-  "password": "1234"
+  "phone": "0000000000",
+  "password": "password123"
 }
 
 
@@ -23,7 +23,7 @@ Content-Type: application/json
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWZiZDA0NGZiYWY0N2Q2N2QxZDNlOCIsInBob25lIjoiMDAwMDAwMDAwMCIsImlhdCI6MTczODUyMTg4MCwiZXhwIjoxNzM4NTI1NDgwfQ.m-0TrEbnY4MX50clffmxPzLcXm4p2c2Mo_g3lYy0kfE
 ### Add Product
 POST http://localhost:5000/api/farmer/products
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWZiNmE0NWJlZjdhYmQ3ZjRkMTNmNiIsInBob25lIjoiODY4ODA5NDMwMCIsImlhdCI6MTczODUyNjYyMSwiZXhwIjoxNzM4NTMwMjIxfQ.6mYmE4OwybsUenJvPEgqfSXOaLzoZ-pby0rfnJC2rSE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTExOGM4Y2M5MWRlNTgxODM0M2UwNyIsInBob25lIjoiMDAwMDAwMDAwMCIsImlhdCI6MTczODYxMDkzMiwiZXhwIjoxNzM4NjE0NTMyfQ.HjEWSW_Xbpjzq6fqo0B8EV13Ii4g6tEHG815RP6PJJM
 Content-Type: application/json
 
 {
@@ -166,13 +166,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWExZmQ0M
 ### Place order
 POST http://localhost:5000/api/customer/order
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OWExZmQ0MjVkMDY0ODgzY2FmNDNkYiIsImVtYWlsIjoiam9obkBleGFtcGxlLmNvbSIsImlhdCI6MTczODIzNTcxMiwiZXhwIjoxNzM4MjM5MzEyfQ.h7ITjFrPVoo21arTB0oD9UG9oDDeBvoFbCG3zTh_N2Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTExZTZlNzljMzM1NDg4M2U5Y2ZkYSIsImVtYWlsIjoiam9objFAZXhhbXBsZS5jb20iLCJpYXQiOjE3Mzg2MTI0MDMsImV4cCI6MTczODYxNjAwM30.foxpltBIkVDF5zdOCRayKixwKrF3YeMRN9KkO37DQ0s
 
 {
-    "customerId": "679a1fd425d064883caf43db",
+    "customerId": "67a11e6e79c3354883e9cfda",
     "products": [
         {
-            "_id": "67999d88a72c6c768554c18c",
+            "_id": "67a0f005ba8b0d21a6a6ef20",
             "quantity": 2
         }
     ]
@@ -192,3 +192,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTA1Y2IwM
 ### get geo coordinates
 GET http://localhost:5000/api/location/geocode?address=New York
 
+
+### Create Notification
+POST http://localhost:5000/api/notification/create
+Content-Type: application/json
+
+{
+  "userId": "67a0ce070e40d8257cf4490d",  
+  "userRole": "Customer", 
+  "message": "Your order has been shipped."
+}
+
+### Get Notification
+GET http://localhost:5000/api/notification/67a0efd6ba8b0d21a6a6ef1c

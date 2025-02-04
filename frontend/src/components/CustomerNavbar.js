@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaSearch, FaHeart, FaShoppingCart, FaUser } from "react-icons/fa";
-import { FaBellConcierge } from "react-icons/fa6";
 import "./CustomerNavbar.css"; // Import the CSS file
+import { FaBellConcierge } from "react-icons/fa6";
 
 const CustomerNavbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -20,13 +20,14 @@ const CustomerNavbar = () => {
     console.log("User logged out successfully.");
 
     // Redirect to the login page
-    navigate("/");
+    navigate("/customer-login");
   };
 
   return (
     <nav className="navbar">
       <div className="container">
         {/* Logo and Website Name */}
+
         <div className="logo" onClick={() => navigate("/customer-dashboard")}>
           <img src="/assets/logo.jpg" className="logo-img" alt="Logo" />
           <span className="FarmCart">FarmCart</span>
@@ -35,6 +36,8 @@ const CustomerNavbar = () => {
         {/* Search Bar */}
     
 
+
+        
 
         {/* Account Dropdown, Wishlist, and Cart */}
         <div className="account">
@@ -59,24 +62,18 @@ const CustomerNavbar = () => {
                   Subscriptions
                 </li>
                 <li className="divider"></li>
-                <li onClick={handleLogout} className="logout">
+                <li onClick={() => handleNavigation("/customer-login")} className="logout">
                   Logout
                 </li>
               </ul>
             )}
           </div>
 
-          {/* Wishlist, Cart, and Notifications */}
+          {/* Wishlist and Cart Icons */}
           <div className="icons">
-            <button onClick={() => handleNavigation("/customer-wishlist")}>
-              <FaHeart className="icon" />
-            </button>
-            <button onClick={() => handleNavigation("/customer-cart")}>
-              <FaShoppingCart className="icon" />
-            </button>
-            <button onClick={() => handleNavigation("/customer-notification")}>
-              <FaBellConcierge className="icon" />
-            </button>
+            <button onClick={() => handleNavigation("/customer-wishlist")}><FaHeart className="icon" /></button>
+            <button onClick={() => handleNavigation("/customer-cart")}><FaShoppingCart className="icon" /></button>
+            <button onClick={() => handleNavigation("/customer-notification")}><FaBellConcierge className="icon" /></button>
           </div>
         </div>
       </div>

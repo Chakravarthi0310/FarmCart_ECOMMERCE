@@ -174,7 +174,7 @@ exports.viewOrders = async(req, res) => {
                     $in: await Product.find({ farmer: farmerId }).select("_id")
                 }
             }).populate("customer", "name email phone address")
-            .populate("products.product", "name category price");
+            .populate("products.product", "name category price image");
         res.status(200).json({ orders });
     } catch (e) {
         res.status(500).json({ message: "Error fetching orders", message: e.message });
@@ -196,7 +196,7 @@ exports.updateOrderStatus = async(req,res)=>{
             return res.status(404).json({message:"Order not found"});
         }
         const products=order.products;
-        if(status=="Delivered")
+        if(status=="Cancelled")
         {
             for(let item of products)
             {
@@ -206,12 +206,9 @@ exports.updateOrderStatus = async(req,res)=>{
                 }
 
                 // Reduce stock only if there is enough quantity
-                if (product.quantity >= item.quantity) {
-                    product.quantity -= item.quantity;
+                product.quantity+=item.quantity;
                     await product.save();
-                } else {
-                    return res.status(400).json({ message: `Not enough stock for product ${product.name}` });
-                }
+                
             }
         }
         res.status(200).json({message:"Order status updated successfully",order});

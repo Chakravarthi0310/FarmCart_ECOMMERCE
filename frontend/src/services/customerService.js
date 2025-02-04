@@ -68,7 +68,7 @@ export const addToWishlist = async (productId,token) => {
   try {
     console.log(productId,token);
     const response = await axios.post(
-      `${API_BASE_URL}/wishlist`,
+     ` ${API_BASE_URL}/wishlist`,
       { productId },
       {
         headers: {
@@ -142,7 +142,7 @@ export const addToCart = async (productId, token) => {
 export const removeFromCart = async (productId, token) => {
   try {
     const response = await axios.delete(
-      `${API_BASE_URL}/cart/${productId}`,
+     `${API_BASE_URL}/cart/${productId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -170,4 +170,3 @@ export const getCart = async (token) => {
     console.error("Error fetching cart:", error.response?.data?.message || error.message);
   }
 };
-
