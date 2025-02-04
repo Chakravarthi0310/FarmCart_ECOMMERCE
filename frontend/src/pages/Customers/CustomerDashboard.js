@@ -1,99 +1,32 @@
-
-// const CustomerDashboard = () => {
-//   const [searchTerm, setSearchTerm] = useState("");
-//   const [selectedCategory, setSelectedCategory] = useState("all");
-//   const navigate = useNavigate();
-
-//   const filteredProducts = dummyProducts.filter(product =>
-//     (selectedCategory === "all" || product.category === selectedCategory) &&
-//     product.name.toLowerCase().includes(searchTerm.toLowerCase())
-//   );
-
-//   return (
-//     <div className="dashboard">
-//       <CustomerNavbar />
-      
-//       {/* Category Bar */}
-//       <div className="category-bar">
-//         {["all", "fruits", "vegetables", "grains", "dairy", "poultry"].map(category => (
-//           <button 
-//             key={category} 
-//             className={selectedCategory === category ? "active" : ""} 
-//             onClick={() => setSelectedCategory(category)}
-//           >
-//             {category.charAt(0).toUpperCase() + category.slice(1)}
-//           </button>
-//         ))}
-//       </div>
-      
-//       {/* Search Bar */}
-//       <div className="search-container">
-//         <input
-//           type="text"
-//           placeholder="Search for products..."
-//           value={searchTerm}
-//           onChange={(e) => setSearchTerm(e.target.value)}
-//         />
-//       </div>
-      
-//       {/* Product Display */}
-//       <div className="product-grid">
-//         {filteredProducts.length > 0 ? (
-//           filteredProducts.map((product) => (
-//             <div key={product.id} className="product-card">
-//               <img
-//                 src={product.image}
-//                 alt={product.name}
-//                 onClick={() => navigate(`/product-details/${product.id}`)}
-//               />
-//               <h3>{product.name}</h3>
-//               <p>{product.price}</p>
-//               <p>Expiry: {product.expiry}</p>
-//               <div className="buttons">
-//                 <button className="wishlist">❤️ Wishlist</button>
-//                 <button className="add-to-cart">🛒 Add to Cart</button>
-//               </div>
-//             </div>
-//           ))
-//         ) : (
-//           <p className="no-results">No products found.</p>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CustomerDashboard;
-
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomerNavbar from "../../components/CustomerNavbar";
 import "./CustomerDashboard.css";
 import useCustomer from "../../hooks/useCustomer";
 
-
-
 const CustomerDashboard = () => {
-  // Main filter states used for filtering products:
+  // Products and wishlist state:
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState([]);
 
-
+  // Filtering states:
   const [searchTerm, setSearchTerm] = useState("");
+  // **Unified category state used in both category bar and filter dropdown:**
   const [selectedCategory, setSelectedCategory] = useState("all");
+  // Rating filter remains separate (you can choose to unify it in a similar way if desired)
   const [ratingFilter, setRatingFilter] = useState("all");
 
-  // State for showing/hiding the filter dropdown
+  // State for controlling the filter dropdown's open/close
   const [filterOpen, setFilterOpen] = useState(false);
-  // Temporary states for the filter form (to allow changes before saving)
-  const [filterCategory, setFilterCategory] = useState(selectedCategory);
+  // Temporary state for rating filter (if you want to allow changes before applying)
   const [filterRating, setFilterRating] = useState(ratingFilter);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { handleGetApprovedProducts, handleAddToWishList, handleGetWishlist,handleAddToCart} = useCustomer();
+  const { handleGetApprovedProducts, handleAddToWishList, handleGetWishlist, handleAddToCart } = useCustomer();
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -108,38 +41,38 @@ const CustomerDashboard = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, [handleGetApprovedProducts]);
 
-  // Apply filter changes and close the dropdown
+  // Apply filter changes for rating and close the dropdown.
+  // The category filter is already live via selectedCategory.
   const applyFilters = () => {
-    setSelectedCategory(filterCategory);
     setRatingFilter(filterRating);
     setFilterOpen(false);
   };
 
   const toggleWishlist = async (productId) => {
-    try{
+    try {
       await handleAddToWishList(productId);
       alert("Added to wishlist successfully");
-    }catch(e){
-      alert("Error adding to wishLIst")
+    } catch (e) {
+      alert("Error adding to wishlist");
     }
-     };
+  };
 
-    const toggleCartlist = async (productId) => {
-      try{
-        await handleAddToCart(productId);
-        alert("Added to cart successfully");
-      }catch(e){
-        alert("Error adding to wishLIst")
-      }
-      };
-  
-  
+  const toggleCartlist = async (productId) => {
+    try {
+      await handleAddToCart(productId);
+      alert("Added to cart successfully");
+    } catch (e) {
+      alert("Error adding to cart");
+    }
+  };
 
-  // Filtering products based on search, category, and rating
+  // Filtering products based on search term, category, and rating
   const filteredProducts = products.filter(product => {
-    const categoryMatch = selectedCategory === "all" || product.category === selectedCategory;
+    const categoryMatch =
+      selectedCategory === "all" ||
+      product.category.toLowerCase() === selectedCategory.toLowerCase();
     const searchMatch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
     let ratingMatch = true;
     if (ratingFilter !== "all") {
@@ -166,12 +99,9 @@ const CustomerDashboard = () => {
           {["all", "Fruits", "Vegetables", "Grains", "Dairy", "Poultry"].map(category => (
             <button 
               key={category} 
-              className={selectedCategory === category ? "active" : ""} 
-              onClick={() => {
-                setSelectedCategory(category);
-                // Sync the temporary filter form as well
-                setFilterCategory(category);
-              }}
+              // Compare in lowercase to ensure consistency:
+              className={selectedCategory === category.toLowerCase() ? "active" : ""} 
+              onClick={() => setSelectedCategory(category.toLowerCase())}
             >
               {category.charAt(0).toUpperCase() + category.slice(1)}
             </button>
@@ -180,8 +110,7 @@ const CustomerDashboard = () => {
         <button 
           className="filter-toggle" 
           onClick={() => {
-            // Sync temporary filter values with current filters before toggling
-            setFilterCategory(selectedCategory);
+            // Sync the temporary rating filter with the current rating filter when toggling
             setFilterRating(ratingFilter);
             setFilterOpen(!filterOpen);
           }}
@@ -195,7 +124,11 @@ const CustomerDashboard = () => {
         <div className="filter-dropdown">
           <div className="filter-group">
             <label>Category:</label>
-            <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}>
+            <select
+              // Use the same selectedCategory for the dropdown so that any changes are live
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
               {["all", "fruits", "vegetables", "grains", "dairy", "poultry"].map(cat => (
                 <option key={cat} value={cat}>
                   {cat.charAt(0).toUpperCase() + cat.slice(1)}
@@ -213,7 +146,9 @@ const CustomerDashboard = () => {
               <option value="less than 2">Less than 2</option>
             </select>
           </div>
-          <button className="filter-save" onClick={applyFilters}>Save</button>
+          <button className="filter-save" onClick={applyFilters}>
+            Save
+          </button>
         </div>
       )}
 
@@ -229,10 +164,14 @@ const CustomerDashboard = () => {
 
       {/* Product Display */}
       <div className="product-grid">
-        {filteredProducts.length > 0 ? (
+        {loading ? (
+          <p className="no-results">Loading...</p>
+        ) : error ? (
+          <p className="no-results">{error}</p>
+        ) : filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
-            <div key={product.id} className="product-card">
-                <img
+            <div key={product._id || product.id} className="product-card">
+              <img
                 className="product-image"
                 src={
                   product.image?.data
@@ -243,27 +182,33 @@ const CustomerDashboard = () => {
                         )
                       )}`
                     : "../../assets/default.jpg"
-                }                onClick={() => navigate(`/product-details/${product._id}`)}
+                }
+                onClick={() => navigate(`/product-details/${product._id}`)}
+                alt={product.name}
               />
               <h3>{product.name}</h3>
               <p>{product.price}</p>
               <p>Expiry: {new Date(product.expiryDate).toLocaleDateString()}</p>
               <p>Rating: {product.ratings}</p>
               <div className="buttons">
-                <button className="wishlist"
-                onClick={()=>toggleWishlist(product._id)}
-                 style={{ color: wishlist.includes(product._id) ? "red" : "black" }}
-
-                
-                >❤️ Wishlist</button>
-                <button className="add-to-cart"
-                onClick={()=>toggleCartlist(product._id)}
-                >🛒 Add to Cart</button>
+                <button 
+                  className="wishlist"
+                  onClick={() => toggleWishlist(product._id)}
+                  style={{ color: wishlist.includes(product._id) ? "red" : "black" }}
+                >
+                  ❤️ Wishlist
+                </button>
+                <button 
+                  className="add-to-cart"
+                  onClick={() => toggleCartlist(product._id)}
+                >
+                  🛒 Add to Cart
+                </button>
               </div>
             </div>
           ))
         ) : (
-          <p className="no-results">Loading...</p>
+          <p className="no-results">No products found.</p>
         )}
       </div>
     </div>
