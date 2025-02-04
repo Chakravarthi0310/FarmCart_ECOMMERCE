@@ -69,10 +69,10 @@ const CustomerNavbar = () => {
           </div>
 
           {/* Wishlist and Cart Icons */}
-          <div className="icons">
-            <button onClick={() => handleNavigation("/customer-wishlist")}><FaHeart className="icon" /></button>
-            <button onClick={() => handleNavigation("/customer-cart")}><FaShoppingCart className="icon" /></button>
-            <button onClick={() => handleNavigation("/customer-notification")}><FaBellConcierge className="icon" /></button>
+          <div className="icons" >
+            <button onClick={() => handleNavigation("/customer-wishlist")}><FaHeart className="icon"  size = {30}/></button>
+            <button onClick={() => handleNavigation("/customer-cart")}><FaShoppingCart className="icon" size = {30}/></button>
+            <button onClick={() => handleNavigation("/customer-notification")}><FaBellConcierge className="icon" size = {30}/></button>
           </div>
         </div>
       </div>
