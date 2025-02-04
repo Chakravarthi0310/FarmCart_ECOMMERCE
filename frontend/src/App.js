@@ -61,7 +61,7 @@ function App() {
        <Route path="/customer-orders" element={<CustomerOrders/>}/>
        <Route path="/farmer-orders" element={<FarmerOrders />} />
        <Route path="/farmer-profile" element={<FarmerProfile/>}/>
-       <Route path="/farmer-notifications" element={<FarmerNotifications/>}/>
+       <Route path="/farmer-notification" element={<FarmerNotifications/>}/>
        <Route path="/farmer-edit" element={<FarmerEdit/>}/>
 
        <Route path="/customer-subscriptions" element={<CustomerSubscriptions/>}/>

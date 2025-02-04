@@ -23,15 +23,25 @@
 }
 
 .logo {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: auto;
   margin-right: 10px;
+  border-radius: 50%;
 }
 
 .brand-name {
   font-size: 24px;
   font-weight: bold;
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Correct transition */
 }
+
+.navbar-left:hover {
+  color: #c8e6c9; /* Change color on hover */
+  transform: scale(1.1); /* Increase size slightly */
+}
+
+
+
 
 .navbar-right {
   display: flex;
