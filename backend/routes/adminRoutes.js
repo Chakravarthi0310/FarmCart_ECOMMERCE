@@ -6,19 +6,23 @@ const {
     loginAdmin,
     changeStatusFarmer,
     changeStatusProduct,
+updateOrderStatus,
     getAllFarmers,
     getAllProducts,
-    getAllCustomer
+    getAllCustomer,
+    getAllOrders
 } = require("../controllers/adminController");
 
-const {authMiddleware}=require("../middlewares/authMiddleware");
+// const {authMiddleware}=require("../middlewares/authMiddleware");
 
 router.post("/register", registerAdmin);
 router.post("/login", loginAdmin);
-router.put("/farmer", authMiddleware,changeStatusFarmer);
-router.put("/product",authMiddleware, changeStatusProduct);
-router.get("/farmers", authMiddleware,getAllFarmers);
-router.get("/products", authMiddleware,getAllProducts);
-router.get("/customers", authMiddleware,getAllCustomer);
+router.put("/farmer",changeStatusFarmer);
+router.put("/product", changeStatusProduct);
+router.put("/order", updateOrderStatus);
+router.get("/farmers",getAllFarmers);
+router.get("/order",getAllOrders);
+router.get("/products",getAllProducts);
+router.get("/customers",getAllCustomer);
 
 module.exports = router;

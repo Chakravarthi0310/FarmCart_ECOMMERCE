@@ -1,44 +1,65 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Tag, Button, Progress } from "antd";
 import { CheckCircleOutlined, ClockCircleOutlined, CloseCircleOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import useAdminActions from "./hooks/useAdminApi";
 
 const Orders = () => {
-  // Sample orders data (Replace with API data later)
-  const [orders, setOrders] = useState([
-    { id: 1, farmer: "John Doe", product: "Tomatoes", quantity: 50, status: "Pending" },
-    { id: 2, farmer: "Jane Smith", product: "Carrots", quantity: 30, status: "Accepted" },
-    { id: 3, farmer: "Mike Johnson", product: "Potatoes", quantity: 40, status: "Cancelled" },
-  ]);
+  const { fetchOrders, updateOrderStatus } = useAdminActions(); // Assuming fetchOrders and updateOrderStatus are implemented in the hook
+  const [orders, setOrders] = useState([]);
+  const getOrders = async () => {
+    try {
+      const fetchedOrders = await fetchOrders(); // Fetch orders from the backend API
+      setOrders(fetchedOrders.map(order => ({
+        ...order,
+        status: order.status || "Processing", // Ensure "Processing" as default if no status is set
+      })));
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
 
-  // Function to update order status
-  const updateStatus = (id, newStatus) => {
-    setOrders((prevOrders) =>
-      prevOrders.map((order) =>
-        order.id === id ? { ...order, status: newStatus } : order
-      )
-    );
+  useEffect(() => {
+    
+    getOrders();
+  }, []);
+
+  const handleUpdateStatus = async (id, newStatus) => {
+    try {
+
+      await updateOrderStatus(id, newStatus); // Use the function to update the order status
+      await getOrders();
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order.id === id ? { ...order, status: newStatus } : order
+        )
+      );
+    } catch (error) {
+      console.error("Error updating order status:", error);
+    }
   };
 
   // Progress bar logic
   const getProgressPercentage = (status) => {
     switch (status) {
-      case "Accepted":
-        return 33; // 33% for Accepted
+      case "Confirmed":
+        return 33;
       case "Shipped":
-        return 66; // 66% for Shipped
+        return 66;
       case "Delivered":
-        return 100; // 100% for Delivered
+        return 100;
       case "Cancelled":
-        return 0; // 0% for Cancelled
+        return 0;
+      case "Processing":
+        return 20;
       default:
-        return 0; // Pending state has 0%
+        return 0;
     }
   };
 
   // Define columns for the Ant Design Table
   const columns = [
-    { title: "Order ID", dataIndex: "id", key: "id" },
-    { title: "Farmer", dataIndex: "farmer", key: "farmer" },
+    { title: "Order ID", dataIndex: "orderId", key: "id" },
+    { title: "Farmer", dataIndex: "", key: "farmer" ,render:(_,record)=>(record.farmer?record.farmer.name:"N/A")},
     { title: "Product", dataIndex: "product", key: "product" },
     { title: "Quantity", dataIndex: "quantity", key: "quantity" },
     {
@@ -46,7 +67,7 @@ const Orders = () => {
       dataIndex: "status",
       key: "status",
       render: (status) => {
-        let color = status === "Accepted" ? "green" : status === "Cancelled" ? "red" : "gold";
+        let color = status === "Confirmed" ? "green" : status === "Cancelled" ? "red" : "gold";
         return (
           <div>
             <Tag color={color}>{status}</Tag>
@@ -63,16 +84,16 @@ const Orders = () => {
           <Button
             type="primary"
             icon={<CheckCircleOutlined />}
-            disabled={record.status === "Accepted" || record.status === "Shipped" || record.status === "Delivered"}
-            onClick={() => updateStatus(record.id, "Accepted")}
+            disabled={record.status === "Confirmed" || record.status === "Shipped" || record.status === "Delivered"}
+            onClick={() => handleUpdateStatus(record._id, "Confirmed")}
           >
             Accept
           </Button>
           <Button
-            type="default"
+            type={record.status == "Confirmed" ? "primary":"default"}
             icon={<ShoppingCartOutlined />}
-            disabled={record.status !== "Accepted" && record.status !== "Shipped"}
-            onClick={() => updateStatus(record.id, "Shipped")}
+            disabled={record.status !== "Confirmed" && record.status !== "Shipped"}
+            onClick={() => handleUpdateStatus(record._id, "Shipped")}
           >
             Ship
           </Button>
@@ -80,7 +101,7 @@ const Orders = () => {
             type="default"
             icon={<ClockCircleOutlined />}
             disabled={record.status === "Delivered" || record.status === "Cancelled"}
-            onClick={() => updateStatus(record.id, "Delivered")}
+            onClick={() => handleUpdateStatus(record._id, "Delivered")}
           >
             Deliver
           </Button>
@@ -88,7 +109,7 @@ const Orders = () => {
             type="danger"
             icon={<CloseCircleOutlined />}
             disabled={record.status === "Cancelled" || record.status === "Delivered"}
-            onClick={() => updateStatus(record.id, "Cancelled")}
+            onClick={() => handleUpdateStatus(record._id, "Cancelled")}
           >
             Cancel
           </Button>

@@ -1,34 +1,33 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Table, Button, Tag, message } from "antd";
+import { Table, Button, Tag, message, Spin } from "antd";
+import useAdminActions from "./hooks/useAdminApi";
 
 const Products = () => {
+  const { loading, error, fetchProducts, updateProductStatus } = useAdminActions();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetchProducts();
+    const fetchData = async () => {
+      try {
+        const response = await fetchProducts();
+        console.log("Fetched Products:", response);
+        setProducts(response || []); // Ensure it's always an array
+      } catch (e) {
+        console.error("Error fetching products:", e);
+      }
+    };
+    fetchData();
   }, []);
-
-  const fetchProducts = async () => {
-    const dummyData = [
-      { id: 1, farmerName: "John Doe", product: "Tomatoes", quantity: "50kg", price: 20, status: "pending" },
-      { id: 2, farmerName: "Alice Smith", product: "Potatoes", quantity: "30kg", price: 15, status: "approved" },
-      { id: 3, farmerName: "Bob Williams", product: "Carrots", quantity: "20kg", price: 10, status: "rejected" },
-    ];
-    setProducts(dummyData);
-  };
 
   const handleApprove = async (id) => {
     try {
-      // Update the status to approved in the local state
-      setProducts((prevProducts) =>
-        prevProducts.map((product) =>
-          product.id === id ? { ...product, status: "approved" } : product
+      await updateProductStatus(id, "Approved");
+      message.success("Product approved!");
+      setProducts((prev) =>
+        prev.map((product) =>
+          product.id === id ? { ...product, status: "Approved" } : product
         )
       );
-      
-      // Simulate API request for approval (replace with actual API call)
-      message.success("Product approved!");
     } catch (error) {
       message.error("Error approving product");
     }
@@ -36,34 +35,32 @@ const Products = () => {
 
   const handleReject = async (id) => {
     try {
-      // Update the status to rejected in the local state
-      setProducts((prevProducts) =>
-        prevProducts.map((product) =>
+      await updateProductStatus(id, "Rejected");
+      message.success("Product rejected!");
+      setProducts((prev) =>
+        prev.map((product) =>
           product.id === id ? { ...product, status: "rejected" } : product
         )
       );
-
-      // Simulate API request for rejection (replace with actual API call)
-      message.success("Product rejected!");
     } catch (error) {
       message.error("Error rejecting product");
     }
   };
 
   const columns = [
-    { title: "Farmer Name", dataIndex: "farmerName", key: "farmerName" },
-    { title: "Product", dataIndex: "product", key: "product" },
+    { title: "Farmer Name", dataIndex: "", key: "farmerName" ,  render: (_,record) => (record.farmer? record.farmer.name : "N/A") },
+    { title: "Product", dataIndex: "name", key: "product" },
     { title: "Quantity", dataIndex: "quantity", key: "quantity" },
     { title: "Price", dataIndex: "price", key: "price", render: (price) => `$${price}` },
-    { 
-      title: "Status", 
-      dataIndex: "status", 
+    {
+      title: "Status",
+      dataIndex: "status",
       key: "status",
       render: (status) => (
-        <Tag color={status === "pending" ? "orange" : status === "approved" ? "green" : "red"}>
+        <Tag color={status === "Pending" ? "orange" : status === "Approved" ? "green" : "red"}>
           {status.toUpperCase()}
         </Tag>
-      )
+      ),
     },
     {
       title: "Actions",
@@ -72,7 +69,7 @@ const Products = () => {
         <>
           <Button
             type="primary"
-            onClick={() => handleApprove(record.id)}
+            onClick={() => handleApprove(record._id)}
             disabled={record.status === "approved" || record.status === "rejected"}
             style={{ marginRight: 8 }}
           >
@@ -80,7 +77,7 @@ const Products = () => {
           </Button>
           <Button
             type="danger"
-            onClick={() => handleReject(record.id)}
+            onClick={() => handleReject(record._id)}
             disabled={record.status === "rejected" || record.status === "approved"}
           >
             Reject
@@ -89,6 +86,9 @@ const Products = () => {
       ),
     },
   ];
+
+  if (loading) return <Spin size="large" />;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return <Table columns={columns} dataSource={products} rowKey="id" />;
 };

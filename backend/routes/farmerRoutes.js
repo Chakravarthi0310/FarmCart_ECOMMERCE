@@ -5,6 +5,8 @@ const {updateProduct,deleteProduct}=require("../controllers/productController");
 const router = express.Router();
 const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() }); // Store images in memory buffer
+// const { salesAnalysis } = require("../controllers/salesController"); // Import salesAnalysis 
+
 
 router.post("/register",registerFarmer);
 router.post("/login",loginFarmer);
@@ -16,6 +18,9 @@ router.put("/products/:productId",authMiddleware,updateProduct);
 router.delete("/products/:productId",authMiddleware,deleteProduct);
 router.put("/profile",authMiddleware,updateFarmerProfile);
 
+
+// Sales Analysis Endpoint (new)
+// router.get("/sales-analysis", authMiddleware, salesAnalysis);
 
 
 module.exports = router;

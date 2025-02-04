@@ -55,7 +55,7 @@ const FarmerOrders = () => {
           });
         });
 
-        // Prepare arrays for chart labels and datasets from the aggregated data
+        // Prepare arrays for chart labels and datasets.
         const labels = Object.values(aggregated).map((item) => item.name);
         const totalSoldData = Object.values(aggregated).map(
           (item) => item.totalSold
@@ -64,7 +64,7 @@ const FarmerOrders = () => {
           (item) => item.totalRevenue
         );
 
-        // Create chart data object for Chart.js
+        // Create chart data object.
         setChartData({
           labels,
           datasets: [
@@ -80,14 +80,18 @@ const FarmerOrders = () => {
             },
           ],
         });
+
+        console.log(fetchedOrders);
+
       } catch (err) {
         console.error("Error fetching orders:", err);
       }
     };
 
+
     // Call the function to load orders when component mounts
     fetchOrders();
-  }, [handleViewOrders]);
+  }, []);
 
   return (
     <>
@@ -95,31 +99,57 @@ const FarmerOrders = () => {
       <div className="orders-container">
         <h2 className="orders-title">📦 Your Orders</h2>
 
-        {/* Display loading message if data is being fetched */}
         {loading && <p>Loading...</p>}
-        {/* Display any error messages from the API */}
         {error && <p className="error">{error}</p>}
+
 
         {/* Render the chart if chartData is available */}
         {chartData && (
           <div className="chart-wrapper">
-            <Bar
-              data={chartData}
-              options={{
-                responsive: true,
-                plugins: {
-                  legend: { position: "top" },
-                  title: {
-                    display: true,
-                    text: "Product-wise Sales Analysis",
-                  },
-                },
-              }}
-            />
+<Bar
+  data={chartData}
+  options={{
+    responsive: true,
+    plugins: {
+      legend: { position: "top" },
+      title: {
+        display: true,
+        text: "Product-wise Sales Analysis",
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            const label = context.dataset.label || "";
+            const value = context.raw; // Get the raw value of the bar
+            return `${label}: ${value.toLocaleString()} units`; // Customize tooltip text
+          },
+        },
+      },
+    },
+    scales: {
+      y: {
+        type: "logarithmic", // Ensures visibility for small values
+        min: 1, 
+        ticks: {
+          callback: function (value) {
+            return Number(value).toLocaleString();
+          },
+        },
+      },
+      x: {
+        ticks: {
+          autoSkip: false,
+          maxRotation: 45,
+          minRotation: 0,
+        },
+      },
+    },
+    barThickness: 30, // Ensures better visibility for small bars
+  }}
+/>
           </div>
         )}
 
-        {/* Render orders table if there are orders */}
         {orders.length > 0 ? (
           <div className="table-wrapper">
             <table className="orders-table">

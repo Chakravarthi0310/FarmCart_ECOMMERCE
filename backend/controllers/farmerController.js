@@ -166,23 +166,44 @@ if (missingFields.length > 0) {
 
 
 //View Orders
-exports.viewOrders = async(req, res) => {
+exports.viewOrders = async (req, res) => {
     try {
-        const farmerId = req.customer.id; 
-        const orders = await Order.find({
-                "products.product": {
-                    $in: await Product.find({ farmer: farmerId }).select("_id")
-                }
-            }).populate("customer", "name email phone address")
-            .populate("products.product", "name category price");
-        res.status(200).json({ orders });
-    } catch (e) {
-        res.status(500).json({ message: "Error fetching orders", message: e.message });
+        const farmerId = req.customer.id; // Get the logged-in farmer's ID
 
+        // Fetch all orders containing at least one product from the farmer
+        const orders = await Order.find({
+            "products.product": { 
+                $in: await Product.find({ farmer: farmerId }).select("_id")
+            }
+        })
+        .populate("customer", "name email phone address") // Populate customer details
+        .populate("products.product", "name category price farmer"); // Populate product details
+        // Filter out products that don't belong to the farmer
+        const filteredOrders = orders.map(order => {
+            const filteredProducts = order.products.filter(
+                (item) => item.product.farmer.toString() === farmerId
+            );
+           console.log(filteredProducts);
+            return {
+                _id: order._id,
+                orderId: order.orderId,
+                customer: order.customer,
+                status: order.status,
+                totalPrice: order.totalPrice,
+                products: filteredProducts, // Include only farmer's products
+                createdAt: order.createdAt
+            };
+        }).filter(order => order.products.length > 0); // Remove orders with no relevant products
+
+        res.status(200).json({ orders: filteredOrders });
+
+    } catch (e) {
+        res.status(500).json({ message: "Error fetching orders", error: e.message });
     }
 };
 
 
+//Update order status
 //Update order status
 exports.updateOrderStatus = async(req,res)=>{
     try{
@@ -196,7 +217,7 @@ exports.updateOrderStatus = async(req,res)=>{
             return res.status(404).json({message:"Order not found"});
         }
         const products=order.products;
-        if(status=="Delivered")
+        if(status=="Cancelled")
         {
             for(let item of products)
             {
@@ -206,15 +227,12 @@ exports.updateOrderStatus = async(req,res)=>{
                 }
 
                 // Reduce stock only if there is enough quantity
-                if (product.quantity >= item.quantity) {
-                    product.quantity -= item.quantity;
+                product.quantity+=item.quantity;
                     await product.save();
-                } else {
-                    return res.status(400).json({ message: `Not enough stock for product ${product.name}` });
-                }
+                
             }
         }
-        res.status(200).json({message:"Order status updated successfully",order});
+         res.status(200).json({message:"Order status updated successfully",order});
 
     }catch(e){
         res.status(500).json({message:"Error updating order status",error:e.message});
