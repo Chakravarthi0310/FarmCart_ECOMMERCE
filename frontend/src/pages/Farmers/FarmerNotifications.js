@@ -3,7 +3,6 @@ import Navbar from "./FarmerNavbar";
 import useNotifications from "../../hooks/useNotification";
 import "./FarmerNotifications.css";
 import { formatRelativeDate } from "../../utils/dateUtils"; // Import timestamp formatter
-import "./FarmerNotifications.css"
 const FarmerNotifications = () => {
   const farmerData = JSON.parse(localStorage.getItem("farmerData"));
   const userId = farmerData?.id;

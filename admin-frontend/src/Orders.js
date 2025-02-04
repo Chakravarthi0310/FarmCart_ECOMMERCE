@@ -90,10 +90,10 @@ const Orders = () => {
             Accept
           </Button>
           <Button
-            type="default"
+            type={record.status == "Confirmed" ? "primary":"default"}
             icon={<ShoppingCartOutlined />}
             disabled={record.status !== "Confirmed" && record.status !== "Shipped"}
-            onClick={() => handleUpdateStatus(record.id, "Shipped")}
+            onClick={() => handleUpdateStatus(record._id, "Shipped")}
           >
             Ship
           </Button>
@@ -101,7 +101,7 @@ const Orders = () => {
             type="default"
             icon={<ClockCircleOutlined />}
             disabled={record.status === "Delivered" || record.status === "Cancelled"}
-            onClick={() => handleUpdateStatus(record.id, "Delivered")}
+            onClick={() => handleUpdateStatus(record._id, "Delivered")}
           >
             Deliver
           </Button>
@@ -109,7 +109,7 @@ const Orders = () => {
             type="danger"
             icon={<CloseCircleOutlined />}
             disabled={record.status === "Cancelled" || record.status === "Delivered"}
-            onClick={() => handleUpdateStatus(record.id, "Cancelled")}
+            onClick={() => handleUpdateStatus(record._id, "Cancelled")}
           >
             Cancel
           </Button>
