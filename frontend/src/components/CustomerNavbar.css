@@ -4,38 +4,58 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  background-color: #859F3D; /* Green navbar color */
-  padding: 10px 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for navbar */
-  border-radius: 30px; /* Curved corners */
-  transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+  background: linear-gradient(135deg, #a4c639, #859F3D);
+  padding: 12px 24px;
+  box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.15);
+  border-radius: 40px;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  transition: transform 0.3s ease; /* Smooth transition for hide/show effect */
 }
 
-/* Logo */
+/* The initial state of the navbar */
+.navbar.hidden {
+  transform: translateY(-100%); /* Hide navbar by moving it up */
+}
+
+/* Other sections like logo, account, dropdown remain the same */
+
+
+/* Logo Section */
 .logo {
   display: flex;
   align-items: center;
-  font-size: 1.8rem; /* Slightly larger logo */
-  font-weight: 600; /* Bold for better readability */
-  color: #f1e6b8; /* Warm cream color for FarmCart */
+  font-size: 2rem;
+  font-weight: 700;
+  color: #FFF8E1;
+  text-transform: uppercase;
+  gap: 10px;
+  cursor: pointer;
   transition: transform 0.3s ease-in-out;
+  margin-left: -20px; /* Shifted slightly left */
 }
 
 .logo-img {
   width: 50px;
-  height: 50px; /* Make the logo square for a perfect circle */
-  margin-right: 10px;
-  border-radius: 50%; /* Make the logo round */
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
 }
 
 .logo:hover {
-  transform: scale(1.1); /* Slight scale on hover to make the logo stand out */
+  transform: scale(1.1);
 }
 
 /* Account Section */
 .account {
   display: flex;
   align-items: center;
+}
+
+.account:hover {
+  color: #FFD740; /* Hover color change */
 }
 
 /* Dropdown Menu */
@@ -48,73 +68,80 @@
   background: none;
   border: none;
   font-size: 1rem;
-  color: black; /* Changed to black for better readability */
+  color: white;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 5px;
-  transition: color 0.3s ease-in-out;
-}
-
-.dropdown-btn .icon {
-  font-size: 1.2rem;
+  gap: 8px;
+  text-transform: capitalize;
+  transition: color 0.3s ease;
 }
 
 .dropdown-btn:hover {
-  color: #141111; /* Darker shade of black on hover */
+  color: #FFF176;
 }
 
 .dropdown-menu {
   position: absolute;
-  top: 100%;
+  top: 110%;
   left: 0;
-  background: hsl(60, 8%, 97%); /* Soft light background for the menu */
-  border: 1px solid #777777; /* Lighter gray border */
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid #DDD;
   list-style: none;
-  padding: 10px;
-  min-width: 150px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  min-width: 180px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
   display: block;
   z-index: 1000;
-  border-radius: 5px;
+  border-radius: 8px;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
 }
 
 .dropdown:hover .dropdown-menu {
   opacity: 1;
   visibility: visible;
-  transform: translateY(5px); /* Slight movement on hover for the dropdown */
+  transform: translateY(0);
 }
 
 .dropdown-menu li {
   padding: 10px;
   cursor: pointer;
-  transition: background 0.2s ease-in-out, border 0.2s ease-in-out;
+  font-size: 1rem;
+  color: #333;
+  transition: all 0.3s ease-in-out;
+  border-radius: 5px;
 }
 
-.dropdown-menu li:hover {
-  background: #444444; /* Darker gray hover effect */
-  border: 1px solid #ff4c4c; /* Red border on hover for emphasis */
-  border-radius: 5px; /* Rounded corners for the border */
+.dropdown-menu li:nth-child(1),
+.dropdown-menu li:nth-child(2),
+.dropdown-menu li:nth-child(3) {
+  background: #E0F7FA;
+}
+
+.dropdown-menu li:nth-child(1):hover,
+.dropdown-menu li:nth-child(2):hover,
+.dropdown-menu li:nth-child(3):hover {
+  background: #0ec8e1;
+  color: white;
+}
+
+.dropdown-menu li.logout {
+  color: #fb0505;
+  background: #FFF1F0;
+}
+
+.dropdown-menu li.logout:hover {
+  background: #D32F2F;
   color: white;
 }
 
 .divider {
-  height: 0.3px;
-  background: #141111; /* Light gray divider */
-  margin: 1px 0;
-}
-
-.logout {
-  color: #ff4c4c; /* Bright red for logout button to stand out */
-  font-weight: bold;
-  transition: color 0.3s ease-in-out;
-}
-
-.logout:hover {
-  color: #141212; /* Brighter red on hover for emphasis */
+  height: 1px;
+  background: #E0E0E0;
+  margin: 8px 0;
 }
 
 /* Icons Section */
@@ -127,11 +154,28 @@
 
 .icon-link {
   text-decoration: none;
-  color: black; /* Changed icons color to black */
-  font-size: 1.5rem;
-  transition: color 0.3s ease-in-out;
+  color: white;
+  font-size: 1.7rem;
+  transition: all 0.3s ease-in-out;
 }
 
 .icon-link:hover {
-  color: #ff4c4c; /* Red hover for contrast */
+  color: #FF8A80;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
+
+  .account {
+    margin-top: 10px;
+  }
+
+  .icons {
+    margin-top: 10px;
+  }
 }

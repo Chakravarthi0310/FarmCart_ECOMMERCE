@@ -13,6 +13,7 @@
   left: 0;
   width: 100%; /* Ensure it stretches across the page */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+  
 }
 
 .navbar-left {
@@ -22,15 +23,25 @@
 }
 
 .logo {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: auto;
   margin-right: 10px;
+  border-radius: 50%;
 }
 
 .brand-name {
   font-size: 24px;
   font-weight: bold;
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Correct transition */
 }
+
+.navbar-left:hover {
+  color: #c8e6c9; /* Change color on hover */
+  transform: scale(1.1); /* Increase size slightly */
+}
+
+
+
 
 .navbar-right {
   display: flex;

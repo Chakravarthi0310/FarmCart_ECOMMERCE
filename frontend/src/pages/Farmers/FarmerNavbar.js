@@ -2,25 +2,22 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./FarmerNavbar.css"; // Import external CSS
 import { FaUserCircle, FaShoppingCart, FaBell, FaSignOutAlt } from "react-icons/fa"; // Icons
+import logo from "../../assets/logo.jpg";
 
 const Navbar = () => {
   const navigate = useNavigate();
-
   const handleLogout = () => {
     // Clear all local storage data
     localStorage.clear();
-  
     console.log("User logged out successfully. All local storage data cleared.");
-  
     navigate("/");
   };
-
   return (
     <nav className="navbar">
       {/* Logo and FarmCart Text */}
       <div className="navbar-left" onClick={() => navigate("/farmer-dashboard")}>
-        <img src="frontend/src/assets/logo.jpg" alt="FarmCart Logo" className="logo" />
-        <h1 className="brand-name">FarmerCart</h1>
+        <img src={logo} alt="FarmCart Logo" className="logo"/>
+        <span className="brand-name">FarmCart</span>
       </div>
 
       {/* Profile, Orders, and Notifications */}

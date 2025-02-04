@@ -7,30 +7,34 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  LogarithmicScale, // Import Logarithmic Scale
   BarElement,
   Title,
   Tooltip,
   Legend,
 } from "chart.js";
 
-// ✅ Register all required components
-ChartJS.register(CategoryScale, LinearScale, LogarithmicScale, BarElement, Title, Tooltip, Legend);
+// Register the required Chart.js components
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const FarmerOrders = () => {
+  // State to store orders and chart data
   const [orders, setOrders] = useState([]);
   const [chartData, setChartData] = useState(null);
+  
+  // Custom hook for farmer-specific API calls (e.g., fetching orders)
   const { handleViewOrders, loading, error } = useFarmer();
 
   useEffect(() => {
+    // Function to fetch orders and process data for charting
     const fetchOrders = async () => {
       try {
+        // Fetch orders from the API
         const fetchedOrders = await handleViewOrders();
         setOrders(fetchedOrders.orders);
         console.log("Fetched orders:", fetchedOrders.orders);
 
         // Aggregate data for charting:
-        // For each order, process each product to calculate total quantity sold and total revenue.
+        // Process each order's products to calculate total quantity sold and total revenue per product.
         const aggregated = {};
         fetchedOrders.orders.forEach((order) => {
           order.products.forEach((item) => {
@@ -43,10 +47,9 @@ const FarmerOrders = () => {
                 totalRevenue: 0,
               };
             }
-            
+            // Increment total quantity sold for this product
             aggregated[productId].totalSold += item.quantity;
-            console.log(item.product.name,aggregated[productId].totalSold);
-            // Use product price to compute revenue. (Make sure product.price is available.)
+            // Calculate revenue for this product item (quantity x price)
             const price = item.product.price || 0;
             aggregated[productId].totalRevenue += item.quantity * price;
           });
@@ -86,7 +89,7 @@ const FarmerOrders = () => {
     };
 
 
-
+    // Call the function to load orders when component mounts
     fetchOrders();
   }, []);
 
@@ -188,6 +191,7 @@ const FarmerOrders = () => {
             </table>
           </div>
         ) : (
+          // Display a message if there are no orders found
           <p>No orders found.</p>
         )}
       </div>
