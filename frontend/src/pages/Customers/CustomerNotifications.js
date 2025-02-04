@@ -1,60 +1,64 @@
 import React, { useState, useEffect } from "react";
 import "./CustomerNotifications.css"; // Import the CSS file
+import { formatRelativeDate } from "../../utils/dateUtils"; // Import timestamp formatter
+import useNotifications from "../../hooks/useNotification";
 
 import CustomerNavbar from "../../components/CustomerNavbar";
-const CustomerNotification = () => {
-  // Dummy data for subscribed farmers and their new items
-  const [notifications, setNotifications] = useState([]);
+const CustomerNotifications = () => {
+  const customerData = JSON.parse(localStorage.getItem("customerData"));
+  const userId = customerData?.id;
+
+  const {
+    notifications,
+    unreadCount,
+    loading,
+    error,
+    fetchNotifications,
+    markNotificationAsRead,
+  } = useNotifications(userId);
 
   useEffect(() => {
-    // Simulating an API fetch with dummy data
-    const dummyNotifications = [
-      {
-        id: 1,
-        farmer: "John Doe",
-        item: "Organic Tomatoes",
-        date: "2025-02-02",
-      },
-      {
-        id: 2,
-        farmer: "Emma Smith",
-        item: "Fresh Strawberries",
-        date: "2025-02-01",
-      },
-      {
-        id: 3,
-        farmer: "Liam Johnson",
-        item: "Farm Fresh Eggs",
-        date: "2025-02-01",
-      },
-    ];
-    setNotifications(dummyNotifications);
+    if (userId) {
+      fetchNotifications(userId);
+    }
   }, []);
 
-  return (
+  const handleMarkAsRead = async (id) => {
+    await markNotificationAsRead(id);
+  };
 
-    <div className="Notifications">
+  return (
+    <>
       <CustomerNavbar />
-    <div className="notification-container">
-      <h2 className="notification-title">Notifications</h2>
-      {notifications.length > 0 ? (
-        <ul className="notification-list">
-          {notifications.map((notification) => (
-            <li key={notification.id} className="notification-item">
-              <p>
-                <strong>{notification.farmer}</strong> added
-                <span className="notification-item-name"> {notification.item}</span>
-              </p>
-              <p className="notification-date">{notification.date}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="no-notifications">No new notifications.</p>
-      )}
-    </div>
-    </div>
+      <div className="notifications-container">
+        <h2>🔔 Notifications {unreadCount > 0 && <span className="badge">{unreadCount}</span>}</h2>
+
+        {loading ? (
+          <p>Loading notifications...</p>
+        ) : error ? (
+          <p className="error">{error}</p>
+        ) : notifications.length > 0 ? (
+          <ul className="notification-list">
+            {notifications.map((notification) => (
+              <li
+                key={notification._id}
+                className={`notification-item ${notification.isRead ? "read" : "unread"}`}
+                onClick={() => handleMarkAsRead(notification._id)}
+              >
+                <div className="notification-header">
+                  <span className="title">{notification.title}</span>
+                  <span className="timestamp">{formatRelativeDate(notification.timestamp)}</span>
+                </div>
+                <p className="message">{notification.message}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No new notifications.</p>
+        )}
+      </div>
+    </>
   );
 };
 
-export default CustomerNotification;
+export default CustomerNotifications;
