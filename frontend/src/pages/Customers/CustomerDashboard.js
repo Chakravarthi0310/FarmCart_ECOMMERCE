@@ -77,7 +77,7 @@ import useCustomer from "../../hooks/useCustomer";
 const CustomerDashboard = () => {
   // Main filter states used for filtering products:
   const [products, setProducts] = useState([]);
-    const [wishlist, setWishlist] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
 
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -92,7 +92,7 @@ const CustomerDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-    const { handleGetApprovedProducts, handleAddToWishList, handleGetWishlist } = useCustomer();
+  const { handleGetApprovedProducts, handleAddToWishList, handleGetWishlist,handleAddToCart} = useCustomer();
   const navigate = useNavigate();
   useEffect(() => {
     const fetchProducts = async () => {
@@ -118,18 +118,24 @@ const CustomerDashboard = () => {
   };
 
   const toggleWishlist = async (productId) => {
-       try{
+    try{
       await handleAddToWishList(productId);
-          setWishlist((prevWishlist) =>
-            prevWishlist.includes(productId)
-              ? prevWishlist.filter((id) => id !== productId)
-              : [...prevWishlist, productId]
-          );
       alert("Added to wishlist successfully");
     }catch(e){
       alert("Error adding to wishLIst")
     }
-      };
+     };
+
+    const toggleCartlist = async (productId) => {
+      try{
+        await handleAddToCart(productId);
+        alert("Added to cart successfully");
+      }catch(e){
+        alert("Error adding to wishLIst")
+      }
+      };
+  
+  
 
   // Filtering products based on search, category, and rating
   const filteredProducts = products.filter(product => {
@@ -226,11 +232,18 @@ const CustomerDashboard = () => {
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
             <div key={product.id} className="product-card">
-              <img
+                <img
                 className="product-image"
-                src={product.image}
-                alt={product.name}
-                onClick={() => navigate(`/product-details/${product.id}`)}
+                src={
+                  product.image?.data
+                    ? `data:${product.image.contentType};base64,${btoa(
+                        new Uint8Array(product.image.data.data).reduce(
+                          (data, byte) => data + String.fromCharCode(byte),
+                          ""
+                        )
+                      )}`
+                    : "../../assets/default.jpg"
+                }                onClick={() => navigate(`/product-details/${product._id}`)}
               />
               <h3>{product.name}</h3>
               <p>{product.price}</p>
@@ -239,11 +252,13 @@ const CustomerDashboard = () => {
               <div className="buttons">
                 <button className="wishlist"
                 onClick={()=>toggleWishlist(product._id)}
-                                  style={{ color: wishlist.includes(product._id) ? "red" : "black" }}
+                 style={{ color: wishlist.includes(product._id) ? "red" : "black" }}
 
                 
                 >❤️ Wishlist</button>
-                <button className="add-to-cart">🛒 Add to Cart</button>
+                <button className="add-to-cart"
+                onClick={()=>toggleCartlist(product._id)}
+                >🛒 Add to Cart</button>
               </div>
             </div>
           ))

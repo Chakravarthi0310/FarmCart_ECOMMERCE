@@ -64,7 +64,10 @@ const FarmerDashboard = () => {
                   {/* Product Details */}
                   <h3 className="item-name">{item.name}</h3>
                   <p className="item-category">{item.category || "Uncategorized"}</p>
-                  <p className="item-seller">Seller: {item.seller || "Unknown"}</p>
+                  
+                  <div className="item-quantity">
+                    <span>Status:</span> <strong>{item.status } </strong>
+                  </div>
 
                   <div className="item-price">
                     <span>Market Rate:</span> <strong>₹{item.marketRate?.toFixed(2) || "N/A"}</strong>

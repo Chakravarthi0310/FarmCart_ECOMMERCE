@@ -50,13 +50,14 @@ const useCustomer = () => {
     setError(null);
     try {
       const token = localStorage.getItem("token");
-      return await placeOrder(customerId, products, token);
+      return await placeOrder(products, token);
     } catch (err) {
       setError(err.response?.data?.message || "Failed to place order.");
     } finally {
       setLoading(false);
     }
   };
+  
 
   // Get Customer Orders
   const handleGetCustomerOrders = async () => {

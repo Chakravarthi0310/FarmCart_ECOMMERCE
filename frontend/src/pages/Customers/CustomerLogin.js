@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth"; // Importing custom authentication hook
+// import CustomerNavbar from "../../components/CustomerNavbar";
+import "./CustomerLogin.css"; // Import CSS
 
 const CustomerLogin  = ()=>
 {

@@ -113,7 +113,6 @@
 // export default CustomerRegister;
 import useAuth from "../../hooks/useAuth"; // Import the authentication hook
 
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CustomerRegister.css"; // Import external CSS
@@ -145,7 +144,6 @@ const CustomerRegister = () => {
     }
   };
   return (
-
     <div className="register-container">
       <div className="register-box">
         <h2 className="register-title">🚜 Customer Registration</h2>
