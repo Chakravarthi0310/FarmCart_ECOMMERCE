@@ -1,56 +1,35 @@
-
-.container {
+/* Container */
+.navbar {
   display: flex;
   align-items: center;
-  width: 100%;
   justify-content: space-between;
+  width: 100%;
+  background-color: #859F3D; /* Green navbar color */
+  padding: 10px 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for navbar */
+  border-radius: 30px; /* Curved corners */
+  transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
 }
 
 /* Logo */
 .logo {
   display: flex;
   align-items: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #2c3e50;
+  font-size: 1.8rem; /* Slightly larger logo */
+  font-weight: 600; /* Bold for better readability */
+  color: #f1e6b8; /* Warm cream color for FarmCart */
+  transition: transform 0.3s ease-in-out;
 }
 
 .logo-img {
   width: 50px;
-  height: auto;
+  height: 50px; /* Make the logo square for a perfect circle */
   margin-right: 10px;
+  border-radius: 50%; /* Make the logo round */
 }
 
-/* Search Bar */
-.search-bar {
-  display: flex;
-  align-items: center;
-  background: #f4f4f4;
-  border-radius: 25px;
-  padding: 5px 10px;
-  width: 300px;
-}
-
-.search-bar input {
-  border: none;
-  outline: none;
-  background: transparent;
-  padding: 8px;
-  flex: 1;
-}
-
-.search-btn {
-  background: #2c3e50;
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.3s ease-in-out;
-}
-
-.search-btn:hover {
-  background: #1a252f;
+.logo:hover {
+  transform: scale(1.1); /* Slight scale on hover to make the logo stand out */
 }
 
 /* Account Section */
@@ -69,23 +48,28 @@
   background: none;
   border: none;
   font-size: 1rem;
-  color: #2c3e50;
+  color: black; /* Changed to black for better readability */
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 5px;
+  transition: color 0.3s ease-in-out;
 }
 
 .dropdown-btn .icon {
   font-size: 1.2rem;
 }
 
+.dropdown-btn:hover {
+  color: #141111; /* Darker shade of black on hover */
+}
+
 .dropdown-menu {
   position: absolute;
   top: 100%;
   left: 0;
-  background: white;
-  border: 1px solid #ddd;
+  background: hsl(60, 8%, 97%); /* Soft light background for the menu */
+  border: 1px solid #777777; /* Lighter gray border */
   list-style: none;
   padding: 10px;
   min-width: 150px;
@@ -93,27 +77,44 @@
   display: block;
   z-index: 1000;
   border-radius: 5px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+}
+
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(5px); /* Slight movement on hover for the dropdown */
 }
 
 .dropdown-menu li {
   padding: 10px;
   cursor: pointer;
-  transition: background 0.2s ease-in-out;
+  transition: background 0.2s ease-in-out, border 0.2s ease-in-out;
 }
 
 .dropdown-menu li:hover {
-  background: #f4f4f4;
+  background: #444444; /* Darker gray hover effect */
+  border: 1px solid #ff4c4c; /* Red border on hover for emphasis */
+  border-radius: 5px; /* Rounded corners for the border */
+  color: white;
 }
 
 .divider {
-  height: 1px;
-  background: #ddd;
-  margin: 5px 0;
+  height: 0.3px;
+  background: #141111; /* Light gray divider */
+  margin: 1px 0;
 }
 
 .logout {
-  color: red;
+  color: #ff4c4c; /* Bright red for logout button to stand out */
   font-weight: bold;
+  transition: color 0.3s ease-in-out;
+}
+
+.logout:hover {
+  color: #141212; /* Brighter red on hover for emphasis */
 }
 
 /* Icons Section */
@@ -125,11 +126,11 @@
 
 .icon-link {
   text-decoration: none;
-  color: #2c3e50;
+  color: black; /* Changed icons color to black */
   font-size: 1.5rem;
   transition: color 0.3s ease-in-out;
 }
 
 .icon-link:hover {
-  color: #1a252f;
+  color: #ff4c4c; /* Red hover for contrast */
 }

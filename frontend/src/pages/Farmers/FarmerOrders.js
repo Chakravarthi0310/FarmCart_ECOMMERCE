@@ -77,10 +77,15 @@ const FarmerOrders = () => {
             },
           ],
         });
+
+        console.log(fetchedOrders);
+
       } catch (err) {
         console.error("Error fetching orders:", err);
       }
     };
+
+
 
     fetchOrders();
   }, []);
@@ -93,6 +98,7 @@ const FarmerOrders = () => {
 
         {loading && <p>Loading...</p>}
         {error && <p className="error">{error}</p>}
+
 
         {/* Render the chart if chartData is available */}
         {chartData && (

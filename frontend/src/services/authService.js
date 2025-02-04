@@ -2,7 +2,7 @@ import axios from "axios";
 const API_BASE_URL = "http://localhost:5000/api";
 
 // export const registerCustomer = async (data) => {
-//   return await axios.post(`${API_BASE_URL}/customer/register`, data);
+//   return await axios.post(${API_BASE_URL}/customer/register, data);
 // };
 export const registerCustomer = async (farmerData) => {
   try {
@@ -36,6 +36,7 @@ export const loginCustomer = async (loginData) => {
 
 export const registerFarmer = async (farmerData) => {
   try {
+    console.log("auth service",farmerData); 
     const response = await axios.post(
       `${API_BASE_URL}/farmer/register`, 
       farmerData, 
@@ -51,7 +52,7 @@ export const registerFarmer = async (farmerData) => {
 // Login Farmer and Store Token
 export const loginFarmer = async (loginData) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/farmer/login`, loginData, {
+    const response = await axios.post(`${API_BASE_URL}/farmer/login`,loginData, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -62,4 +63,3 @@ export const loginFarmer = async (loginData) => {
     throw error;
   }
 };
-
