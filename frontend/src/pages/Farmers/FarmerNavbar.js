@@ -5,21 +5,17 @@ import { FaUserCircle, FaShoppingCart, FaBell, FaSignOutAlt } from "react-icons/
 
 const Navbar = () => {
   const navigate = useNavigate();
-
   const handleLogout = () => {
     // Clear all local storage data
     localStorage.clear();
-  
     console.log("User logged out successfully. All local storage data cleared.");
-  
     navigate("/");
   };
-
   return (
     <nav className="navbar">
       {/* Logo and FarmCart Text */}
       <div className="navbar-left" onClick={() => navigate("/farmer-dashboard")}>
-        <img src="frontend/src/assets/logo.jpg" alt="FarmCart Logo" className="logo" />
+        <img src="/assets/logo.jpg" alt="FarmCart Logo" className="logo" />
         <h1 className="brand-name">FarmerCart</h1>
       </div>
 

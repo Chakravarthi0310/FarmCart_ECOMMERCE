@@ -1,13 +1,15 @@
 .add-item-container {
-    max-width: 600px;
-    margin: 40px auto;
-    background-color: #f9f9f9;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    background: url("../../assets/farm-bg.jpg") no-repeat center center/cover;
-  }
+  max-width: 600px;
+  margin: 40px auto;
+  background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white */
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 10px 4px 12px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+  text-align: center;
+  backdrop-filter: blur(10px); /* Adds blur effect to the background */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Optional: Border for definition */
+}
+
   
   h2 {
     font-size: 28px;
