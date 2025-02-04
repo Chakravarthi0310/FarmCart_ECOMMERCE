@@ -1,10 +1,10 @@
+import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { FaHeart, FaShoppingCart, FaUser } from "react-icons/fa";
+import { FaSearch, FaHeart, FaShoppingCart, FaUser } from "react-icons/fa";
 import { FaBellConcierge } from "react-icons/fa6";
 import logo from "../assets/logo.jpg"; // Correct import for logo
-
 import "./CustomerNavbar.css"; // Import the CSS file
 
 const CustomerNavbar = () => {
