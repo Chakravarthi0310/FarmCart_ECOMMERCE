@@ -20,6 +20,7 @@ const ProductDetails = () => {
     const fetchProducts = async () => {
       try {
         const productsData = await handleGetApprovedProducts();
+        console.log(productsData)
         setApprovedProducts(productsData);
         const selectedProduct = productsData.find((p) => p._id === id);
         if (!selectedProduct) {
@@ -104,7 +105,7 @@ const ProductDetails = () => {
           <p className="product-rating"><strong>Rating:</strong> {product.ratings}</p>
 
           {/* Additional approved product details */}
-          <p className="product-farmer"><strong>Farmer Name:</strong> {product.farmerName}</p>
+          <p className="product-farmer"><strong>Farmer Name:</strong> {product.farmer.name}</p>
           <p className="product-farmer-number"><strong>Farmer Phone:</strong> {product.farmerNumber}</p>
           <p className="product-farmer-address">
             <strong>Farmer Address:</strong> {product.farmerAddress || "Address not provided"}

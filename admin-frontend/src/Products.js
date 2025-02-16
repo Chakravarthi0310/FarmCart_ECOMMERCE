@@ -70,7 +70,7 @@ const Products = () => {
           <Button
             type="primary"
             onClick={() => handleApprove(record._id)}
-            disabled={record.status === "approved" || record.status === "rejected"}
+            disabled={record.status === "Approved" || record.status === "Rejected"}
             style={{ marginRight: 8 }}
           >
             Approve
@@ -78,7 +78,7 @@ const Products = () => {
           <Button
             type="danger"
             onClick={() => handleReject(record._id)}
-            disabled={record.status === "rejected" || record.status === "approved"}
+            disabled={record.status === "Rejected" || record.status === "Approved"}
           >
             Reject
           </Button>

@@ -8,39 +8,49 @@ const FarmerRegister = () => {
   const [mobile, setMobile] = useState("");
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [successPopup, setSuccessPopup] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState("");
   
   
-  const { user, loading, error,login,register } = useAuth(); // Use the register function from the authentication hook
+  
+  const { login,register } = useAuth(); // Use the register function from the authentication hook
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
+    setError("");
+    
+    // Check password match
     if (password !== confirmPassword) {
-      alert("❌ Passwords do not match!");
+      setError("❌ Passwords do not match!");
       return;
     }
 
-    const userData = { name, password, phone:mobile,address };
+    const userData = { name, password, phone: mobile, address };
 
     try {
-      const response = await register("farmer", userData);
-      const success = await login( "farmer",{ phone:mobile, password },); // Passing phone instead of email
-      console.log(success);
-      if (success) {
-        // Assuming 'login' returns a token on success
-        const token = success; // Adjust according to your login response
-  
+      setLoading(true); // Show loading overlay
+      
+      // Call register API
+      const success = await register("farmer", userData);
+
+      if (!success || success.message === "User with this phone numnber already exists") {
+        throw new Error(success.message);
+      } 
+      // Auto login after successful registration
+      const loginResponse = await login("farmer", { phone:mobile, password });
+
+      if (loginResponse.message === "Invalid credentials" || loginResponse.message === "Invalid email or password") {
+        throw new Error(loginResponse.message);
       }
 
-  
-  
-      alert("✅ Farmer Registered Successfully!");
-      console.log(response)
-      navigate("/farmer-dashboard"); // Redirect after successful registration
+      
     } catch (err) {
-      console.error("Registration failed", err);
+      setError(`❌ ${err.message}`);
+    } finally {
+      setLoading(false); // Hide loading overlay
     }
   };
 
@@ -49,7 +59,6 @@ const FarmerRegister = () => {
       <div className="register-box">
         <h2 className="register-title">🚜 Farmer Registration</h2>
         
-        {error && <p className="error-message">❌ {error}</p>}
 
         <form onSubmit={handleRegister} className="register-form">
           <input
@@ -93,6 +102,8 @@ const FarmerRegister = () => {
             className="register-input"
             required
           />
+                  {error && <p className="error-message">❌ {error}</p>}
+
           <button type="submit" className="register-button" disabled={loading}>
             {loading ? "Registering..." : "Register"}
           </button>

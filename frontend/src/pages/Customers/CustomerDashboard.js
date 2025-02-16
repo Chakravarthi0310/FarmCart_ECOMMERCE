@@ -187,7 +187,8 @@ const CustomerDashboard = () => {
                 alt={product.name}
               />
               <h3>{product.name}</h3>
-              <p>{product.price}</p>
+              <p>Price Rs.{product.price}</p>
+              <p>Available stock: {product.quantity} kgs</p>
               <p>Expiry: {new Date(product.expiryDate).toLocaleDateString()}</p>
               <p>Rating: {product.ratings}</p>
               <div className="buttons">

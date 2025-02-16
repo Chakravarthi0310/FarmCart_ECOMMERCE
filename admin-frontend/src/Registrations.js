@@ -5,6 +5,7 @@ import useAdminActions from "./hooks/useAdminApi";
 const Registrations = () => {
   const { loading, error, fetchFarmers, updateFarmerStatus } = useAdminActions();
   const [farmers, setFarmers] = useState([]);
+  const [loadingId, setLoadingId] = useState(null); // Track which row is being updated
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,31 +20,17 @@ const Registrations = () => {
     fetchData();
   }, []);
 
-  const handleApprove = async (id) => {
+  const handleAction = async (id, status) => {
+    setLoadingId(id); // Show loading spinner on the specific row
     try {
-      await updateFarmerStatus(id, "Approved");
-      message.success("Registration approved!");
-      setFarmers((prev) =>
-        prev.map((farmer) =>
-          farmer.id === id ? { ...farmer, status: "approved" } : farmer
-        )
-      );
+      await updateFarmerStatus(id, status);
+      message.success(`Registration ${status.toLowerCase()}!`);
+      const updatedFarmers = await fetchFarmers(); // Fetch updated data
+      setFarmers(updatedFarmers || []);
     } catch (error) {
-      message.error("Error approving registration");
-    }
-  };
-
-  const handleReject = async (id) => {
-    try {
-      await updateFarmerStatus(id, "Rejected");
-      message.success("Registration rejected!");
-      setFarmers((prev) =>
-        prev.map((farmer) =>
-          farmer.id === id ? { ...farmer, status: "rejected" } : farmer
-        )
-      );
-    } catch (error) {
-      message.error("Error rejecting registration");
+      message.error(`Error ${status.toLowerCase()} registration`);
+    } finally {
+      setLoadingId(null); // Reset loading state
     }
   };
 
@@ -75,18 +62,18 @@ const Registrations = () => {
         <>
           <Button
             type="primary"
-            onClick={() => handleApprove(record._id)}
-            disabled={record.verificationStatus == "Approved"}
+            onClick={() => handleAction(record._id, "Approved")}
+            disabled={record.verificationStatus === "Approved"}
             style={{ marginRight: 8 }}
           >
-            Approve
+            {loadingId === record._id ? <Spin size="small" /> : "Approve"}
           </Button>
           <Button
             type="danger"
-            onClick={() => handleReject(record._id)}
-            disabled={record.verificationStatus == "Rejected"}
+            onClick={() => handleAction(record._id, "Rejected")}
+            disabled={record.verificationStatus === "Rejected"}
           >
-            Reject
+            {loadingId === record._id ? <Spin size="small" /> : "Reject"}
           </Button>
         </>
       ),
@@ -96,7 +83,7 @@ const Registrations = () => {
   if (loading) return <Spin size="large" />;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
-  return <Table columns={columns} dataSource={farmers} rowKey="id" />;
+  return <Table columns={columns} dataSource={farmers} rowKey="_id" />;
 };
 
 export default Registrations;

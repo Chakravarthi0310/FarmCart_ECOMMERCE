@@ -90,6 +90,7 @@ const useAdminActions = () => {
     setError(null);
     try {
       const response = await getAllOrders();
+      setLoading(false);
       return response;
     } catch (err) {
       setError(err.response?.data?.message || "Failed to fetch orders.");
@@ -131,6 +132,7 @@ const useAdminActions = () => {
     try {
 
       const response = await changeStatusOrder(orderId, status);
+      setLoading(false);
       console.log(response);
       return response;
     } catch (err) {

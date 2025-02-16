@@ -1,10 +1,22 @@
+/* Ensure scrollability */
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow-y: auto; /* Ensure vertical scroll */
+  scroll-behavior: smooth;
+}
+
 /* Dashboard General Styles */
 .dashboard {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px 50px;
   background: url("../../assets/farm-bg.jpg") no-repeat center center/cover;
   background-attachment: fixed;
   color: #333;
+  overflow-y: auto;
 }
 
 .dashboard-content {
@@ -15,6 +27,7 @@
   margin: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s;
+  margin-bottom: 30px;
 }
 
 .dashboard-content:hover {
@@ -117,7 +130,6 @@ p {
   font-style: italic;
 }
 
-/* Search Button Icon */
 .search-container .search-icon {
   position: absolute;
   top: 50%;
@@ -140,31 +152,34 @@ p {
 /* Product Grid */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Default to 5 columns per row */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
   justify-content: center;
   padding: 20px;
   align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* Responsive layout for medium screens */
 @media (max-width: 1200px) {
   .product-grid {
-    grid-template-columns: repeat(4, 1fr); /* 4 items per row */
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
 /* Responsive layout for small screens */
 @media (max-width: 900px) {
   .product-grid {
-    grid-template-columns: repeat(3, 1fr); /* 3 items per row */
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 /* Mobile layout */
 @media (max-width: 600px) {
   .product-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 items per row */
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -176,9 +191,7 @@ p {
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   width: 100%;
-  max-width: 300px;  /* Prevents cards from becoming too wide */
-  height: auto;  /* Let height adjust based on content */
-  box-sizing: border-box;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
 }
@@ -219,7 +232,6 @@ p {
   justify-content: space-between;
   margin-top: 10px;
 }
-
 
 .wishlist,
 .add-to-cart {
@@ -292,7 +304,7 @@ p {
 }
 
 .filter-save:hover {
-  background-color:#007bff;
+  background-color: #007bff;
 }
 
 /* No Results Message */

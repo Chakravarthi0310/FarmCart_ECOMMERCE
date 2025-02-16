@@ -50,6 +50,7 @@ const useAuth = () => {
         : await registerCustomer(userData);
 
       setUser(response); // Assuming the response contains the user data
+      console.log(response)
       return response;
     } catch (err) {
       console.error("Registration error:", err);

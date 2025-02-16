@@ -12,19 +12,25 @@ exports.registerCustomer = async (req,res)=>{
     try{
         const {name,email,password,phone,address}=req.body;
 
+
         const existingCustomer = await Customer.findOne({email});
+        console.log(existingCustomer);
+
         if(existingCustomer){
-            return res.status(400).json({message: "Email already exist"});
+
+            return res.status(201).json({message: "Email already exist"});
         }
-        console.log("The registration data is good");
+
+
 
         const hashedPassword= await bcrypt.hash(password,10);
         const newCustomer = new Customer({name,email,password:hashedPassword,phone,address});
+
         await newCustomer.save();
-        console.log(token);
-        res.status(201).json({
+
+
+        return res.status(201).json({
           message: "Customer registered successfully",
-          token,
           customer: {
               id: newCustomer._id,
               name: newCustomer.name,
@@ -35,12 +41,12 @@ exports.registerCustomer = async (req,res)=>{
       });
 
     }catch(e){
+
         res.status(500).json({message:"Error registering customer", error:e.message});
         
 
     }
 };
-const mongoose = require('mongoose');
 
 exports.addToWishlist = async (req, res) => {
   try {
@@ -244,11 +250,16 @@ exports.loginCustomer = async (req,res)=>{
         const existingCustomer = await Customer.findOne({email});
         if(!existingCustomer)
         {
-            return res.status(400).json({message:"Invalid email or password"});
+          console.log("jhbdcsj");
+
+            return res.status(201).json({message:"Invalid email or password"});
         }
+
         const isMatch= await bcrypt.compare(password,existingCustomer.password);
         if(!isMatch){
-            return res.status(400).json({message:"Invalid credentials"});
+
+
+            return res.status(201).json({message:"Invalid credentials"});
         }
         const token=jwt.sign({id: existingCustomer._id,email:existingCustomer.email}, JWT_SECRET, {expiresIn:"1h"});
         res.json({

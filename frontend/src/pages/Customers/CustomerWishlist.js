@@ -15,8 +15,8 @@ const CustomerWishlist = () => {
     hasFetched.current = true;
     const fetchWishlist = async () => {
       const response = await handleGetWishlist();
-      console.log(response.data);
-      setWishlist(response.data.wishList);
+      console.log("gdfhfjgb",response);
+      setWishlist(response.data);
  
     };
 

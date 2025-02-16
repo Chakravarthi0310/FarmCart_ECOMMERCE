@@ -171,8 +171,10 @@ exports.updateOrderStatus = async (req,res) => {
                 }
             }
         }
-
         console.log("All notifications sent successfully.");
+        res.status(200).json({ message: `Order ${status} successfully` });
+
+
     } catch (error) {
         console.error("Error updating order status:", error);
     }
@@ -199,27 +201,39 @@ exports.getAllProducts = async (req, res) => {
 
 
 exports.getAllOrders = async (req, res) => {
-  try {
-    const orders = await Order.find()
-      .populate("customer")  // Populate customer details
-      .populate({
-        path: "products.product", // Populate each product inside the array
-        model: "Product"
-      })
-      .lean(); // Converts Mongoose documents into plain objects
-
-    // Ensure each order has "Processing" as the default status if not set
-    // const processedOrders = orders.map(order => ({
-    //   ...order,
-    //   status: order.status || "Processing"
-    // }));
-
-    res.status(200).json(orders);
-  } catch (error) {
-    res.status(500).json({ message: "Failed to fetch orders", error: error.message });
-  }
-};
-
+    try {
+      const orders = await Order.find()
+        .select("orderId customer products status createdAt") // Fetch only necessary fields
+        .populate({ path: "customer", select: "name" }) // Fetch only customer name & ID
+        .populate({
+          path: "products.product",
+          select: "name", // Fetch only product name & ID
+        })
+        .lean(); // Reduce Mongoose overhead
+  
+      // Construct a minimal response
+      const processedOrders = orders.map(order => ({
+        id:order._id,
+        orderId: order.orderId,
+        status: order.status || "Processing",
+        createdAt: order.createdAt,
+        customer: {
+          id: order.customer?._id,
+          name: order.customer?.name,
+        },
+        products: order.products.map(item => ({
+          id: item.product?._id,
+          name: item.product?.name,
+          quantity: item.quantity,
+        })),
+      }));
+  
+      res.status(200).json(processedOrders);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch orders", error: error.message });
+    }
+  };
+  
 
 
 
@@ -233,14 +247,16 @@ exports.getAllFarmers = async (req, res) => {
 };
 
 exports.getAllProducts = async (req, res) => {
-try {
- const products = await Product.find().populate("farmer", "name email");
- res.status(200).json(products);
-} catch (error) {
- res.status(500).json({ error: "Internal server error" });
-}
-};
-
+    try {
+      const products = await Product.find()
+        .select('-image') // Exclude the 'image' field
+        .populate("farmer", "name email"); // Populate the farmer field with name and email
+      res.status(200).json(products);
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  };
+  
 exports.getAllCustomer = async(req,res)=>{
     try{
         const customers=await Customer.find();

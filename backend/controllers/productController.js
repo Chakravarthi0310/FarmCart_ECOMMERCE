@@ -7,7 +7,7 @@ exports.getApprovedProducts = async (req,res)=>{
         if(category){
             query.category=category;
         }
-        const products= await Product.find(query);
+        const products= await Product.find(query).populate("farmer","name mobile address");
         res.json(products);
 
     }catch(e)

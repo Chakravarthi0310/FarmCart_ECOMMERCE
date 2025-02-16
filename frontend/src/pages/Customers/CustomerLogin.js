@@ -1,29 +1,49 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth"; // Importing custom authentication hook
-// import CustomerNavbar from "../../components/CustomerNavbar";
 import "./CustomerLogin.css"; // Import CSS
 
-const CustomerLogin  = ()=>
-{
-  const [email, setemail] = useState("");
+const CustomerLogin = () => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [successPopup, setSuccessPopup] = useState(false);
+  const [error, setError] = useState(""); // Corrected error state
+
   const navigate = useNavigate();
-  const { login, error } = useAuth(); // Using custom hook for authentication
+  const { login } = useAuth(); // Using custom hook for authentication
 
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
+    try {
+      setLoading(true); // Show loading overlay
+      
+      // Call register API
 
-    const success = await login("customer",{ email, password },); // Passing phone instead of email
+      // Auto login after successful registration
+      const loginResponse = await login("customer", { email, password });
 
-    if (success) {
-      const token = success; // Adjust according to your login response
-      localStorage.setItem("authToken", token); // Store token in localStorage
+      if (loginResponse.message === "Invalid credentials" || loginResponse.message === "Invalid email or password") {
+        throw new Error(loginResponse.message);
+      }
 
-      alert("✅ Customer Login Successful!");
-      navigate("/customer-dashboard"); // Redirect to dashboard
+      localStorage.setItem("token", loginResponse.token);
+      
+      // Show success popup
+      setSuccessPopup(true);
+      setTimeout(() => {
+        setSuccessPopup(false);
+        navigate("/customer-dashboard");
+      }, 2000);
+      
+    } catch (err) {
+      setError(`❌ ${err.message}`);
+    } finally {
+      setLoading(false); // Hide loading overlay
     }
+
   };
 
   return (
@@ -31,15 +51,15 @@ const CustomerLogin  = ()=>
       <div className="login-box">
         <h2 className="login-title">🚜 Customer Login</h2>
         <form onSubmit={handleLogin} className="login-form">
-        <input
+          <input
             type="email"
             placeholder="Enter Email"
             value={email}
-            onChange={(e) => setemail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             className="login-input"
             pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
             required
-          />          
+          />
           <input
             type="password"
             placeholder="Enter Password"
@@ -49,7 +69,9 @@ const CustomerLogin  = ()=>
             required
           />
           {error && <p className="error-text">{error}</p>} {/* Show error message */}
-          <button type="submit" className="login-button">Login</button>
+          <button type="submit" className="login-button">
+            {loading ? "Logging in..." : "Login"}
+          </button>
         </form>
 
         <p className="register-text">
@@ -66,10 +88,19 @@ const CustomerLogin  = ()=>
           >
             Login as Farmer
           </button>
-          </p>
+        </p>
       </div>
+
+      {/* Success Popup */}
+      {successPopup && (
+        <div className="popup-overlay">
+          <div className="popup-box">
+            ✅ Login Successful! Redirecting...
+          </div>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
 export default CustomerLogin;

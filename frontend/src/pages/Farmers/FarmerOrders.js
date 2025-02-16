@@ -7,6 +7,7 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
+  LogarithmicScale, 
   BarElement,
   Title,
   Tooltip,
@@ -14,8 +15,7 @@ import {
 } from "chart.js";
 
 // Register the required Chart.js components
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
+ChartJS.register(CategoryScale, LinearScale, LogarithmicScale, BarElement, Title, Tooltip, Legend);
 const FarmerOrders = () => {
   // State to store orders and chart data
   const [orders, setOrders] = useState([]);
@@ -167,11 +167,19 @@ const FarmerOrders = () => {
                     <td>
                       {order.products.map((product, index) => (
                         <div key={index} className="product-item">
-                          <img
-                            src={product.product.image}
-                            alt={product.product.name}
-                            className="product-image"
-                          />
+                  <img
+                    src={
+                      product.product.image?.data
+                        ? `data:${product.product.image.contentType};base64,${btoa(
+                            new Uint8Array(product.product.image.data.data).reduce(
+                              (data, byte) => data + String.fromCharCode(byte),
+                              ""
+                            )
+                          )}`
+                        : "../../assets/default.jpg"
+                    }
+                    alt={product.product.name}
+                  />
                           <span>
                             {product.product.name} - {product.quantity}
                           </span>

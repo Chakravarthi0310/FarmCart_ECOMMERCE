@@ -18,7 +18,7 @@ exports.registerFarmer = async(request, res) => {
         const { name, password, phone, address } = request.body;
         const existingFarmer = await Farmer.findOne({ phone });
         if (existingFarmer) {
-            return res.status(400).json({ message: "User with this phone numnber already exists" });
+            return res.status(201).json({ message: "User with this phone numnber already exists" });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const newFarmer = new Farmer({
@@ -29,7 +29,6 @@ exports.registerFarmer = async(request, res) => {
         });
         await newFarmer.save();
         res.status(201).json({  message: "Farmer Registered Successfully",
-            token,
             farmer: {
                 id: newFarmer._id,
                 name: newFarmer.name,
@@ -50,7 +49,7 @@ exports.loginFarmer = async(req, res) => {
         }
         const isPasswordValid = await bcrypt.compare(password, farmer.password);
         if (!isPasswordValid) {
-            return res.status(401).json({ message: "Invalid credentials" });
+            return res.status(201).json({ message: "Invalid credentials" });
         }
         const token = jwt.sign({ id: farmer._id, phone:farmer.phone }, JWT_SECRET, { expiresIn: "1h" });
        
@@ -177,7 +176,7 @@ exports.viewOrders = async (req, res) => {
             }
         })
         .populate("customer", "name email phone address") // Populate customer details
-        .populate("products.product", "name category price farmer"); // Populate product details
+        .populate("products.product", "name category price farmer image"); // Populate product details
         // Filter out products that don't belong to the farmer
         const filteredOrders = orders.map(order => {
             const filteredProducts = order.products.filter(

@@ -26,7 +26,7 @@ const Navbar = () => {
           <FaShoppingCart size={24} />
           <span>Orders</span>
         </button>
-        <button className="nav-item" onClick={() => navigate("/farmer-notifications")}>
+        <button className="nav-item" onClick={() => navigate("/farmer-notification")}>
           <FaBell size={24} />
           <span>Notifications</span>
         </button>

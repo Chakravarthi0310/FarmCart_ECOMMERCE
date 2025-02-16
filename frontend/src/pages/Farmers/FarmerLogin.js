@@ -6,24 +6,47 @@ import "./FarmerLogin.css"; // Import CSS
 const FarmerLogin = () => {
   const [phone, setPhone] = useState(""); // State for phone number
   const [password, setPassword] = useState("");
-  const { login, error } = useAuth(); // Using custom hook for authentication
+    const [loading, setLoading] = useState(false);
+  
+  const { login } = useAuth(); // Using custom hook for authentication
   const navigate = useNavigate();
+    const [error, setError] = useState(""); // Corrected error state
+      const [successPopup, setSuccessPopup] = useState(false);
+    
+  
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
-    const success = await login( "farmer",{ phone, password },); // Passing phone instead of email
-    console.log(success);
-    if (success) {
-      // Assuming 'login' returns a token on success
-      const token = success; // Adjust according to your login response
-      localStorage.setItem("authToken", token); // Store token in localStorage
-
-      alert("✅ Farmer Login Successful!");
-      navigate("/farmer-dashboard"); // Redirect to dashboard
-    }
-  };
-
+      const handleLogin = async (e) => {
+        e.preventDefault();
+        setError("");
+        try {
+          setLoading(true); // Show loading overlay
+          
+          // Call register API
+    
+          // Auto login after successful registration
+          const loginResponse = await login("farmer", { phone, password });
+    
+          if (loginResponse.message === "Invalid credentials" || loginResponse.message === "Farmer not found") {
+            throw new Error(loginResponse.message);
+          }
+    
+          localStorage.setItem("token", loginResponse.token);
+          
+          // Show success popup
+          setSuccessPopup(true);
+          setTimeout(() => {
+            setSuccessPopup(false);
+            navigate("/farmer-dashboard");
+          }, 2000);
+          
+        } catch (err) {
+          setError(`❌ ${err.message}`);
+        } finally {
+          setLoading(false); // Hide loading overlay
+        }
+    
+      };
+    
   return (
     <div className="login-container">
       <div className="login-box">
@@ -46,7 +69,9 @@ const FarmerLogin = () => {
             required
           />
           {error && <p className="error-text">{error}</p>} {/* Show error message */}
-          <button type="submit" className="login-button">Login</button>
+          <button type="submit" className="login-button">
+          {loading ? "Logging in..." : "Login"}
+          </button>
         </form>
 
         <p className="register-text">

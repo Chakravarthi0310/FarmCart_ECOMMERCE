@@ -1,67 +1,82 @@
 import React, { useState, useEffect } from "react";
-import { Table, Tag, Button, Progress } from "antd";
-import { CheckCircleOutlined, ClockCircleOutlined, CloseCircleOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { Table, Tag, Button, Progress, Spin } from "antd";
+import { 
+  CheckCircleOutlined, 
+  ClockCircleOutlined, 
+  CloseCircleOutlined, 
+  ShoppingCartOutlined 
+} from "@ant-design/icons";
 import useAdminActions from "./hooks/useAdminApi";
 
 const Orders = () => {
-  const { fetchOrders, updateOrderStatus } = useAdminActions(); // Assuming fetchOrders and updateOrderStatus are implemented in the hook
+  const { fetchOrders, updateOrderStatus,loading } = useAdminActions();
   const [orders, setOrders] = useState([]);
+  const [loadingOrders, setLoadingOrders] = useState(false); // Loader for fetching orders
+  const [loadingId, setLoadingId] = useState(null); // Track the button loading state
+
   const getOrders = async () => {
+    setLoadingId(false);
+    setLoadingOrders(true);
     try {
-      const fetchedOrders = await fetchOrders(); // Fetch orders from the backend API
-      setOrders(fetchedOrders.map(order => ({
-        ...order,
-        status: order.status || "Processing", // Ensure "Processing" as default if no status is set
-      })));
+      const fetchedOrders = await fetchOrders();
+      
+      setOrders(
+        fetchedOrders.map((order) => ({
+          ...order,
+          status: order.status || "Processing",
+        }))
+        
+      );
+      console.log("OK completed");
+      setLoadingOrders(false);
+
     } catch (error) {
       console.error("Error fetching orders:", error);
+    } finally {
+      setLoadingOrders(false);
     }
   };
 
   useEffect(() => {
-    
     getOrders();
   }, []);
 
-  const handleUpdateStatus = async (id, newStatus) => {
+  const handleUpdateStatus = async (orderId, newStatus) => {
+    setLoadingId(orderId); // Set loading state for the specific order
     try {
+      console.log(orderId);
 
-      await updateOrderStatus(id, newStatus); // Use the function to update the order status
-      await getOrders();
-      setOrders((prevOrders) =>
-        prevOrders.map((order) =>
-          order.id === id ? { ...order, status: newStatus } : order
-        )
-      );
+      await updateOrderStatus(orderId, newStatus);
+      await getOrders(); // Refresh order list after update
+      console.log("fetch completed");
+      setLoadingId(null); // Reset loading state
+
     } catch (error) {
       console.error("Error updating order status:", error);
+    } finally {
+      setLoadingId(null); // Reset loading state
     }
   };
 
-  // Progress bar logic
   const getProgressPercentage = (status) => {
     switch (status) {
-      case "Confirmed":
-        return 33;
-      case "Shipped":
-        return 66;
-      case "Delivered":
-        return 100;
-      case "Cancelled":
-        return 0;
-      case "Processing":
-        return 20;
-      default:
-        return 0;
+      case "Confirmed": return 33;
+      case "Shipped": return 66;
+      case "Delivered": return 100;
+      case "Cancelled": return 0;
+      case "Processing": return 20;
+      default: return 0;
     }
   };
 
-  // Define columns for the Ant Design Table
   const columns = [
     { title: "Order ID", dataIndex: "orderId", key: "id" },
-    { title: "Farmer", dataIndex: "", key: "farmer" ,render:(_,record)=>(record.farmer?record.farmer.name:"N/A")},
+    { 
+      title: "Customer", 
+      key: "farmer", 
+      render: (_, record) => record.customer ? record.customer.name : "N/A" 
+    },
     { title: "Product", dataIndex: "product", key: "product" },
-    { title: "Quantity", dataIndex: "quantity", key: "quantity" },
     {
       title: "Status",
       dataIndex: "status",
@@ -71,7 +86,10 @@ const Orders = () => {
         return (
           <div>
             <Tag color={color}>{status}</Tag>
-            <Progress percent={getProgressPercentage(status)} status={status === "Delivered" ? "success" : "active"} />
+            <Progress 
+              percent={getProgressPercentage(status)} 
+              status={status === "Delivered" ? "success" : "active"} 
+            />
           </div>
         );
       },
@@ -84,35 +102,49 @@ const Orders = () => {
           <Button
             type="primary"
             icon={<CheckCircleOutlined />}
-            disabled={record.status === "Confirmed" || record.status === "Shipped" || record.status === "Delivered"}
-            onClick={() => handleUpdateStatus(record._id, "Confirmed")}
+            disabled={["Confirmed", "Shipped", "Delivered","Cancelled"].includes(record.status)}
+            onClick={() => handleUpdateStatus(record.id, "Confirmed")}
+            loading={loadingId === record.id} // Show loader while updating
           >
             Accept
           </Button>
           <Button
-            type={record.status == "Confirmed" ? "primary":"default"}
+            type={record.status === "Confirmed" ? "primary" : "default"}
             icon={<ShoppingCartOutlined />}
-            disabled={record.status !== "Confirmed" && record.status !== "Shipped"}
-            onClick={() => handleUpdateStatus(record._id, "Shipped")}
+            disabled={["Shipped","Delivered","Cancelled"].includes(record.status)}
+            onClick={() => handleUpdateStatus(record.id, "Shipped")}
+            loading={loadingId === record.id}
           >
             Ship
           </Button>
           <Button
-            type="default"
+            type={record.status === "Shipped" ? "primary" : "default"}
             icon={<ClockCircleOutlined />}
-            disabled={record.status === "Delivered" || record.status === "Cancelled"}
-            onClick={() => handleUpdateStatus(record._id, "Delivered")}
+            disabled={["Delivered", "Cancelled"].includes(record.status)}
+            onClick={() => handleUpdateStatus(record.id, "Delivered")}
+            loading={loadingId === record.id}
           >
             Deliver
           </Button>
           <Button
-            type="danger"
+            type={!["Delivered","Cancelled"].includes(record.status)?"danger":"default"}
             icon={<CloseCircleOutlined />}
-            disabled={record.status === "Cancelled" || record.status === "Delivered"}
-            onClick={() => handleUpdateStatus(record._id, "Cancelled")}
+            disabled={["Delivered","Cancelled"].includes(record.status)}
+            onClick={() => handleUpdateStatus(record.id, "Cancelled")}
+            loading={loadingId === record.id}
           >
             Cancel
-          </Button>
+          </Button><Button
+  type="primary" // Ensures the button has a proper style
+  danger={!["Delivered", "Cancelled"].includes(record.status)} // Makes it red
+  icon={<CloseCircleOutlined />}
+  disabled={["Delivered", "Cancelled"].includes(record.status)}
+  onClick={() => handleUpdateStatus(record.id, "Cancelled")}
+  loading={loadingId === record.id}
+>
+  Cancel
+</Button>
+
         </div>
       ),
     },
@@ -121,7 +153,11 @@ const Orders = () => {
   return (
     <div>
       <h2>Admin Orders</h2>
-      <Table dataSource={orders} columns={columns} rowKey="id" />
+      {loadingOrders ? (
+        <Spin size="large" style={{ display: "block", textAlign: "center", margin: "20px 0" }} />
+      ) : (
+        <Table dataSource={orders} columns={columns} rowKey="id" />
+      )}
     </div>
   );
 };

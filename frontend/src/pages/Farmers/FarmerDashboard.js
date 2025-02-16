@@ -98,7 +98,7 @@ const FarmerDashboard = () => {
               </div>
             ))
           ) : (
-            <p className="no-items">No items found.</p>
+            <p className="no-items">Loading</p>
           )}
         </div>
       </div>
