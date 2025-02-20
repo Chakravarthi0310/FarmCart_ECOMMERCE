@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import CustomerNavbar from "../../components/CustomerNavbar";
 import "./CustomerDashboard.css";
 import useCustomer from "../../hooks/useCustomer";
+import PopupMessage from "../../components/PopupMessage";
 
 const CustomerDashboard = () => {
   // Products and wishlist state:
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState([]);
-
+  // popups
+  const [popupMessage, setPopupMessage] = useState("");
   // Filtering states:
   const [searchTerm, setSearchTerm] = useState("");
   // **Unified category state used in both category bar and filter dropdown:**
@@ -53,7 +55,10 @@ const CustomerDashboard = () => {
   const toggleWishlist = async (productId) => {
     try {
       await handleAddToWishList(productId);
-      alert("Added to wishlist successfully");
+      setPopupMessage("Product added to wishlist! ✅");
+      setTimeout(() => {
+        setPopupMessage("");
+      }, 3000);
     } catch (e) {
       alert("Error adding to wishlist");
     }
@@ -62,7 +67,10 @@ const CustomerDashboard = () => {
   const toggleCartlist = async (productId) => {
     try {
       await handleAddToCart(productId);
-      alert("Added to cart successfully");
+      setPopupMessage("Product added to Cartlist! ✅");
+      setTimeout(() => {
+        setPopupMessage("");
+      }, 3000);
     } catch (e) {
       alert("Error adding to cart");
     }
@@ -92,6 +100,8 @@ const CustomerDashboard = () => {
   return (
     <div className="dashboard">
       <CustomerNavbar />
+      
+      {popupMessage && <PopupMessage message={popupMessage} onClose={() => setPopupMessage("")} />}
 
       {/* Top bar: Category Bar and Filter Toggle */}
       <div className="filter-container">

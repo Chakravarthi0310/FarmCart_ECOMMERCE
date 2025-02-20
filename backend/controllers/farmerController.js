@@ -56,6 +56,7 @@ exports.loginFarmer = async(req, res) => {
         res.json({
             message: "Login Successful",
             token,
+            
             farmer: {
                 id: farmer._id,
                 name: farmer.name,
