@@ -3,14 +3,11 @@ import { useNavigate } from "react-router-dom";
 import CustomerNavbar from "../../components/CustomerNavbar";
 import "./CustomerDashboard.css";
 import useCustomer from "../../hooks/useCustomer";
-import PopupMessage from "../../components/PopupMessage";
 
 const CustomerDashboard = () => {
   // Products and wishlist state:
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState([]);
-  // popups
-  const [popupMessage, setPopupMessage] = useState("");
   // Filtering states:
   const [searchTerm, setSearchTerm] = useState("");
   // **Unified category state used in both category bar and filter dropdown:**
@@ -26,7 +23,7 @@ const CustomerDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { handleGetApprovedProducts, handleAddToWishList, handleAddToCart } = useCustomer();
+  const { handleGetApprovedProducts, handleAddToWishList, handleGetWishlist, handleAddToCart } = useCustomer();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,30 +52,16 @@ const CustomerDashboard = () => {
   const toggleWishlist = async (productId) => {
     try {
       await handleAddToWishList(productId);
-  
-      setWishlist((prevWishlist) =>
-        prevWishlist.includes(productId)
-          ? prevWishlist.filter((id) => id !== productId) // Remove if already present
-          : [...prevWishlist, productId] // Add if not present
-      );
-  
-      setPopupMessage("Product added to wishlist! ✅");
-      setTimeout(() => {
-        setPopupMessage("");
-      }, 3000);
+      alert("Added to wishlist successfully");
     } catch (e) {
       alert("Error adding to wishlist");
     }
   };
-  
 
   const toggleCartlist = async (productId) => {
     try {
       await handleAddToCart(productId);
-      setPopupMessage("Product added to Cartlist! ✅");
-      setTimeout(() => {
-        setPopupMessage("");
-      }, 3000);
+      alert("Added to cart successfully");
     } catch (e) {
       alert("Error adding to cart");
     }
@@ -108,8 +91,6 @@ const CustomerDashboard = () => {
   return (
     <div className="dashboard">
       <CustomerNavbar />
-      
-      {popupMessage && <PopupMessage message={popupMessage} onClose={() => setPopupMessage("")} />}
 
       {/* Top bar: Category Bar and Filter Toggle */}
       <div className="filter-container">
@@ -205,8 +186,7 @@ const CustomerDashboard = () => {
                 alt={product.name}
               />
               <h3>{product.name}</h3>
-              <p>Price Rs.{product.price}</p>
-              <p>Available stock: {product.quantity} kgs</p>
+              <p>{product.price}</p>
               <p>Expiry: {new Date(product.expiryDate).toLocaleDateString()}</p>
               <p>Rating: {product.ratings}</p>
               <div className="buttons">
