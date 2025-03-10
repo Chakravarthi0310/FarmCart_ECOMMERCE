@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import "./PopupMessage.css"; // Import CSS for styling
 
 function PopupMessage({ message, onClose }) {

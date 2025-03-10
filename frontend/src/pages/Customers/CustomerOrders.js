@@ -19,7 +19,7 @@ const CustomerOrders = () => {
       }
     };
     fetchOrders();
-  }, []);
+  }, [handleGetCustomerOrders]);
 
   return (
     <div className="Orders">
@@ -43,7 +43,7 @@ const CustomerOrders = () => {
               <div className="order-products">
                 {order.products.map((product) => (
                   <div key={product._id} className="order-product">
-                   <img src={
+                   {/* <img src={
                       product.product.image?.data
                         ? `data:${product.product.image.contentType};base64,${btoa(
                             new Uint8Array(product.product.image.data.data).reduce(
@@ -52,7 +52,7 @@ const CustomerOrders = () => {
                             )
                           )}`
                         : "../../assets/default.jpg"
-                    } alt={product.image} className="item-image" />
+                    } alt={product.image} className="item-image" /> */}
                     <div className="product-details">
                       <h4 className="product-name">{product.product.name}</h4>
 {/* =======

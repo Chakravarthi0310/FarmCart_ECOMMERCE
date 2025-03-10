@@ -91,7 +91,7 @@ const FarmerOrders = () => {
 
     // Call the function to load orders when component mounts
     fetchOrders();
-  }, []);
+  }, [handleViewOrders]);
 
   return (
     <>

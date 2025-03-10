@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   getApprovedProducts,
   updateProfile,
@@ -17,7 +17,7 @@ const useCustomer = () => {
   const [error, setError] = useState(null);
 
   // Fetch Approved Products
-  const handleGetApprovedProducts = async () => {
+  const handleGetApprovedProducts = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -28,7 +28,7 @@ const useCustomer = () => {
     } finally {
       setLoading(false);
     }
-  };
+  },[]);
 
   // Update Profile
   const handleUpdateProfile = async (userData) => {
@@ -60,7 +60,7 @@ const useCustomer = () => {
   
 
   // Get Customer Orders
-  const handleGetCustomerOrders = async () => {
+  const handleGetCustomerOrders = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -71,7 +71,7 @@ const useCustomer = () => {
     } finally {
       setLoading(false);
     }
-  };
+  },[]);
 
   const handleAddToWishList = async (productId)=>{
     setLoading(true);
@@ -88,7 +88,7 @@ const useCustomer = () => {
 
   };
 
-  const handleGetWishlist = async(req,res)=>{
+  const handleGetWishlist =useCallback(async(req,res)=>{
     setLoading(true);
     setError(null);
     try {
@@ -99,8 +99,8 @@ const useCustomer = () => {
     } finally {
       setLoading(false);
     }
-  }
-  const handleGetCart = async () => {
+  },[]);
+  const handleGetCart =useCallback( async () => {
     setLoading(true);
     setError(null);
     try {
@@ -111,7 +111,7 @@ const useCustomer = () => {
     } finally {
       setLoading(false);
     }
-  };
+  },[]);
   
   const handleAddToCart = async (productId) => {
     setLoading(true);

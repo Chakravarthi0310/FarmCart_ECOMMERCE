@@ -62,11 +62,4 @@ export const getUnreadCount = async (userId) => {
   }
 };
 
-// ✅ EXPORT all functions
-export default {
-  createNotification,
-  getNotifications,
-  markAsRead,
-  deleteNotification,
-  getUnreadCount,
-};
+

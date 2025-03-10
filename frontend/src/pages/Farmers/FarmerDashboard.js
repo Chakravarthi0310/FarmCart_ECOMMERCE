@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Navbar from "./FarmerNavbar"; 
-import { Link, useNavigate } from "react-router-dom"; 
+import { Link} from "react-router-dom"; 
 import useFarmer from "../../hooks/useFarmer"; 
 import "./FarmerDashboard.css"; 
 import { Edit, Trash2 } from "lucide-react";

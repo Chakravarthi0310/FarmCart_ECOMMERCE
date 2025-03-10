@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useCallback, useState } from "react";
 import {
   createNotification,
   getNotifications,
@@ -15,7 +15,7 @@ const useNotifications = (userId) => {
 
 
 
-  const fetchNotifications = async (userId) => {
+  const fetchNotifications = useCallback(async (userId) => {
     setLoading(true);
     setError(null);
     try {
@@ -28,7 +28,7 @@ const useNotifications = (userId) => {
     } finally {
       setLoading(false);
     }
-  };
+  },[]);
 
   const fetchUnreadCount = async () => {
     try {

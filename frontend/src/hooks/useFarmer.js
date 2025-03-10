@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   addProduct,
   viewOwnProducts,
@@ -15,7 +15,6 @@ const useFarmer = () => {
 
   // Add Product
   const handleAddProduct = async (productData) => {
-    const token = localStorage.getItem("token");
 
     setLoading(true);
     setError(null);
@@ -50,7 +49,7 @@ const useFarmer = () => {
   };
 
   // View Orders
-  const handleViewOrders = async () => {
+  const handleViewOrders = useCallback(async () => {
     try {
       const orders = await viewOrders();
       return orders;
@@ -58,7 +57,7 @@ const useFarmer = () => {
       console.error("Error in handleViewOrders:", error);
       return []; // return empty array on error
     }
-  };
+  },[]);
   
   // Update Order Status
   const handleUpdateOrderStatus = async (orderId, status) => {

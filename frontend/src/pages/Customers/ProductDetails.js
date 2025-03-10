@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useCustomer from "../../hooks/useCustomer";
-import "./ProductDetails.css";
 import CustomerNavbar from "../../components/CustomerNavbar";
+import "./ProductDetails.css";
+// import CustomerNavbar from "../../components/CustomerNavbar";
 const ProductDetails = () => {
   const { id } = useParams(); // product ID from URL
   const navigate = useNavigate();
   const { handleGetApprovedProducts, handleAddToWishList ,handleAddToCart} = useCustomer();
 
   const [product, setProduct] = useState(null);
-  const [approvedProducts, setApprovedProducts] = useState([]);
+  // const [approvedProducts, setApprovedProducts] = useState([]);
   const [similarProducts, setSimilarProducts] = useState([]);
   const [showSimilar, setShowSimilar] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -21,7 +22,6 @@ const ProductDetails = () => {
       try {
         const productsData = await handleGetApprovedProducts();
         console.log(productsData)
-        setApprovedProducts(productsData);
         const selectedProduct = productsData.find((p) => p._id === id);
         if (!selectedProduct) {
           setError("Product not found or not approved.");
@@ -72,7 +72,7 @@ const ProductDetails = () => {
 
   return (
     <>
-    <customerNavbar/>
+    <CustomerNavbar/>
     <div className="product-details-container">
       
       <button className="back-btn" onClick={() => navigate(-1)}>
@@ -108,7 +108,7 @@ const ProductDetails = () => {
           <p className="product-farmer"><strong>Farmer Name:</strong> {product.farmer.name}</p>
           <p className="product-farmer-number"><strong>Farmer Phone:</strong> {product.farmerNumber}</p>
           <p className="product-farmer-address">
-            <strong>Farmer Address:</strong> {product.farmerAddress || "Address not provided"}
+            <strong>Farmer Address:</strong> {product.farmer.address || "Address not provided"}
           </p>
 
           {/* Action Buttons */}

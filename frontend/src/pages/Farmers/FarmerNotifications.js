@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import Navbar from "./FarmerNavbar";
 import useNotifications from "../../hooks/useNotification";
 import "./FarmerNotifications.css";
@@ -20,7 +20,7 @@ const FarmerNotifications = () => {
     if (userId) {
       fetchNotifications(userId);
     }
-  }, []);
+  }, [fetchNotifications,userId]);
 
   const handleMarkAsRead = async (id) => {
     await markNotificationAsRead(id);

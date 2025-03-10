@@ -27,7 +27,7 @@ const CustomerCart = () => {
       }
     };
     fetchCart();
-  }, []);
+  }, [handleGetCart]);
 
   const removeItem= async (productId,itemName)=>{
     try{
@@ -54,18 +54,18 @@ const CustomerCart = () => {
       [id]: newQuantity > cartItems.find((item) => item.id === id)?.stock ? "Exceeds available stock" : "",
     }));
   };
-  const increaseQuantity = (id) => {
-    const item = cartItems.find((item) => item.id === id);
-    if (item.quantity < item.stock) {
-      updateQuantity(id, item.quantity + 1);
-    }
-  };
-  const decreaseQuantity = (id) => {
-    const item = cartItems.find((item) => item.id === id);
-    if (item.quantity > 1) {
-      updateQuantity(id, item.quantity - 1);
-    }
-  };
+  // const increaseQuantity = (id) => {
+  //   const item = cartItems.find((item) => item.id === id);
+  //   if (item.quantity < item.stock) {
+  //     updateQuantity(id, item.quantity + 1);
+  //   }
+  // };
+  // const decreaseQuantity = (id) => {
+  //   const item = cartItems.find((item) => item.id === id);
+  //   if (item.quantity > 1) {
+  //     updateQuantity(id, item.quantity - 1);
+  //   }
+  // };
 
   const handleQuantityChange = (id, value) => {
     const newQuantity = Number(value);

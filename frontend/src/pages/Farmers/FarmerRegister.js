@@ -9,7 +9,7 @@ const FarmerRegister = () => {
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [successPopup, setSuccessPopup] = useState(false);
+  // const [successPopup, setSuccessPopup] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
   

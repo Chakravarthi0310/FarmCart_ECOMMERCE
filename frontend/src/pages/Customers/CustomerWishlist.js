@@ -5,7 +5,7 @@ import useCustomer from "../../hooks/useCustomer";
 import CustomerNavbar from "../../components/CustomerNavbar";
 
 const CustomerWishlist = () => {
-  const { handleGetWishlist, handleRemoveFromWishlist,handleAddToCart, loading, error } = useCustomer(); // Include remove function
+  const { handleGetWishlist, handleRemoveFromWishlist,handleAddToCart} = useCustomer(); // Include remove function
   const [wishlist, setWishlist] = useState([]);
     const hasFetched = useRef(false); 
   
@@ -16,16 +16,16 @@ const CustomerWishlist = () => {
     const fetchWishlist = async () => {
       const response = await handleGetWishlist();
       console.log("gdfhfjgb",response);
-      setWishlist(response.data);
+      setWishlist(response.data.wishList);
  
     };
 
     fetchWishlist();
-  }, []);
+  }, [handleGetWishlist]);
 
   const handleAddCart = async (productId) => {
     try{
-      await handleRemoveFromWishlist(productId);
+      await handleAddToCart(productId);
       alert("Added to cart successfully");
     }catch(e){
       alert(e);
@@ -69,7 +69,7 @@ const CustomerWishlist = () => {
                   <div className="wishlist-buttons">
                     <button 
                       className="wishlist-add-to-cart" 
-                      onClick={() => handleAddToCart(item._id)}
+                      onClick={() => handleAddCart(item._id)}
                     >
                       Add to Cart
                     </button>

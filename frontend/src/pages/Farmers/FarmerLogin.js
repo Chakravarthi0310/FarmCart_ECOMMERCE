@@ -11,7 +11,7 @@ const FarmerLogin = () => {
   const { login } = useAuth(); // Using custom hook for authentication
   const navigate = useNavigate();
     const [error, setError] = useState(""); // Corrected error state
-      const [successPopup, setSuccessPopup] = useState(false);
+      // const [successPopup, setSuccessPopup] = useState(false);
     
   
 
@@ -33,9 +33,9 @@ const FarmerLogin = () => {
           localStorage.setItem("token", loginResponse.token);
           
           // Show success popup
-          setSuccessPopup(true);
+          // setSuccessPopup(true);
           setTimeout(() => {
-            setSuccessPopup(false);
+            // setSuccessPopup(false);
             navigate("/farmer-dashboard");
           }, 2000);
           

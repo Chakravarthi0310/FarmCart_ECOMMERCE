@@ -37,7 +37,7 @@ const CustomerEdit = () => {
     }, []);
 
   const navigate = useNavigate();
-  const { handleUpdateProfile, loading, error } = useCustomer();
+  const { handleUpdateProfile } = useCustomer();
 
 
   const handleSave =async (e) => {

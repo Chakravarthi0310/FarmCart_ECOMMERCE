@@ -26,7 +26,7 @@ const CustomerDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { handleGetApprovedProducts, handleAddToWishList, handleGetWishlist, handleAddToCart } = useCustomer();
+  const { handleGetApprovedProducts, handleAddToWishList, handleAddToCart } = useCustomer();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,6 +55,13 @@ const CustomerDashboard = () => {
   const toggleWishlist = async (productId) => {
     try {
       await handleAddToWishList(productId);
+  
+      setWishlist((prevWishlist) =>
+        prevWishlist.includes(productId)
+          ? prevWishlist.filter((id) => id !== productId) // Remove if already present
+          : [...prevWishlist, productId] // Add if not present
+      );
+  
       setPopupMessage("Product added to wishlist! ✅");
       setTimeout(() => {
         setPopupMessage("");
@@ -63,6 +70,7 @@ const CustomerDashboard = () => {
       alert("Error adding to wishlist");
     }
   };
+  
 
   const toggleCartlist = async (productId) => {
     try {

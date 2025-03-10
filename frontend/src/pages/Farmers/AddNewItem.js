@@ -30,7 +30,7 @@ const AddNewItem = () => {
   };
 
   const handleAddItem = async () => {
-    const { name, category, marketRate, price, quantity,expiryDate, image } = newItem;
+    const { name, category, marketRate, price, quantity, image } = newItem;
   
     if (!name || !category || !marketRate || !price || !quantity || !image) {
       alert("❌ Please fill all fields and upload an image!");

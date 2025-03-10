@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./CustomerNotifications.css"; // Import the CSS file
 import { formatRelativeDate } from "../../utils/dateUtils"; // Import timestamp formatter
 import useNotifications from "../../hooks/useNotification";
@@ -21,7 +21,7 @@ const CustomerNotifications = () => {
     if (userId) {
       fetchNotifications(userId);
     }
-  }, []);
+  }, [fetchNotifications,userId]);
 
   const handleMarkAsRead = async (id) => {
     await markNotificationAsRead(id);
