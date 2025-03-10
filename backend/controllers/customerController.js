@@ -4,6 +4,7 @@ const Customer = require("../models/Customer");
 const Order = require("../models/Order");
 const Product = require("../models/Product")
 const dotenv = require("dotenv");
+const mongoose = require("mongoose");
 
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -53,18 +54,23 @@ exports.addToWishlist = async (req, res) => {
     const { productId } = req.body;
     const customerId = req.customer.id;
 
-    console.log(customerId, productId);
 
-    // Validate inputs
+
     if (!customerId || !productId) {
+
+      
       return res.status(400).json({ message: "Customer ID and Product ID are required" });
     }
 
+
     // Convert productId to ObjectId
     const productObjectId = new mongoose.Types.ObjectId(productId);
+    console.log(customerId, productId);
 
     // Check if customer exists
+
     const customer = await Customer.findById(customerId);
+
     if (!customer || !Array.isArray(customer.wishList)) {
       return res.status(404).json({ message: "Customer not found or wishList is invalid" });
     }
@@ -196,16 +202,20 @@ exports.removeFromCart = async (req, res) => {
 exports.getWishlist = async (req, res) => {
   try {
     const customerId = req.customer.id;
+    console.log("getting wishlist",customerId);
 
     // Check if customer exists and populate wishlist with product and farmer details
     const customer = await Customer.findById(customerId)
-      .populate({
+    .populate({
         path: "wishList",
+        model: "Product",
+        select: "name category price marketRate expiryDate image farmer",
         populate: {
-          path: "farmer", // Populate farmer details
-          select: "name phone address", // Only get required fields
-        },
-      });
+            path: "farmer",
+            model: "Farmer",
+            select: "name email phone address"
+        }
+    });
 
     if (!customer) {
       return res.status(404).json({ message: "Customer not found" });
@@ -282,11 +292,13 @@ exports.loginCustomer = async (req,res)=>{
 
 exports.getCustomerOrders = async (req, res) => {
     try {
+      
       const customerId = req.customer.id; // Extracted from JWT authentication middleware
   
-      console.log("Fetching orders for customer:", customerId);
+      console.log("Fetching orders for customer backend:", customerId);
   
       const orders = await Order.find({ customer: customerId }).populate("products.product");
+      console.log("Customer orders: ",orders);
   
       if (!orders.length) {
         return res.status(404).json({ message: "No orders found for this customer" });
