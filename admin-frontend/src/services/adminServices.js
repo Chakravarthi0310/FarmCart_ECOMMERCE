@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:5000/api/admin";
+const API_BASE_URL = "https://farmcart-ecommerce-1.onrender.com/api/admin";
 
 // Function to register an admin
 export const registerAdmin = async (adminData) => {

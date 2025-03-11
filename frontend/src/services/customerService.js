@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_BASE_URL = "http://localhost:5000/api/customer";
+const API_BASE_URL = "https://farmcart-ecommerce-1.onrender.com/api/customer";
 
 export const getApprovedProducts = async (token) => {
   try {

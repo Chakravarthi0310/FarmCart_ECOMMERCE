@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/api/notification";
+const BASE_URL = "https://farmcart-ecommerce-1.onrender.com/api/notification";
 
 // ✅ CREATE a new notification
 export const createNotification = async (userId, userRole, title, message) => {
