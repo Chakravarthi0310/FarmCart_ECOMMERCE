@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const Farmer = require("../models/Farmer");
 const Product = require("../models/Product");
 const Order = require("../models/Order");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const multer = require("multer");
 
 const storage = multer.memoryStorage();

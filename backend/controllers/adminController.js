@@ -5,7 +5,7 @@ const Order = require("../models/Order")
 const Customer = require("../models/Customer");
 const Notification = require("../models/Notification")
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
 
 dotenv.config();
