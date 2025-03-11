@@ -12,6 +12,7 @@ const customerRoutes = require("./routes/customerRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const mapApiRoutes = require("./routes/map_routes");
+
 connectDB();
 
 app.use(bodyParser.json({ limit: "10mb" }));
@@ -30,16 +31,22 @@ app.use((req, res, next) => {
     next();
 });
 
-
- 
 app.use(express.json());
-app.use("/api/farmer", farmerRoutes);
-app.use("/api/customer",customerRoutes);
-app.use("/api/admin",adminRoutes);
-app.use("/api/orders",orderRoutes);
-app.use("/api/location",mapApiRoutes);
-app.use("/api/notification",notificationRoutes);
 
-app.listen(5000, () => {
-    console.log("Server is running");
-})
+// ✅ Add a root route to confirm backend is running
+app.get("/", (req, res) => {
+    res.send("FarmCart Backend is running! 🚀");
+});
+
+// ✅ Define API Routes
+app.use("/api/farmer", farmerRoutes);
+app.use("/api/customer", customerRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/location", mapApiRoutes);
+app.use("/api/notification", notificationRoutes);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
