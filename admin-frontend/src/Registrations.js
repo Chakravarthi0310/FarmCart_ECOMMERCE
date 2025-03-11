@@ -18,7 +18,7 @@ const Registrations = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [fetchFarmers]);
 
   const handleAction = async (id, status) => {
     setLoadingId(id); // Show loading spinner on the specific row

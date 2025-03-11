@@ -9,7 +9,7 @@ import {
 import useAdminActions from "./hooks/useAdminApi";
 
 const Orders = () => {
-  const { fetchOrders, updateOrderStatus,loading } = useAdminActions();
+  const { fetchOrders, updateOrderStatus } = useAdminActions();
   const [orders, setOrders] = useState([]);
   const [loadingOrders, setLoadingOrders] = useState(false); // Loader for fetching orders
   const [loadingId, setLoadingId] = useState(null); // Track the button loading state
@@ -38,8 +38,30 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    getOrders();
-  }, []);
+      const fetchAllOrders = async () => {
+    setLoadingId(false);
+    setLoadingOrders(true);
+    try {
+      const fetchedOrders = await fetchOrders();
+      
+      setOrders(
+        fetchedOrders.map((order) => ({
+          ...order,
+          status: order.status || "Processing",
+        }))
+        
+      );
+      console.log("OK completed");
+      setLoadingOrders(false);
+
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    } finally {
+      setLoadingOrders(false);
+    }
+  };
+  fetchAllOrders();
+  }, [fetchOrders]);
 
   const handleUpdateStatus = async (orderId, newStatus) => {
     setLoadingId(orderId); // Set loading state for the specific order

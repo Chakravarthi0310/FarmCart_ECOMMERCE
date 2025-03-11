@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   registerAdmin,
   loginAdmin,
@@ -44,7 +44,7 @@ const useAdminActions = () => {
   };
 
   // Fetch all farmers
-  const fetchFarmers = async () => {
+  const fetchFarmers = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -56,10 +56,10 @@ const useAdminActions = () => {
     } finally {
       setLoading(false);
     }
-  };
+  },[]);
 
   // Fetch all products
-  const fetchProducts = async () => {
+  const fetchProducts =useCallback( async () => {
     setLoading(true);
     setError(null);
     try {
@@ -70,7 +70,7 @@ const useAdminActions = () => {
     } finally {
       setLoading(false);
     }
-  };
+  },[]);
 
   // Fetch all customers
   const fetchCustomers = async () => {
@@ -85,7 +85,7 @@ const useAdminActions = () => {
       setLoading(false);
     }
   };
-  const fetchOrders = async () => {
+  const fetchOrders =useCallback( async () => {
     setLoading(true);
     setError(null);
     try {
@@ -97,7 +97,7 @@ const useAdminActions = () => {
     } finally {
       setLoading(false);
     }
-  };
+  },[]);
 
   // Update farmer verification status
   const updateFarmerStatus = async (farmerId, verificationStatus) => {

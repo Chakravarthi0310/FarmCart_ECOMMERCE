@@ -17,7 +17,7 @@ const Products = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [fetchProducts]);
 
   const handleApprove = async (id) => {
     try {
